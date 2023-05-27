@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 07:37:55 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/05/24 09:33:39 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/05/27 09:22:15 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include "libft.h"
 
 /*###############################################################
-#  	   * struct     :		    								#
+#  	   * define     :		    								#
 ###############################################################*/
 typedef enum e_state
 {
@@ -36,6 +36,15 @@ typedef enum e_state
 typedef t_state	(*t_state_func)(char, t_state);
 
 /*###############################################################
+#  	   * struct     :		    								#
+###############################################################*/
+typedef struct s_token
+{
+	char	*name;
+	t_state	type;
+}	t_token;
+
+/*###############################################################
 #  	   * Functions :											#
 ###############################################################*/
 // minishell toknizer
@@ -43,8 +52,6 @@ t_list		*tokenizer(char *line);
 
 // utils :
 t_state		get_next_state(t_state state, char input);
-void		create_token(t_list **list, char *start, char *end, t_state type);
-void		print_tokens(t_list *list);
 
 // function state
 t_state		st_start(char input, t_state prv_state);

@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 09:57:40 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/05/24 09:35:14 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/05/27 10:05:35 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_state	st_string(char input, t_state prv_state)
 
 	if (prv_state == quotes && input == quote)
 		return (string);
-	if (prv_state == quotes)
+	if (prv_state == quotes && input != 0)
 		return (quotes);
 	if (input == '"' || input == '\'')
 	{
@@ -60,6 +60,7 @@ t_state	st_redir(char input, t_state prv_state)
 
 t_state	st_pipes(char input, t_state prv_state)
 {
+	(void)input;
 	(void)prv_state;
 	return (end);
 }
