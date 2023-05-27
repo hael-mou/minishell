@@ -6,7 +6,7 @@
 #    By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 09:16:42 by hael-mou          #+#    #+#              #
-#    Updated: 2023/05/27 10:00:05 by hael-mou         ###   ########.fr        #
+#    Updated: 2023/05/27 14:56:21 by hael-mou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRC			:= $(addsuffix .c, $(SRC))
 BSRC		:= $(addsuffix .c, $(BSRC))
 LIBFT_DIR	:= ../libft
 LIBFT		:= $(LIBFT_DIR)/libft.a
-INC			:= -I $(LIBFT_DIR)/includes -I.
+INC			:= -I $(LIBFT_DIR)/includes -I../includes -I.
 CFLAG		:= -Wall -Wextra -Werror -g -fsanitize=address 
 
 all: Mtest

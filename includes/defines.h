@@ -1,42 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/17 07:37:55 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/05/27 14:55:44 by hael-mou         ###   ########.fr       */
+/*   Created: 2023/03/23 07:17:12 by hael-mou          #+#    #+#             */
+/*   Updated: 2023/05/27 14:53:24 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#ifndef DEFINES_H
+# define DEFINES_H
 
 /*###############################################################
-#  	   * Includes :		    								 	#
+#		* STANDART FD  :										#
 ###############################################################*/
-# include "libft.h"
-# include "minishell_struct.h"
+# define STD_IN		0
+# define STD_OUT	1
+# define STD_ERROR	2
 
 /*###############################################################
-#  	   * define     :		    								#
+#		* EXIT STATUS  :										#
 ###############################################################*/
-typedef t_state	(*t_state_func)(char, t_state);
+# define FAILURE			0
+# define SUCCESS			1
+# define PERMISSION_DINED	126
+# define CMD_NOT_FOUND		127
 
 /*###############################################################
-#  	   * Functions :											#
+#		* OTHER  :												#
 ###############################################################*/
-// minishell toknizer
-t_list		*tokenizer(char *line);
+# define TRUE	1
+# define FALSE	0
 
-// utils :
-t_state		get_next_state(t_state state, char input);
-
-// function state
-t_state		st_start(char input, t_state prv_state);
-t_state		st_string(char input, t_state prv_state);
-t_state		st_redir(char input, t_state prv_state);
-t_state		st_pipes(char input, t_state prv_state);
-
-#endif /* LEXER_H */
+#endif /*DEFINES*/
