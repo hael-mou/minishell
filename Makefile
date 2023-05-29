@@ -6,7 +6,7 @@
 #    By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/28 09:46:30 by hael-mou          #+#    #+#              #
-#    Updated: 2023/05/28 19:59:03 by hael-mou         ###   ########.fr        #
+#    Updated: 2023/05/29 18:50:53 by hael-mou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,8 @@ OBJ_DIRS	:=	$(OBJ_DIR)\
 LIBFT		:=	$(LIBFT_DIR)/libft.a
 
 # Files:
-SRC			:=	minishell
-BUILTIN 	:=
+SRC			:=	minishell var_utils
+BUILTIN 	:=	export env
 LEXER		:=	Minishell_Lexer MandatoryState
 SRC_FILES   :=	$(addprefix $(BUILTIN_DIR)/,$(BUILTIN))
 SRC_FILES   +=	$(addprefix $(LEXER_DIR)/,$(LEXER))
@@ -41,7 +41,7 @@ OBJ_FILES   :=	$(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
 CC			:= cc
 AR			:= ar rc
 RM			:= rm -rf
-CFLAGS 		:= -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS 		:= -Wall -Wextra -Werror #-g -fsanitize=address
 LINKS		:= -lreadline
 INCLUDE     := -I includes \
                -I $(LIBFT_DIR)/includes \

@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:35:28 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/05/28 20:13:05 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/05/29 16:45:36 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,34 @@
 /*###############################################################
 #		* Includes :		    							 	#
 ###############################################################*/
-# include "defines.h"
-# include "minishell_struct.h"
 # include <stdlib.h>
+# include <fcntl.h>
+# include <stdio.h>
+# include "defines.h"
+# include "libft.h"
+# include "minishell_types.h"
 
+// global var :
+t_list  *env;
+
+/*###############################################################
+#		*  DEFINES :											#
+###############################################################*/
+// SHELL INFO :
+# define PROGRAM_INFO   "Minishell 2023 [Version 1.0.0.0]."
+# define DEVLOPERS  "Copyright © OEZZAOU && HAEL-MOU. All Rights Reserved."
 /*###############################################################
 #		* Functions :											#
 ###############################################################*/
+// builtins :
+void	shell_env(void);
+void	export_show(void);
+int 	shell_export(char *new_var);
 
+// var utils :
+t_var   *new_var(char *key, char *value);
+t_list  *get_var(char *key);
+char	*extract_key(char *env_var);
+char	*extract_value(char *env_var);
 
 #endif

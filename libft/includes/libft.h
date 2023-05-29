@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 10:25:28 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/05/16 16:49:42 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/05/29 16:47:11 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,8 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
-enum e_boolean
-{
-	FALSE,
-	TRUE
-};
+# define FALSE	0
+# define TRUE	1
 
 /*###############################################################
 #  	   * Functions :											#
@@ -83,6 +80,7 @@ char	*ft_strjoin(char const *string1, char const *string2);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 int		ft_strncmp(const char *string1, const char *string2, size_t n);
+int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char	*ft_strrchr(const char *string, int character);
 char	*ft_strtok(char const *string, char delim);
