@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   tokenizer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 07:37:55 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/05/29 16:43:00 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/03 18:35:15 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#ifndef TOKENIZER_H
+# define TOKENIZER_H
 
 /*###############################################################
 #  	   * Includes :		    								 	#
@@ -20,23 +20,43 @@
 # include "minishell_types.h"
 
 /*###############################################################
-#  	   * define     :		    								#
+#  	   * define :		    								 	#
 ###############################################################*/
-typedef t_state	(*t_state_func)(char, t_state);
+# define AND_IN_FUTURE 22
+// # ifndef BONUS
+// #  define BONUS 1
+// # endif
+
+/*###############################################################
+#  	   * types :		    								 	#
+###############################################################*/
+typedef struct s_state
+{
+	char	*key;
+	int		state;
+}	t_state;
 
 /*###############################################################
 #  	   * Functions :											#
 ###############################################################*/
 // minishell toknizer
-t_list		*tokenizer(char *line);
+t_list	*tokenizer(char *line);
 
-// utils :
-t_state		get_next_state(t_state state, char input);
+// state utils 1:
+int		state_start(char *input);
+int		state_string(char *input);
+int		state_quates(char *input, int prv_state);
 
-// function state
-t_state		st_start(char input, t_state prv_state);
-t_state		st_string(char input, t_state prv_state);
-t_state		st_redir(char input, t_state prv_state);
-t_state		st_pipes(char input, t_state prv_state);
+// state utils 2:
+int		state_pipe(char *input);
+int		state_redout(char *input);
+int		state_redin(char *input);
 
-#endif /* LEXER_H */
+// tokenizer utils:
+int		get_next_state(int state, char *input);
+void	set_state(t_state *states, int index, char *key, int state);
+int		get_state(t_state *states, int size, char input);
+t_token	*create_token(char *start, char *end, int type);
+t_list	*listadd_token(t_list **list, t_token *new_token);
+
+#endif /* TOKENIZER_H */

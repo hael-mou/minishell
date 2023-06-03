@@ -6,41 +6,34 @@
 #    By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 09:16:42 by hael-mou          #+#    #+#              #
-#    Updated: 2023/05/29 18:23:22 by hael-mou         ###   ########.fr        #
+#    Updated: 2023/06/03 19:38:56 by hael-mou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-MANDATORY 	:= lexerMandatory
-BONUS 		:= lexerBONUS
+TOKENIZER 	:= tokenizer
+BONUS 		:= 1
 
-CC			:= cc
-SRC			:= test/test Minishell_Lexer MandatoryState
-BSRC		:= test/test Minishell_Lexer BonusState
-OBJ			:= $(addsuffix .o, $(SRC))
-OBJB		:= $(addsuffix .o, $(BSRC))
-SRC			:= $(addsuffix .c, $(SRC))
-BSRC		:= $(addsuffix .c, $(BSRC))
-LIBFT_DIR	:= ../../libft
-LIBFT		:= $(LIBFT_DIR)/libft.a
-INC			:= -I $(LIBFT_DIR)/includes -I../../includes -I.
-CFLAG		:= -Wall -Wextra -Werror -g -fsanitize=address 
+CC			:= 	cc
+SRC			:=	test/test tokenizer tokenizer_utils minishell_state1\
+				minishell_state2
+OBJ			:= 	$(addsuffix .o, $(SRC))
+SRC			:= 	$(addsuffix .c, $(SRC))
+LIBFT_DIR	:= 	../../libft
+LIBFT		:= 	$(LIBFT_DIR)/libft.a
+INC			:= 	-I $(LIBFT_DIR)/includes -I../../includes -I.
+CFLAG		:= 	-Wall -Wextra -Werror -g -fsanitize=address
+BB			= 0
 
-all: Mtest
-
-Mtest: $(MANDATORY)
+all:  $(TOKENIZER)
 	clear
 	./$<
 
-$(MANDATORY): $(LIBFT) $(OBJ)
+$(TOKENIZER): $(LIBFT) $(OBJ)
 	@$(CC) $(CFLAG) -lreadline $(INC) $(OBJ) $(LIBFT) -o $@
 	@echo "------- mandatory lexer test created -------\n"
 
-bonus: $(LIBFT) $(OBJB)
-	@$(CC) $(CFLAG) -lreadline $(INC) $(OBJB) $(LIBFT) -o $@
-	@echo "------- BONUS lexer test created -------\n"
-
 %.o: %.c
-	@$(CC) $(CFLAG) $(INC) -c $< -o $@
+	@$(CC) $(CFLAG) -D BONUS=$(BONUS) $(INC) -c $< -o $@
 	@echo "Compiling $<"
 
 $(LIBFT):

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_struct.h                                 :+:      :+:    :+:   */
+/*   minishell_types.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:44:04 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/05/29 08:29:45 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/03 17:32:17 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,32 @@
 /*###############################################################
 #		* LEXER :												#
 ###############################################################*/
-typedef enum e_state
-{
-	start,
-	redir,
-	redir2,
-	pipes,
-	string,
-	quotes,
-	end,
-}	t_state;
+// state :
+# define	OTHER				0
+# define	START				0
+# define	PIPE				1
+# define	REDIR_OUT			2
+# define	REDIR_IN			3
+# define	SINGLE_QUOTES		4
+# define	DOUBLE_QUOTES		5
+# define	STRING				6
+# define	HERE_DOC			7
+# define	REDIR_APPEND		8
+# define	SEMICOLON			9
+# define	AND					10
+# define	OR					11
+# define	OPEN_PARENTHESIS	12
+# define	CLOSE_PARENTHESIS	13
+# define	END					14
 
 typedef struct s_token
 {
 	char	*name;
-	t_state	type;
+	int		type;
 }	t_token;
 
 /*###############################################################
-#		* env :												#
+#		* env :													#
 ###############################################################*/
 typedef struct s_var
 {
