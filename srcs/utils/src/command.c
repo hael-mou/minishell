@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/30 15:22:04 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/12 17:29:38 by hael-mou         ###   ########.fr       */
+/*   Created: 2023/06/18 12:07:00 by hael-mou          #+#    #+#             */
+/*   Updated: 2023/06/18 12:20:54 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "command.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+//=== create_command_node ===============================================
+t_command	*create_command_node(void)
 {
-	t_list	*med;
+	t_command	*cmd;
 
-	if (lst == NULL || del == NULL)
-		return ;
-	while (*lst != NULL)
-	{
-		med = (*lst)->next;
-		del((*lst)->content);
-		free(*lst);
-		*lst = med;
-	}
-	lst = NULL;
+	cmd = ft_calloc(1, sizeof(t_command));
+	if (cmd == NULL)
+		return (NULL);
+	cmd->type = COMMAND;
+	return (cmd);
 }

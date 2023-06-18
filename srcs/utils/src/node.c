@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   node.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/30 15:22:04 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/12 17:29:38 by hael-mou         ###   ########.fr       */
+/*   Created: 2023/06/18 11:59:56 by hael-mou          #+#    #+#             */
+/*   Updated: 2023/06/18 12:29:39 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "node.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+//=== get node type ===========================================================
+int		get_node_type(void *node)
 {
-	t_list	*med;
+	t_node *g_node;
 
-	if (lst == NULL || del == NULL)
-		return ;
-	while (*lst != NULL)
-	{
-		med = (*lst)->next;
-		del((*lst)->content);
-		free(*lst);
-		*lst = med;
-	}
-	lst = NULL;
+	g_node = node;
+	if (g_node != NULL)
+		return (g_node->type);
+	return (ERROR);
 }

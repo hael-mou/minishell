@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 15:04:53 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/03 18:33:45 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/13 13:17:13 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ int	get_next_state(int state, char *input)
 	return (state_string(input));
 }
 
+//=== clean_tokenizer ===================================================
+void	clean_tokenizer(t_list *tokens)
+{
+	ft_lstclear(&tokens, free_token);
+}
+
 //=== set_state =========================================================
 void	set_state(t_state *states, int index, char *key, int state)
 {
@@ -53,41 +59,4 @@ int	get_state(t_state *states, int size, char input)
 			return (states[index].state);
 	}
 	return (states[index].state);
-}
-
-//=== create_token ======================================================
-t_token	*create_token(char *start, char *end, int type)
-{
-	t_token	*new_token;
-	char	*name;
-
-	new_token = malloc(sizeof(t_token));
-	name = malloc(end - start + 1);
-	if (new_token == NULL || name == NULL)
-	{
-		free(new_token);
-		free(name);
-		return (NULL);
-	}
-	new_token->name = name;
-	new_token->type = type;
-	while (start < end)
-		*name++ = *start++;
-	*name = 0;
-	return (new_token);
-}
-
-//=== listadd_token =====================================================
-t_list	*listadd_token(t_list **list, t_token *new_token)
-{
-	t_list	*new_node;
-
-	new_node = ft_lstnew(new_token);
-	if (new_token == NULL || new_node == NULL)
-	{
-		ft_lstclear(list, free);
-		return (NULL);
-	}
-	ft_lstadd_back(list, new_node);
-	return (*list);
 }

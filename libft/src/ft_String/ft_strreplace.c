@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   ft_strreplace.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/30 15:22:04 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/12 17:29:38 by hael-mou         ###   ########.fr       */
+/*   Created: 2023/06/14 15:08:37 by hael-mou          #+#    #+#             */
+/*   Updated: 2023/06/15 17:16:10 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+void	ft_strreplace(char *str, char *c1, char c2)
 {
-	t_list	*med;
+	int	index;
 
-	if (lst == NULL || del == NULL)
-		return ;
-	while (*lst != NULL)
+	while (str != NULL && *str != 0)
 	{
-		med = (*lst)->next;
-		del((*lst)->content);
-		free(*lst);
-		*lst = med;
+		index = -1;
+		while (c1[++index] != 0)
+		{
+			if (*str == c1[index])
+				*str = c2;
+		}
+		str++;
 	}
-	lst = NULL;
 }

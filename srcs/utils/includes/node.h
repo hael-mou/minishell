@@ -1,47 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   node.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/27 14:35:28 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/18 08:49:54 by hael-mou         ###   ########.fr       */
+/*   Created: 2023/06/18 11:46:06 by hael-mou          #+#    #+#             */
+/*   Updated: 2023/06/18 12:27:47 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef NODE_H
+# define NODE_H
 
 /*###############################################################
 #		* Includes :		    							 	#
 ###############################################################*/
-# include <stdio.h>
-# include <errno.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+# include "libft.h"
 # include "defines.h"
 
 /*###############################################################
-#		*  Shell Info :											#
+#		* operator Types :		    						 	#
 ###############################################################*/
-# define PROGRAM_INFO	"Minishell 2023 [Version 1.0.0.0]."
-# define DEVLOPERS	"Copyright © OEZZAOU && HAEL-MOU. All Rights Reserved."
+typedef struct s_node
+{
+	int			type;
+}	t_node;
 
 /*###############################################################
-#		* Functions :											#
+#		* Functions :		    							 	#
 ###############################################################*/
-// Minishell Init :
-void	minishell_info(void);
-void	minishell_init(char **env);
+int		get_node_type(void *node);
 
-// tokenizer :
-void	*tokenizer(char *line);
-void	clean_tokenizer(void *tokens);
-
-// builtins :
-int	    minishell_export(char *variable);
-int		minishell_unset(char *var_name);
-
-void	print_tokens(void *tokens); // remove
-#endif
+#endif /* NODE_H */

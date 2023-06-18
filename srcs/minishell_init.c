@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   minishell_init.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/30 15:22:04 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/12 17:29:38 by hael-mou         ###   ########.fr       */
+/*   Created: 2023/06/17 10:48:06 by hael-mou          #+#    #+#             */
+/*   Updated: 2023/06/17 23:40:40 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+void	minishell_info(void)
 {
-	t_list	*med;
+	printf("\033[2J\033[H");
+	printf("%s\n", PROGRAM_INFO);
+	printf("%s\n\n", DEVLOPERS);
+}
 
-	if (lst == NULL || del == NULL)
-		return ;
-	while (*lst != NULL)
+void	minishell_init(char **env)
+{
+	while (env && *env)
 	{
-		med = (*lst)->next;
-		del((*lst)->content);
-		free(*lst);
-		*lst = med;
+		minishell_export(*env++);
 	}
-	lst = NULL;
 }

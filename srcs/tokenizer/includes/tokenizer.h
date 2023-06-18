@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 07:37:55 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/04 10:08:52 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/17 23:33:57 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,15 @@
 ###############################################################*/
 # include "libft.h"
 # include "types.h"
+# include "token.h"
 
 /*###############################################################
 #  	   * define :		    								 	#
 ###############################################################*/
 # define AND_IN_FUTURE 22
-// # ifndef BONUS
-// #  define BONUS 1
-// # endif
+# ifndef BONUS
+#  define BONUS 1
+# endif
 
 /*###############################################################
 #  	   * types :		    								 	#
@@ -56,7 +57,8 @@ int		state_redin(char *input);
 int		get_next_state(int state, char *input);
 void	set_state(t_state *states, int index, char *key, int state);
 int		get_state(t_state *states, int size, char input);
-t_token	*create_token(char *start, char *end, int type);
-t_list	*listadd_token(t_list **list, t_token *new_token);
+void	clean_tokenizer(t_list *tokens);
+
+void	print_tokens(t_list	*tokens); //just for test remove it
 
 #endif /* TOKENIZER_H */

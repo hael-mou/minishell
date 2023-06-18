@@ -1,43 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/27 08:48:03 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/03 18:16:07 by hael-mou         ###   ########.fr       */
+/*   Created: 2023/06/13 12:37:46 by hael-mou          #+#    #+#             */
+/*   Updated: 2023/06/18 09:22:05 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <readline/readline.h>
-#include "tokenizer.h"
-
-void	print_tokens(t_list *list)
+#include "minishell.h"
+#include "libft.h"
+//=== minishell main ====================================================
+int	main(int number_arg, char **argument, char **env)
 {
-	t_token	*token;
-	int		index;
-
-	index = 1;
-	while (list != NULL)
-	{
-		token = list->content;
-		printf("    |token %d =[%s]->%d\n", index++, token->name, token->type);
-		list = list->next;
-	}
-}
-
-int	main(void)
-{
-	char	*line;
-	t_list	*tokens;
-
+	char	*cmd_line;
+	
+	(void)number_arg;
+	(void)argument;
+	minishell_init(env);
+	minishell_info();
 	while (TRUE)
 	{
-		line = readline("-> ");
-		tokens = tokenizer(line);
+		cmd_line = readline("🔞 - ");
+		if (cmd_line == NULL)
+			return (FAILURE);
+		t_list *tokens = tokenizer(cmd_line);
 		print_tokens(tokens);
-		free(line);
+		clean_tokenizer(tokens);
+		free(cmd_line);
 	}
+	return (0);
 }

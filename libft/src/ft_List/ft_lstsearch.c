@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   ft_lstsearch.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/30 15:22:04 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/12 17:29:38 by hael-mou         ###   ########.fr       */
+/*   Created: 2022/09/30 15:22:47 by oezzaou           #+#    #+#             */
+/*   Updated: 2023/06/17 15:03:21 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+t_list	*ft_lstsearch(t_list *lst, int (*search)(void *, void *), void *value)
 {
-	t_list	*med;
-
-	if (lst == NULL || del == NULL)
-		return ;
-	while (*lst != NULL)
+	while (lst && search && value)
 	{
-		med = (*lst)->next;
-		del((*lst)->content);
-		free(*lst);
-		*lst = med;
+		if (search(lst->content, value))
+			return (lst);
+		lst = lst->next;
 	}
-	lst = NULL;
+	return (NULL);
 }

@@ -1,56 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   types.h                                            :+:      :+:    :+:   */
+/*   file.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/27 14:44:04 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/04 10:58:45 by hael-mou         ###   ########.fr       */
+/*   Created: 2023/06/18 08:55:32 by hael-mou          #+#    #+#             */
+/*   Updated: 2023/06/18 11:49:41 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#ifndef TYPES_H
-# define TYPES_H
-
-/*###############################################################
-#		* STATE :												#
-###############################################################*/
-# define	OTHER				0
-# define	START				0
-# define	PIPE				1
-# define	REDIR_OUT			2
-# define	REDIR_IN			3
-# define	SINGLE_QUOTES		4
-# define	DOUBLE_QUOTES		5
-# define	STRING				6
-# define	HERE_DOC			7
-# define	REDIR_APPEND		8
-# define	SEMICOLON			9
-# define	AND					10
-# define	OR					11
-# define	OPEN_PARENTHESIS	12
-# define	CLOSE_PARENTHESIS	13
-# define	END					14
+#ifndef FILE_H
+# define FILE_H
 
 /*###############################################################
-#		* LEXER :												#
+#		* Includes :		    							 	#
 ###############################################################*/
-typedef struct s_token
+# include "libft.h"
+# include "defines.h"
+
+/*###############################################################
+#		* token Types :		    							 	#
+###############################################################*/
+typedef struct s_file
 {
 	char	*name;
 	int		type;
-}	t_token;
+}	t_file;
 
 /*###############################################################
-#		* env :													#
+#		* Functions :		    							 	#
 ###############################################################*/
-typedef struct s_var
-{
-	char		*key;
-	char		*value;
-}	t_var;
+t_file	*create_file(char *name, char *type);
+void	clean_file(void *content);
+void	listadd_file(t_list **list, t_file *new_file);
+char	*get_file_name(t_list *file_node);
+char	*get_file_type(t_list *file_node);
 
-
-#endif /* TYPES_H */
+#endif /* FILE_H */

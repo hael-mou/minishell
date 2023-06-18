@@ -6,7 +6,7 @@
 #    By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/06 12:36:30 by hael-mou          #+#    #+#              #
-#    Updated: 2023/05/29 16:48:09 by hael-mou         ###   ########.fr        #
+#    Updated: 2023/06/17 21:52:34 by hael-mou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,16 +29,18 @@ GNL_DIR		= get_next_line/
 FT_CHECKS	= ft_isalnum ft_isalpha ft_isascii ft_isdigit ft_islower \
 			  ft_isprint ft_isspace ft_isupper ft_isxdigit
 FT_CONVERT	= ft_atoi ft_itoa ft_tolower ft_toupper
-FT_MEMORY	= ft_bzero ft_calloc ft_memchr ft_memcmp ft_memcpy ft_memmove \
+FT_MEMORY	= ft_bzero ft_calloc ft_memchr ft_memcmp ft_memcpy ft_memmove\
 			  ft_memset ft_realloc
 FT_NUMBER	= ft_nbrlen ft_nbrnchr
-FT_STRING	= ft_split ft_strchr ft_strcount ft_strdup ft_striteri ft_strjoin \
-			  ft_strlcat ft_strlcpy ft_strlen ft_strmapi ft_strncmp ft_strnstr \
-			  ft_strrchr ft_strtok ft_strtrim ft_substr ft_strcmp
+FT_STRING	= ft_split ft_strchr ft_strcount ft_strdup ft_striteri ft_strjoin\
+			  ft_strlcat ft_strlcpy ft_strlen ft_strmapi ft_strncmp ft_strnstr\
+			  ft_strrchr ft_strtok ft_strtrim ft_substr ft_strcmp ft_toklen\
+			  ft_strnjoin ft_strreplace
 FT_PRINT	= ft_putchar_fd ft_putendl_fd ft_putnbr_fd ft_putstr_fd
 FT_GNL		= get_next_line get_next_line_utils
 FT_LIST		= ft_lstdelone ft_lstadd_front ft_lstadd_back ft_lstdelone ft_lstclear\
-			  ft_lstiter ft_lstlast ft_lstmap ft_lstnew ft_lstsize
+			  ft_lstiter ft_lstlast ft_lstmap ft_lstnew ft_lstsize ft_lstsearch\
+			  ft_lstrmif
 
 SRC_FILES	 = $(addprefix $(CHECKS_DIR), $(FT_CHECKS))
 SRC_FILES	+= $(addprefix $(CONVERT_DIR), $(FT_CONVERT))
@@ -77,7 +79,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@$(AR) $@ $^
-	@echo "$(GREEN) [OK]$(DEF)	$(YELLOW)libft.a is created$(DEF)"
+	@echo "$(GREEN) [OK]$(DEF)	$(YELLOW)[ libft.a is created ]$(DEF)"
 
 clean:
 	@if [ -d $(OBJ_DIR) ]; then\
@@ -88,7 +90,7 @@ clean:
 fclean: clean
 	@if [ -f $(NAME) ]; then\
 		$(RM) $(NAME);\
-		echo "$(GREEN) [OK]$(DEF)	$(CYAN)libft file cleaned!$(DEF)";\
+		echo "$(GREEN) [OK]$(DEF)	$(CYAN)[ libft file cleaned!$ ]$(DEF)";\
 	fi
 
 re: fclean all

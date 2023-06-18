@@ -1,47 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   var.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/27 14:35:28 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/18 08:49:54 by hael-mou         ###   ########.fr       */
+/*   Created: 2023/06/17 17:15:26 by hael-mou          #+#    #+#             */
+/*   Updated: 2023/06/17 23:12:00 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef VAR_H
+# define VAR_H
 
 /*###############################################################
 #		* Includes :		    							 	#
 ###############################################################*/
-# include <stdio.h>
-# include <errno.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+# include "libft.h"
 # include "defines.h"
 
 /*###############################################################
-#		*  Shell Info :											#
+#		* Var Types :		    							 	#
 ###############################################################*/
-# define PROGRAM_INFO	"Minishell 2023 [Version 1.0.0.0]."
-# define DEVLOPERS	"Copyright © OEZZAOU && HAEL-MOU. All Rights Reserved."
+typedef struct s_var
+{
+	char	*name;
+	char	*value;
+}   t_var;
 
 /*###############################################################
-#		* Functions :											#
+#		* Functions :		    							 	#
 ###############################################################*/
-// Minishell Init :
-void	minishell_info(void);
-void	minishell_init(char **env);
+t_list		*create_variable(char *variable);
+char		*get_var_content(t_list *var_node, char *content);
+int			invalid_name(char *name);
+int			varcmp(void *value1, void *value2);
+void		clean_var(void *content);
 
-// tokenizer :
-void	*tokenizer(char *line);
-void	clean_tokenizer(void *tokens);
-
-// builtins :
-int	    minishell_export(char *variable);
-int		minishell_unset(char *var_name);
-
-void	print_tokens(void *tokens); // remove
-#endif
+#endif /* VAR_H */

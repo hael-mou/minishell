@@ -1,47 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   operator.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/27 14:35:28 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/18 08:49:54 by hael-mou         ###   ########.fr       */
+/*   Created: 2023/06/18 11:39:52 by hael-mou          #+#    #+#             */
+/*   Updated: 2023/06/18 11:59:21 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef OPERATOR_H
+# define OPERATOR_H
 
 /*###############################################################
 #		* Includes :		    							 	#
 ###############################################################*/
-# include <stdio.h>
-# include <errno.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+# include "libft.h"
 # include "defines.h"
 
 /*###############################################################
-#		*  Shell Info :											#
+#		* operator Types :		    						 	#
 ###############################################################*/
-# define PROGRAM_INFO	"Minishell 2023 [Version 1.0.0.0]."
-# define DEVLOPERS	"Copyright © OEZZAOU && HAEL-MOU. All Rights Reserved."
+typedef struct s_node	t_node;
+typedef struct s_operator
+{
+	int			type;
+	t_node		*right;
+	t_node		*left;
+}				t_operator;
 
 /*###############################################################
-#		* Functions :											#
+#		* Functions :		    							 	#
 ###############################################################*/
-// Minishell Init :
-void	minishell_info(void);
-void	minishell_init(char **env);
+t_node	*create_operator_node(t_node *left, t_node *right, int type);
+t_node	*get_left_node(t_operator *node);
+t_node	*get_right_node(t_operator *node);
 
-// tokenizer :
-void	*tokenizer(char *line);
-void	clean_tokenizer(void *tokens);
-
-// builtins :
-int	    minishell_export(char *variable);
-int		minishell_unset(char *var_name);
-
-void	print_tokens(void *tokens); // remove
-#endif
+#endif /* OPERATOR_H */
