@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 08:55:32 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/18 11:49:41 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/18 15:23:40 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ typedef struct s_file
 /*###############################################################
 #		* Functions :		    							 	#
 ###############################################################*/
-t_file	*create_file(char *name, char *type);
+t_file	*create_file(char *name, int type);
 void	clean_file(void *content);
 void	listadd_file(t_list **list, t_file *new_file);
 char	*get_file_name(t_list *file_node);
-char	*get_file_type(t_list *file_node);
+int		get_file_type(t_list *file);
 
 #endif /* FILE_H */

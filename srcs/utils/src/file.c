@@ -6,14 +6,14 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 12:13:38 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/18 09:15:02 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/18 15:23:52 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "file.h"
 
 //=== create_file =============================================================
-t_file	*create_file(char *name, char *type)
+t_file	*create_file(char *name, int type)
 {
 	t_file	*new_file;
 
@@ -67,9 +67,9 @@ char	*get_file_name(t_list *file)
 }
 
 //=== get_file_type ===========================================================
-char	*get_file_type(t_list *file)
+int	get_file_type(t_list *file)
 {
 	if (file != NULL)
 		return (((t_file *)file->content)->type);
-	return (NULL);
+	return (ERROR);
 }
