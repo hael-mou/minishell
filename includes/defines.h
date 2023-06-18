@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 07:17:12 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/18 12:11:38 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/18 16:29:56 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 /*###############################################################
 #		* EXIT STATUS  :										#
 ###############################################################*/
-# define EXIT_FAILURE		1
-# define EXIT_SUCCESS		0
+//# define EXIT_FAILURE		1
+//# define EXIT_SUCCESS		0
 # define PERMISSION_DINED	126
 # define CMD_NOT_FOUND		127
 
@@ -58,5 +58,7 @@
 # define END				14
 # define COMMAND			15
 # define SUBSHELL			16
+# define OPERATOR			17
+# define REDIR				18
 
 #endif /* DEFINES_H */

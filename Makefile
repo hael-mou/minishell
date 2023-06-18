@@ -6,46 +6,46 @@
 #    By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/13 11:01:09 by hael-mou          #+#    #+#              #
-#    Updated: 2023/06/18 08:58:01 by hael-mou         ###   ########.fr        #
+#    Updated: 2023/06/18 17:17:09 by oezzaou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME 		:=	minishell
-BONUS		:=	1
+NAME 			:=	minishell
+BONUS			:=	1
 
 # Directories:
-SRC_DIR		:=	srcs
-LIBFT_DIR	:= 	libft
-OBJ_DIR		:=	objs
+SRC_DIR			:=	srcs
+LIBFT_DIR		:= 	libft
+OBJ_DIR			:=	objs
 
 # Libraries:
-LIBFT		:=	$(LIBFT_DIR)/libft.a
+LIBFT			:=	$(LIBFT_DIR)/libft.a
 
 # Files:
-SRC_FILES	:=	$(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_DIR)/*/src/*.c)
-OBJ_FILES	:=	$(patsubst %.c,$(OBJ_DIR)/%.o, $(notdir $(SRC_FILES)))
+SRC_FILES		:=	$(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_DIR)/*/src/*.c)
+OBJ_FILES		:=	$(patsubst %.c,$(OBJ_DIR)/%.o, $(notdir $(SRC_FILES)))
 
 # include:
-INCLUDE_FILES 	:= 	$(wildcard includes/*.h) $(wildcard */includes/*.h)\
+INCLUDE_FILES	:= 	$(wildcard includes/*.h) $(wildcard */includes/*.h)\
 					$(wildcard */*/includes/*.h)
 INCLUDE_DIRS	:=	$(sort $(dir $(INCLUDE_FILES)))
 
 # Command:
-CC			:= 	cc
-RM			:= 	rm -rf
-CFLAGS 		:= 	-Wall -Wextra -Werror -g -fsanitize=address
-LINKS		:= 	-lreadline
-INCLUDE		:=	$(addprefix -I,$(INCLUDE_DIRS))
+CC				:= 	cc
+RM				:= 	rm -rf
+CFLAGS 			:= 	-Wall -Wextra -Werror -g -fsanitize=address
+LINKS			:= 	-lreadline
+INCLUDE			:=	$(addprefix -I,$(INCLUDE_DIRS))
 
 # Colors :
-DEF			= \033[0;39m
-GRAY		= \033[0;90m
-PINK		= \033[0;38;5;199m
-RED			= \033[0;91m
-GREEN		= \033[0;32m
-CYAN		= \033[0;96m
-PURPLE		= \033[0;35m
-YELLOW		= \033[0;93m
+DEF				= \033[0;39m
+GRAY			= \033[0;90m
+PINK			= \033[0;38;5;199m
+RED				= \033[0;91m
+GREEN			= \033[0;32m
+CYAN			= \033[0;96m
+PURPLE			= \033[0;35m
+YELLOW			= \033[0;93m
 
 # compiling Rules:
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | .create_dirs
@@ -90,4 +90,4 @@ $(LIBFT):
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re run

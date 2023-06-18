@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_init.c                                   :+:      :+:    :+:   */
+/*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/17 10:48:06 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/18 19:22:46 by oezzaou          ###   ########.fr       */
+/*   Created: 2023/06/15 15:30:18 by oezzaou           #+#    #+#             */
+/*   Updated: 2023/06/18 16:51:39 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef LEXER_H
+# define LEXER_H
 
-void	minishell_info(void)
-{
-	printf("\033[2J\033[H");
-	printf("%s\n", PROGRAM_INFO);
-	printf("%s\n\n", DEVLOPERS);
-}
+# include "tokenizer.h"
+# include "analyzer.h"
 
-void	minishell_init(char **env)
-{
-	while (env && *env)
-		minishell_export(*env++);
-}
+t_list	*lexer(char *cmd_line);
+#endif
