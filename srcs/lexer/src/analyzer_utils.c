@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyzer_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:05:13 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/18 17:11:43 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/06/19 11:49:57 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	parse_error(int prev_state, int state, t_list *token, int *data)
 
 	msg = NULL;
 	if ((!token->next && state == REDIR))
-		msg = "\\n";
+		msg = "newline";
 	if ((prev_state == START && state == OPERATOR)
 		|| (prev_state == OPERATOR && state == OPERATOR)
 		|| (prev_state == OPEN_PARENTHESIS && state == OPERATOR)
@@ -63,7 +63,11 @@ int	parse_error(int prev_state, int state, t_list *token, int *data)
 	if (prev_state == STRING && state == OPEN_PARENTHESIS)
 		msg = get_token_name(token->next);
 	if (msg)
-		printf("%s `%s'\n", PARSE_ERROR_MSG, msg);
+	{
+		ft_putstr_fd(PARSE_ERROR_MSG, 2);
+		ft_putstr_fd(msg, 2);
+		ft_putstr_fd("'\n", 2);
+	}
 	return (PARSE_ERROR * !(!msg));
 }
 

@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:35:28 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/18 16:39:06 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/06/19 09:36:26 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,5 @@ t_list	*lexer(char *cmd_line);
 int	    minishell_export(char *variable);
 int		minishell_unset(char *var_name);
 
-//void	print_tokens(void *tokens); // remove
+void	print_tokens(void *tokens); // remove
 #endif

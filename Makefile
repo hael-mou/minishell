@@ -6,7 +6,7 @@
 #    By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/13 11:01:09 by hael-mou          #+#    #+#              #
-#    Updated: 2023/06/18 17:17:09 by oezzaou          ###   ########.fr        #
+#    Updated: 2023/06/19 09:33:07 by hael-mou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ INCLUDE_DIRS	:=	$(sort $(dir $(INCLUDE_FILES)))
 # Command:
 CC				:= 	cc
 RM				:= 	rm -rf
-CFLAGS 			:= 	-Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS 			:= 	-Wall -Wextra -Werror #-g -fsanitize=address
 LINKS			:= 	-lreadline
 INCLUDE			:=	$(addprefix -I,$(INCLUDE_DIRS))
 

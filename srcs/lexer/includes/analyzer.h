@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyzer.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 11:44:14 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/18 16:37:03 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/06/19 11:48:34 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include "lexer.h"
 # include "readline/readline.h"
 
-# define PARSE_ERROR_MSG	"minish: parse error near"
-# define PARSE_ERROR		258
+# define PARSE_ERROR_MSG "minishell: syntax error near unexpected token `"
+# define PARSE_ERROR	 258
 
 /*====================================================================*\
 |     Prompts :                                                        |
@@ -61,8 +61,5 @@ t_list	*quote_prompt(int *data);
 int		get_current_state(t_list *token);
 int		state_operator(t_list *token);
 int		state_redir(t_list *token);
-
-//char	*read_subsh_line(int subshs);
-//char	*read_operator_line(int type);
 
 #endif

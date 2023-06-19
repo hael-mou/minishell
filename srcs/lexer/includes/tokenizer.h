@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 07:37:55 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/18 16:01:34 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/06/19 09:37:28 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,6 @@ void	set_state(t_state *states, int index, char *key, int state);
 int		get_state(t_state *states, int size, char input);
 void	clean_tokenizer(t_list *tokens);
 
-void	print_tokens(t_list	*tokens); //just for test remove it
+//void	print_tokens(t_list	*tokens); //just for test remove it
 
 #endif /* TOKENIZER_H */
