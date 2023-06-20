@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyzer.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/14 11:44:14 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/19 11:48:34 by hael-mou         ###   ########.fr       */
+/*   Created: 2023/06/20 13:21:54 by oezzaou           #+#    #+#             */
+/*   Updated: 2023/06/20 13:21:57 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "lexer.h"
 # include "readline/readline.h"
+# include "libft.h"
 
 # define PARSE_ERROR_MSG "minishell: syntax error near unexpected token `"
 # define PARSE_ERROR	 258
@@ -30,30 +31,21 @@
 # define DQUOTE_PROMPT		"dquote> "
 
 /*====================================================================*\
-|     Data :                                                           |
-\*====================================================================*/
-typedef enum e_data
-{
-	EQ_POINT,
-	QUOTE_TYPE,
-	QUOTES
-}			t_data;
-
-/*====================================================================*\
 |     Analyzer:                                                        |
 \*====================================================================*/
 t_list	*analyzer(t_list *tokens);
 
 void	update_data(int *data, int cur_state);
-int		parse_error(int prev_state, int state, t_list *token, int *data);
-t_list	*complete_tokens(int *data, int cur_state);
+int		parse_error(int prev_state, int state, t_list *token, int eq_point);
+t_list	*complete_tokens(t_list *token, int eq_point);
 
 /*====================================================================*\
 |     Subtokens:                                                       |
 \*====================================================================*/
-t_list	*subsh_prompt(int *data);
+t_list	*subsh_prompt(int eq_point);
 t_list	*operator_prompt(int type);
-t_list	*quote_prompt(int *data);
+t_list	*quote_prompt(t_list *token);
+char	*get_prompt(int type);
 
 /*====================================================================*\
 |     STATES :                                                         |
