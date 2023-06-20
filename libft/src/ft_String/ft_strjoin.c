@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 18:20:58 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/19 19:55:43 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/20 19:36:56 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,7 @@ char	*ft_strjoin(char *string1, char const *string2)
 		return (NULL);
 	ft_memcpy(new_string, string1, strlen1);
 	ft_memmove(new_string + strlen1, string2, strlen2 + 1);
+	free(string1);
+	free((void *) string2);
 	return (new_string);
 }

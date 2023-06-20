@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:26:25 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/20 15:25:59 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/20 19:35:20 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,15 @@
 #include "libft.h"
 
 //=== minishell main ====================================================
-int	main(int number_arg, char **argument, char **env)
+int	main(int argc, char **argv, char **env)
 {
 	char	*cmd_line;
 	t_list	*tokens;
 	t_command	*tree;
 
-	(void)number_arg;
-	(void)argument;
+	(void) argc;
+	(void) argv;
 	minishell_init(env);
-	minishell_info();
 	while (TRUE)
 	{
 		cmd_line = readline(" (🔞) ︻╦̵̵̿╤── 💥-> ");

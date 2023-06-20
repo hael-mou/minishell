@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 10:48:06 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/18 19:22:46 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/06/20 13:08:11 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,5 @@ void	minishell_init(char **env)
 {
 	while (env && *env)
 		minishell_export(*env++);
+	minishell_info();
 }

@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:17:28 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/16 10:31:20 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/19 21:46:10 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ char	*get_type(int type)
 		return ("OPEN_PARENTHESIS");
 	if (type == CLOSE_PARENTHESIS)
 		return ("CLOSE_PARENTHESIS");
+	if (type == DOUBLE_QUOTES)
+		return ("DOUBLE QUOTES");
+	if (type == SINGLE_QUOTES)
+		return ("SINGLE_QUOTES");
 	return ("ERROR");
 }
 

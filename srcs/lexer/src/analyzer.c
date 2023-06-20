@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyzer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/10 23:48:04 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/19 11:13:00 by hael-mou         ###   ########.fr       */
+/*   Created: 2023/06/20 13:20:17 by oezzaou           #+#    #+#             */
+/*   Updated: 2023/06/20 13:21:29 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,20 @@ t_list	*analyzer(t_list *tokens)
 	t_list		*cursor;
 	int			cur_state;
 	int			prev_state;
-	int			*data;
+	int			eq_point;
 
-	data = (int [3]){0, 0, 0};
+	eq_point = 0;
 	cursor = tokens;
 	prev_state = START;
 	while (cursor)
 	{
 		cur_state = get_current_state(cursor);
-		update_data(data, cur_state);
-		if (parse_error(prev_state, cur_state, cursor, data) == PARSE_ERROR)
+		eq_point += (cur_state == OPEN_PARENTHESIS);
+		eq_point -= (cur_state == CLOSE_PARENTHESIS);
+		if (parse_error(prev_state, cur_state, cursor, eq_point) == PARSE_ERROR)
 			return (NULL);
 		if (cursor->next == NULL)
-			cursor->next = complete_tokens(data, get_token_type(cursor));
+			cursor->next = complete_tokens(cursor, eq_point);
 		prev_state = cur_state;
 		cursor = cursor->next;
 	}
