@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:23:32 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/18 15:28:38 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/20 08:26:37 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,23 +65,18 @@ t_node	*parse_pipe(t_list **tokens)
 //=== parse_command =====================================================
 t_node	*parse_command(t_list **tokens)
 {
-	// t_command	*cmd;
+	t_command	*cmd;
 
-	// cmd = create_command_node();
-	// if (cmd == NULL)
-	// 	return (NULL);
-	// cmd->args = get_argument(*tokens);
-	// if (cmd->args == NULL || cmd->name == NULL)
-	// {
-	// 	free(cmd);
-	// 	return (NULL);
-	// }
-	// cmd->in_out = extract_files(*tokens);
-	// while (is_end_of_command(*tokens) == FALSE)
-	// 	*tokens = (*tokens)->next;
-	// return ((t_node *) cmd);
-	(void)tokens;
-	return (NULL);
+	cmd = create_command_node();
+	if (cmd == NULL)
+		return (NULL);
+	cmd->name = join_argument(*tokens);
+	cmd->in_out = extract_files(*tokens);
+	 while (is_end_of_command(*tokens) == FALSE)
+	 {
+	 	*tokens = (*tokens)->next;
+	 }
+	return ((t_node *) cmd);
 }
 
 //=== parse_subshell ====================================================

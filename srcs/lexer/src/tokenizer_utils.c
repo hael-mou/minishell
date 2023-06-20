@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 15:04:53 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/13 13:17:13 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/20 09:29:24 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	get_next_state(int state, char *input)
 {
 	int	(*state_func[6])();
 
-	if (*input == '\0' || state == SEMICOLON || state == AND || state == OR)
+	if (*input == '\0' || state == SEMICOLON || state == HERE_DOC
+		|| state == AND || state == OR || state == REDIR_APPEND)
 		return (END);
 	if (state == OPEN_PARENTHESIS || state == CLOSE_PARENTHESIS)
 		return (END);

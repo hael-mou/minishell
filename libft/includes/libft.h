@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 10:25:28 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/15 17:14:54 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/19 20:26:11 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
+# include <stdarg.h>
 
 /*###############################################################
 #  	   * struct & enum :										#
@@ -89,6 +90,7 @@ size_t	ft_toklen(const char *string, const char delim);
 char	*ft_strtrim(char const *string, char const *set);
 char	*ft_substr(char const *string, unsigned int start, size_t len);
 char	*ft_strnjoin(char *string1, char const *string2, size_t n);
+char	*ft_vstrjoin(int nstr, char *dst, ...);
 
 // number:
 int		ft_nbrlen(int number);

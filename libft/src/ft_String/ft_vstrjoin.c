@@ -1,31 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_vstrjoin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 18:20:58 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/19 19:55:43 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/19 20:37:37 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-char	*ft_strjoin(char *string1, char const *string2)
+#include <stdio.h>
+char	*ft_vstrjoin(int nstr, char *dst, ...)
 {
 	char	*new_string;
-	size_t	strlen1;
-	size_t	strlen2;
+	va_list	list;
+	va_list	copy;
+	char	index;
+	size_t	len;
 
-	if (string1 == NULL || string2 == NULL)
+	index = 0;
+	len = ft_strlen(dst);
+	va_start(list, dst);
+	va_copy(copy, list);
+	while (++index < nstr)
+		len += ft_strlen(va_arg(copy, char *));;
+	new_string = ft_calloc(len + 1, sizeof(char));
+	if (new_string == NULL)
 		return (NULL);
-	strlen1 = ft_strlen(string1);
-	strlen2 = ft_strlen(string2);
-	new_string = ft_calloc(strlen1 + strlen2 + 1, sizeof(char));
-	if (!new_string)
-		return (NULL);
-	ft_memcpy(new_string, string1, strlen1);
-	ft_memmove(new_string + strlen1, string2, strlen2 + 1);
-	return (new_string);
+	ft_strlcat(new_string, dst, len + 1);
+	 while (--index > 0)
+	 	ft_strlcat(new_string, va_arg(list, char *), len + 1);
+	va_end(list);
+	va_end(copy);
+	return (free(dst), new_string);
 }

@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:23:48 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/18 15:21:52 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/19 21:35:35 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ t_node		*parse_pipe(t_list **tokens);
 t_node		*parse_command(t_list **tokens);
 t_node		*parse_subshell(t_list **tokens);
 
-// parser utils :
+//parse command utils:
+t_list		*extract_files(t_list *tokens);
+char		*join_argument(t_list *tokens);
+int			is_end_of_command(t_list *token);
 int			is_redirection(t_list *token);
 
 #endif

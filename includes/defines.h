@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 07:17:12 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/18 16:29:56 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/06/20 19:29:42 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 //# define EXIT_FAILURE		1
 //# define EXIT_SUCCESS		0
 # define PERMISSION_DINED	126
-# define CMD_NOT_FOUND		127
+# define COMMAND_NOT_FOUND		127
 
 /*###############################################################
 #		* RETURN  :												#

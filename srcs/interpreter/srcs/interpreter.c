@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interpreter.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 21:21:16 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/18 20:13:37 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/06/19 15:33:26 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ int	interpreter(t_node *tree)
 
 pid_t	exec_cmd(t_node *node)
 {
-	t_cmd	*cmd;
+	t_command	*cmd;
 
-	cmd = (t_cmd *) node;
+	cmd = (t_command *) node;
 	cmd->pid = fork();
 	if (cmd->pid < 0)
 		perror("Error creating child process ...\n");
 	if (cmd->pid == 0)
 	{
-		printf("EXEC_CMD| => %s\n", cmd->name);
+		printf("EXEC_COMMAND| => %s\n", cmd->name);
 		exit(0);
 	}
 	return (cmd->pid);
@@ -46,9 +46,9 @@ int	exec_cmds(t_node *node)
 		return (-1);
 	while (node)
 	{
-		if (node->type == CMD)
+		if (node->type == COMMAND)
 			return (waitpid(exec_cmd(node), &status, 0), WEXITSTATUS(status));
-		if (((t_operator *)node)->left->type == CMD)
+		if (((t_operator *)node)->left->type == COMMAND)
 			pid = exec_cmd(((t_operator *)node)->left);
 		else if (((t_operator *) node)->left->type == SUBSHELL)
 			pid = exec_subshell(((t_operator *)node)->left);
