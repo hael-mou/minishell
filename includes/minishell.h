@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:35:28 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/19 09:36:26 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/21 12:32:30 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include "defines.h"
 # include "lexer.h"
 # include "parser.h"
+# include "interpreter.h"
 
 /*###############################################################
 #		*  Shell Info :											#

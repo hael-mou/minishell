@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 21:21:16 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/20 19:36:13 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:51:28 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ pid_t	exec_cmd(t_node *node)
 	if (cmd->pid == 0)
 	{
 		printf("EXEC_COMMAND| => %s\n", cmd->name);
-		exit(0);
+//		if (execve(cmd->path, cmd->args, get_env(g_env)) == -1)
+//			exit(printf("Error of Command\n"));
+		exit(1);
 	}
 	return (cmd->pid);
 }
@@ -81,31 +83,6 @@ int	exec_subshell(t_node *node)
 		status = exec_cmds(node);
 		exit(status);
 	}
-	return (status);
-}
-
-int	get_in_out(t_list *in_out)
-{
-	t_list	*cursor;
-	int		type;
-
-	cursor = in_out;
-	while (cursor)
-	{
-		type = get_file_type(cursor);
-		if (type == REDIR_IN)
-		{
-			(cursor->fd)[0] = open(get_file_name(cursor), O_RDONLY);
-			if ((cursor->fd)[0] == -1)
-				return (ERROR);
-		}
-		if (type == REDIR_OUT || type == REDIR_APPEND)
-		{
-			(cursor->fd)[1] = open(get_file_name(cursor), O_CREAT | O_WRONLY, 0666);
-			if ((cursor->fd)[1])
-				return (ERROR);
-		}
-		cursor = cursor->next;
-	}
-	return (ERROR);
+	waitpid(pid, &status, 0);
+	return (WEXITSTATUS(status));
 }

@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 09:57:40 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/20 13:14:45 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/06/21 15:04:46 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ int	state_redir(t_list *token)
 	int	input;
 
 	input = get_token_type(token);
-	if (input == REDIR_OUT
-		|| input == REDIR_IN
-		|| input == REDIR_APPEND
-		|| input == HERE_DOC)
+	if (input == REDIR_IN
+		|| input == REDIR_OUT
+		|| input == HERE_DOC
+		|| input == REDIR_APPEND)
 		return (REDIR);
 	return (STRING);
 }

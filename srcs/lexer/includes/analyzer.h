@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:21:54 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/20 13:21:57 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/06/21 21:06:18 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,20 @@
 # define QUOTE_PROMPT		"quote> "
 # define DQUOTE_PROMPT		"dquote> "
 
+typedef enum e_data
+{
+	TYPE,
+	SQUOTES,
+	DQUOTES
+}			t_data;
 /*====================================================================*\
 |     Analyzer:                                                        |
 \*====================================================================*/
 t_list	*analyzer(t_list *tokens);
 
-void	update_data(int *data, int cur_state);
 int		parse_error(int prev_state, int state, t_list *token, int eq_point);
 t_list	*complete_tokens(t_list *token, int eq_point);
+void	update_quotes_data(char *buff, int *data);
 
 /*====================================================================*\
 |     Subtokens:                                                       |

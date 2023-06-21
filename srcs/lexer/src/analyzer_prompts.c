@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:19:51 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/20 13:19:58 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/06/21 22:54:03 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,24 @@ t_list	*subsh_prompt(int eq_point)
 t_list	*quote_prompt(t_list *token)
 {
 	char	*line;
-	char	*set;
-	char	*tokens_part;
-	char	*content_part;
+	int		*data;
+	void	*tmp;
 	t_list	*new_tokens;
 
-	set = "'\"";
-	line = ft_strdup("");
-	while (!ft_strchr(line, set[get_token_type(token) - 4]))
-		line = ft_strjoin(line, readline(get_prompt(get_token_type(token))));
-	tokens_part = ft_strchr(line, set[get_token_type(token) - 4]) + 1;
-	content_part = ft_substr(line, 0, tokens_part - line);
-	set_token_name(token, ft_strjoin(get_token_name(token), content_part));
+	line = get_token_name(token);
+	data = (int [3]) {get_token_type(token), 0, 0};
+	update_quotes_data(line, data);
+	while (data[SQUOTES] % 2 || data[DQUOTES] % 2)
+	{
+		tmp = readline(get_prompt(data[TYPE]));
+		update_quotes_data((char *)tmp, data);
+		line = ft_strjoin(line, (char *)tmp);
+	}
+	tmp = tokenizer(line);
+	new_tokens = ((t_list *)tmp)->next;
+	set_token_name(token, ft_strdup(get_token_name(tmp)));
 	set_token_type(token, STRING);
-	new_tokens = tokenizer(tokens_part);
+	ft_lstdelone(tmp, free_token);
 	free(line);
 	return (new_tokens);
 }

@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:20:35 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/20 13:20:39 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/06/21 21:32:33 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,23 @@ t_list	*complete_tokens(t_list *token, int eq_point)
 	if (eq_point > 0)
 		ft_lstadd_back(&new_tokens, subsh_prompt(eq_point));
 	return (new_tokens);
+}
+
+//=== update_quotes_data ================================
+void	update_quotes_data(char *buff, int *data)
+{
+	char	*set;
+	int		i;
+
+	set = "'\"";
+	i = -1;
+	while (buff[++i])
+	{
+		if (buff[i] == set[-data[TYPE] + 5] && (data[data[TYPE] - 3] % 2 == 0))
+			data[TYPE] = -data[TYPE] + 9;
+		if (buff[i] == set[0] && data[TYPE] == SINGLE_QUOTES)
+			data[SQUOTES]++;
+		if (buff[i] == set[1] && data[TYPE] == DOUBLE_QUOTES)
+			data[DQUOTES]++;
+	}
 }

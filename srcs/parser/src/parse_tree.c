@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:23:32 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/20 08:26:37 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/21 12:29:43 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,7 @@ t_node	*parse_and_or(t_list **tokens)
 
 	and_or = parse_pipe(tokens);
 	if (tokens != NULL)
-	{
 		type = get_token_type(*tokens);
-	}
 	if (tokens != NULL && *tokens != 0 && (type == AND || type == OR))
 	{
 		*tokens = (*tokens)->next;
