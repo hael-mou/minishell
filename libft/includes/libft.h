@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 10:25:28 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/19 20:26:11 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/25 11:47:32 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,11 @@
 # include <stdlib.h>
 # include <limits.h>
 # include <stdarg.h>
+# include "list.h"
 
 /*###############################################################
-#  	   * struct & enum :										#
+#  	   * Defines :												#
 ###############################################################*/
-typedef struct s_list
-{
-	void			*content;
-	struct s_list	*next;
-}					t_list;
-
 # define FALSE	0
 # define TRUE	1
 
@@ -58,6 +53,7 @@ void	ft_putchar_fd(char character, int fd);
 void	ft_putstr_fd(char *string, int fd);
 void	ft_putendl_fd(char *string, int fd);
 void	ft_putnbr_fd(int number, int fd);
+void	ft_print_error(const char *format, ...);
 
 // Memory Function:
 void	*ft_memset(void *memory, int constant, size_t len);
@@ -91,6 +87,7 @@ char	*ft_strtrim(char const *string, char const *set);
 char	*ft_substr(char const *string, unsigned int start, size_t len);
 char	*ft_strnjoin(char *string1, char const *string2, size_t n);
 char	*ft_vstrjoin(int nstr, char *dst, ...);
+void	ft_free_array(char **node);
 
 // number:
 int		ft_nbrlen(int number);

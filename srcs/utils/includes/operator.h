@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 11:39:52 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/18 11:59:21 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/25 04:12:48 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 ###############################################################*/
 # include "libft.h"
 # include "defines.h"
+# include "types.h"
 
 /*###############################################################
 #		* operator Types :		    						 	#
 ###############################################################*/
-typedef struct s_node	t_node;
 typedef struct s_operator
 {
 	int			type;
@@ -33,7 +33,9 @@ typedef struct s_operator
 /*###############################################################
 #		* Functions :		    							 	#
 ###############################################################*/
+int		get_node_type(void *node);
 t_node	*create_operator_node(t_node *left, t_node *right, int type);
+void	clean_operator(t_operator *node);
 t_node	*get_left_node(t_operator *node);
 t_node	*get_right_node(t_operator *node);
 

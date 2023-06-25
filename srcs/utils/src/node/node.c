@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   interpreter.c                                      :+:      :+:    :+:   */
+/*   node.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/08 21:21:16 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/25 13:08:20 by hael-mou         ###   ########.fr       */
+/*   Created: 2023/06/18 11:59:56 by hael-mou          #+#    #+#             */
+/*   Updated: 2023/06/24 23:45:25 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "interpreter.h"
+#include "operator.h"
 
-//=== interpreter ========================================================
-void	interpreter(t_node *tree)
+//=== get node type ===========================================================
+int	get_node_type(void *node)
 {
-	//exec_tree(tree);
-	clean_tree(tree);
-}
+	t_node	*g_node;
 
-//=== exec_tree ==========================================================
-void	exec_tree(t_node *tree)
-{
-	(void)tree;
+	g_node = node;
+	if (g_node != NULL)
+		return (g_node->type);
+	return (ERROR);
 }

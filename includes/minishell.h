@@ -6,47 +6,41 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:35:28 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/21 12:32:30 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/06/25 05:19:37 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-/*###############################################################
-#		* Includes :		    							 	#
-###############################################################*/
-# include <stdio.h>
-# include <errno.h>
+/*#############################################################################
+#		* Includes : 	    												  #
+#############################################################################*/
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <stdlib.h>
+# include <unistd.h>
 # include "defines.h"
-# include "lexer.h"
-# include "parser.h"
-# include "interpreter.h"
+# include "types.h"
 
-/*###############################################################
-#		*  Shell Info :											#
-###############################################################*/
-# define PROGRAM_INFO	"Minishell 2023 [Version 1.0.0.0]."
+/*#############################################################################
+#		* Shell Info : 	    												  #
+#############################################################################*/
+# define PROG_INFO	"Minishell 2023 [Version 1.0.0.0]."
 # define DEVLOPERS	"Copyright © OEZZAOU && HAEL-MOU. All Rights Reserved."
+# define CLEAR      "\033[2J\033[H"
 
-/*###############################################################
-#		* Functions :											#
-###############################################################*/
-// Minishell Init :
-void	minishell_info(void);
+/*#############################################################################
+#		* Functions : 	    												  #
+#############################################################################*/
+// minishell:
 void	minishell_init(char **env);
+void	minishell_clear(void);
 
-// tokenizer :
-//void	*tokenizer(char *line);
-//void	clean_tokenizer(void *tokens);
+// minishell utils :
+t_list		*lexer(char *cmd_line);
+t_node		*parser(t_list *tokens);
+void		interpreter(t_node *tree);
+int			minishell_export(char **args);
 
-t_list	*lexer(char *cmd_line);
-
-// builtins :
-int	    minishell_export(char *variable);
-int		minishell_unset(char *var_name);
-
-void	print_tokens(void *tokens); // remove
-#endif
+#endif /* MINISHELL_H */

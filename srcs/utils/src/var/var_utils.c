@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   var.c                                              :+:      :+:    :+:   */
+/*   var_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/17 15:29:58 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/17 21:57:21 by hael-mou         ###   ########.fr       */
+/*   Created: 2023/06/24 12:05:49 by hael-mou          #+#    #+#             */
+/*   Updated: 2023/06/24 12:46:35 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "var.h"
 
-//=== create variable node =====================================================
+//=== create variable  ========================================================
 t_list	*create_variable(char *variable)
 {
 	t_list	*node;
@@ -38,31 +38,28 @@ t_list	*create_variable(char *variable)
 	return (node);
 }
 
-//=== is invalid name =========================================================
-int	invalid_name(char *name)
+//=== is invalide name ========================================================
+int	invalid_name(char *str, char *name)
 {
+	int	status;
+
+	status = FALSE;
 	if (!ft_isalpha(*name) && *name != '_')
-		return (TRUE);
-	while (*(++name) != '\0')
+		status = TRUE;
+	while (!status && *(++name) != '\0')
 	{
 		if (!ft_isalnum(*name) && *name != '_')
-			return (TRUE);
+			status = TRUE;
 	}
-	return (FALSE);
+	if (status == TRUE)
+	{
+		ft_print_error("minishell: %: `%': "INVALID_ID, str, name);
+	}
+	return (status);
 }
 
-//=== get var content ===========================================================
-char	*get_var_content(t_list *var_node, char *content)
-{
-	if (var_node != NULL && ft_strcmp(content, "name") == 0)
-		return (((t_var *)var_node->content)->name);
-	if (var_node != NULL && ft_strcmp(content, "value") == 0)
-		return (((t_var *)var_node->content)->value);
-	return (NULL);
-}
-
-//=== Varcmp ==================================================================
-int	varcmp(void *value1, void *value2)
+//=== cmp value of 2 var ======================================================
+int	var_cmp(void *value1, void *value2)
 {
 	if (ft_strcmp(((t_var *)value1)->name, value2) == 0)
 	{
@@ -71,7 +68,7 @@ int	varcmp(void *value1, void *value2)
 	return (FALSE);
 }
 
-//=== clean var ================================================================
+//=== set variable ============================================================
 void	clean_var(void *content)
 {
 	t_var	*var_node;

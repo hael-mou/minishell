@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_cmd_utils.c                                  :+:      :+:    :+:   */
+/*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 10:45:47 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/20 13:17:51 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/25 06:19:54 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	is_end_of_command(t_list *token)
 	int	type;
 
 	type = get_token_type(token);
-	if (!token ||type == CLOSE_PARENTHESIS || type == AND || type == OR )
+	if (!token || type == CLOSE_PARENTHESIS || type == AND || type == OR)
 		return (TRUE);
 	if (type == PIPE || type == SEMICOLON || type == OPEN_PARENTHESIS)
 		return (TRUE);
@@ -45,10 +45,7 @@ char	*join_argument(t_list *tokens)
 
 	arg = ft_strdup("");
 	if (arg == NULL)
-	{
-		free(arg);
-		return (NULL);
-	}
+		return (free(arg), NULL);
 	while (is_end_of_command(tokens) == FALSE)
 	{
 		if (is_redirection(tokens) == TRUE)
@@ -58,7 +55,7 @@ char	*join_argument(t_list *tokens)
 			tokens = tokens->next->next;
 			continue ;
 		}
-		arg = ft_vstrjoin(3 ,arg, get_token_name(tokens), "%");
+		arg = ft_vstrjoin(3, arg, get_token_name(tokens), "\5");
 		tokens = tokens->next;
 	}
 	return (arg);
@@ -89,4 +86,25 @@ t_list	*extract_files(t_list *tokens)
 		tokens = tokens->next;
 	}
 	return (files);
+}
+
+//=== clean tree ========================================================
+void	clean_tree(t_node *head)
+{
+	int	node_type;
+
+	if (head != NULL)
+	{
+		node_type = get_node_type(head);
+		if (node_type != COMMAND)
+		{
+			clean_tree(((t_operator *)head)->left);
+			clean_tree(((t_operator *)head)->right);
+			clean_operator((t_operator *)head);
+		}
+		else if (node_type == COMMAND)
+		{
+			clean_command((t_command *)head);
+		}
+	}
 }

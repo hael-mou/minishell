@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:23:48 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/19 21:35:35 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/25 03:08:37 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,20 @@
 /*###############################################################
 #		* Includes :		    							 	#
 ###############################################################*/
+# include "tokenizer.h"
 # include "defines.h"
-# include "libft.h"
-# include "file.h"
+# include "types.h"
+
 # include "operator.h"
 # include "command.h"
-# include "node.h"
-# include "token.h"
+# include "file.h"
 
 /*###############################################################
 #  	   * Functions :											#
 ###############################################################*/
 // Parser :
 t_node		*parser(t_list *tokens);
+void		clean_tree(t_node *tree);
 
 // Parse tree:
 t_node		*parse_seq(t_list **tokens);

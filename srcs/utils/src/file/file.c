@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 12:13:38 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/20 09:48:39 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/25 01:43:10 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,11 @@ t_file	*create_file(char *name, int type)
 }
 
 //=== clean_file ===========================================================
-void	clean_file(void *content)
+void	clean_file(void *file)
 {
-	t_file	*file;
-
-	file = content;
 	if (file != NULL)
 	{
-		free(file->name);
+		free(((t_file *)file)->name);
 		free(file);
 	}
 }
@@ -56,20 +53,4 @@ void	listadd_file(t_list **list, t_file *new_file)
 	{
 		ft_lstclear(list, clean_file);
 	}
-}
-
-//=== get_file_name ===========================================================
-char	*get_file_name(t_list *file)
-{
-	if (file != NULL)
-		return (((t_file *)file->content)->name);
-	return (NULL);
-}
-
-//=== get_file_type ===========================================================
-int	get_file_type(t_list *file)
-{
-	if (file != NULL)
-		return (((t_file *)file->content)->type);
-	return (ERROR);
 }

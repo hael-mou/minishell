@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_init.c                                   :+:      :+:    :+:   */
+/*   ft_free_array.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/17 10:48:06 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/20 13:08:11 by oezzaou          ###   ########.fr       */
+/*   Created: 2023/06/25 11:44:15 by hael-mou          #+#    #+#             */
+/*   Updated: 2023/06/25 11:47:25 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	minishell_info(void)
+void	ft_free_array(char **node)
 {
-	printf("\033[2J\033[H");
-	printf("%s\n", PROGRAM_INFO);
-	printf("%s\n\n", DEVLOPERS);
-}
+	int	index;
 
-void	minishell_init(char **env)
-{
-	while (env && *env)
-		minishell_export(*env++);
-	minishell_info();
+	index = 0;
+	while (node != NULL && node[index])
+	{
+		free(node[index++]);
+	}
+	free(node);
 }

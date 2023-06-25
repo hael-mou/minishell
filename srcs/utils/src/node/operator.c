@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 12:02:40 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/18 12:06:05 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/25 04:12:54 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ t_node	*create_operator_node(t_node *left, t_node *right, int type)
 	operator->left = left;
 	operator->right = right;
 	return ((t_node *) operator);
+}
+
+//=== clean operator ====================================================
+void	clean_operator(t_operator *node)
+{
+	free(node);
 }
 
 //=== get_left_node =====================================================

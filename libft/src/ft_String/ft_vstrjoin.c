@@ -6,12 +6,12 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 18:20:58 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/19 20:37:37 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/23 22:26:36 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
+
 char	*ft_vstrjoin(int nstr, char *dst, ...)
 {
 	char	*new_string;
@@ -25,13 +25,17 @@ char	*ft_vstrjoin(int nstr, char *dst, ...)
 	va_start(list, dst);
 	va_copy(copy, list);
 	while (++index < nstr)
-		len += ft_strlen(va_arg(copy, char *));;
+	{
+		len += ft_strlen(va_arg(copy, char *));
+	}
 	new_string = ft_calloc(len + 1, sizeof(char));
 	if (new_string == NULL)
 		return (NULL);
 	ft_strlcat(new_string, dst, len + 1);
-	 while (--index > 0)
-	 	ft_strlcat(new_string, va_arg(list, char *), len + 1);
+	while (--index > 0)
+	{
+		ft_strlcat(new_string, va_arg(list, char *), len + 1);
+	}
 	va_end(list);
 	va_end(copy);
 	return (free(dst), new_string);

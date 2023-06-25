@@ -3,28 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   interpreter.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:38:00 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/21 13:20:32 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/06/25 12:09:54 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef INTERPRETER_H
 # define INTERPRETER_H
-# include <sys/wait.h>
-# include <unistd.h>
+
+/*###############################################################
+#  	   * Includes	:											#
+###############################################################*/
 # include <stdio.h>
+# include <unistd.h>
+# include <sys/wait.h>
 # include "builtins.h"
-# include "tokenizer.h"
 # include "parser.h"
 
-int		interpreter(t_node *root);
+/*###############################################################
+#  	   * Functions :											#
+###############################################################*/
+// interpreter :
+void	interpreter(t_node *tree);
 
-int		exec_cmds(t_node *node);
-int		exec_subshell(t_node *node);
-pid_t	exec_cmd(t_node *node);
+// extract_cmd
+void	extract_command(t_node *cmd);
+char	*whereis_cmd(char *cmd);
 
-/*********** UTILS **************/
-char	**get_env(t_list *g_env);
 #endif

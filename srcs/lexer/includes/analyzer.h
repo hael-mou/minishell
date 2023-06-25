@@ -3,26 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   analyzer.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:21:54 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/21 21:06:18 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/06/25 02:46:49 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ANALYZER_H
 # define ANALYZER_H
 
-# include "lexer.h"
+/*###############################################################
+#  	   * Includes :		    								 	#
+###############################################################*/
 # include "readline/readline.h"
 # include "libft.h"
+# include "token.h"
 
+/*###############################################################
+#  	   * Define :		    								 	#
+###############################################################*/
 # define PARSE_ERROR_MSG "minishell: syntax error near unexpected token `"
 # define PARSE_ERROR	 258
 
-/*====================================================================*\
-|     Prompts :                                                        |
-\*====================================================================*/
+/*###############################################################
+#  	   * Prompts :		    								 	#
+###############################################################*/
 # define SUBSH_PROMPT		"subsh> "
 # define PIPE_PROMPT		"pipe> "
 # define AND_PROMPT			"cmdand> "
@@ -30,34 +36,38 @@
 # define QUOTE_PROMPT		"quote> "
 # define DQUOTE_PROMPT		"dquote> "
 
+/*###############################################################
+#  	   * Typedef :		    								 	#
+###############################################################*/
 typedef enum e_data
 {
 	TYPE,
 	SQUOTES,
 	DQUOTES
 }			t_data;
-/*====================================================================*\
-|     Analyzer:                                                        |
-\*====================================================================*/
-t_list	*analyzer(t_list *tokens);
 
+/*###############################################################
+#  	   * Functions :		   								 	#
+###############################################################*/
+// Analyzer:
+t_list	*analyzer(t_list *tokens);
 int		parse_error(int prev_state, int state, t_list *token, int eq_point);
 t_list	*complete_tokens(t_list *token, int eq_point);
 void	update_quotes_data(char *buff, int *data);
 
-/*====================================================================*\
-|     Subtokens:                                                       |
-\*====================================================================*/
+// minishell toknizer
+t_list	*tokenizer(char *line);
+
+// Subtokens:
 t_list	*subsh_prompt(int eq_point);
 t_list	*operator_prompt(int type);
 t_list	*quote_prompt(t_list *token);
 char	*get_prompt(int type);
 
-/*====================================================================*\
-|     STATES :                                                         |
-\*====================================================================*/
+// STATES :
+
 int		get_current_state(t_list *token);
 int		state_operator(t_list *token);
 int		state_redir(t_list *token);
 
-#endif
+#endif /* ANALYZER_H */

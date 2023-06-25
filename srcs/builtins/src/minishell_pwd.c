@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   interpreter.c                                      :+:      :+:    :+:   */
+/*   minishell_pwd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/08 21:21:16 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/25 13:08:20 by hael-mou         ###   ########.fr       */
+/*   Created: 2023/06/22 15:42:35 by hael-mou          #+#    #+#             */
+/*   Updated: 2023/06/24 14:58:25 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "interpreter.h"
+#include "builtins.h"
 
-//=== interpreter ========================================================
-void	interpreter(t_node *tree)
+int	minishell_pwd(char **args)
 {
-	//exec_tree(tree);
-	clean_tree(tree);
-}
+	char	*abs_path;
 
-//=== exec_tree ==========================================================
-void	exec_tree(t_node *tree)
-{
-	(void)tree;
+	(void)args;
+	abs_path = getcwd(NULL, 0);
+	if (abs_path == NULL)
+		return (FAILURE);
+	printf("%s\n", abs_path);
+	free(abs_path);
+	return (SUCCESS);
 }

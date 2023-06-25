@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   node.c                                             :+:      :+:    :+:   */
+/*   minishell_env.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/18 11:59:56 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/18 12:29:39 by hael-mou         ###   ########.fr       */
+/*   Created: 2023/06/22 16:22:16 by hael-mou          #+#    #+#             */
+/*   Updated: 2023/06/24 13:43:01 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "node.h"
+#include "builtins.h"
 
-//=== get node type ===========================================================
-int		get_node_type(void *node)
+int	minishell_env(char **args)
 {
-	t_node *g_node;
+	t_list	*cursor;
+	char	*name;
+	char	*value;
 
-	g_node = node;
-	if (g_node != NULL)
-		return (g_node->type);
-	return (ERROR);
+	(void)args;
+	cursor = g_sys.env;
+	while (cursor != NULL)
+	{
+		name = get_var_name(cursor);
+		value = get_var_value(cursor);
+		if (value != NULL && *value != 0)
+			printf("%s=%s\n", name, value);
+		cursor = cursor->next;
+	}
+	return (SUCCESS);
 }

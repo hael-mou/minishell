@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.c                                          :+:      :+:    :+:   */
+/*   list.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/18 12:07:00 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/18 12:20:54 by hael-mou         ###   ########.fr       */
+/*   Created: 2023/06/24 13:08:49 by hael-mou          #+#    #+#             */
+/*   Updated: 2023/06/24 13:09:24 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "command.h"
+#ifndef LIST_H
+# define LIST_H
 
-//=== create_command_node ===============================================
-t_command	*create_command_node(void)
+typedef struct s_list
 {
-	t_command	*cmd;
+	void			*content;
+	struct s_list	*next;
+}					t_list;
 
-	cmd = ft_calloc(1, sizeof(t_command));
-	if (cmd == NULL)
-		return (NULL);
-	cmd->type = COMMAND;
-	return (cmd);
-}
+#endif /* LIST_H */

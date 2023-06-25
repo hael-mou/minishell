@@ -6,7 +6,7 @@
 #    By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/13 11:01:09 by hael-mou          #+#    #+#              #
-#    Updated: 2023/06/20 09:49:53 by hael-mou         ###   ########.fr        #
+#    Updated: 2023/06/25 05:22:23 by hael-mou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ OBJ_DIR			:=	objs
 LIBFT			:=	$(LIBFT_DIR)/libft.a
 
 # Files:
-SRC_FILES		:=	$(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_DIR)/*/src/*.c)
+SRC_FILES		:=	$(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_DIR)/*/src/*.c)\
+					$(wildcard $(SRC_DIR)/*/src/*/*.c)
 OBJ_FILES		:=	$(patsubst %.c,$(OBJ_DIR)/%.o, $(notdir $(SRC_FILES)))
 
 # include:
@@ -33,7 +34,7 @@ INCLUDE_DIRS	:=	$(sort $(dir $(INCLUDE_FILES)))
 # Command:
 CC				:= 	cc
 RM				:= 	rm -rf
-CFLAGS 			:= 	-Wall -Wextra -Werror# -g -fsanitize=address
+CFLAGS 			:= 	-Wall -Wextra -Werror -g -fsanitize=address
 LINKS			:= 	-lreadline
 INCLUDE			:=	$(addprefix -I,$(INCLUDE_DIRS))
 
@@ -53,6 +54,10 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | .create_dirs
 	@echo "$(GREEN) [OK]$(DEF)	$(PURPLE)Compiling$(DEF)  $<"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/*/src/%.c | .create_dirs
+	@$(CC) $(CFLAGS) -D BONUS=$(BONUS) $(INCLUDE) -c $< -o $@
+	@echo "$(GREEN) [OK]$(DEF)	$(PURPLE)Compiling$(DEF)  $<"
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/*/src/*/%.c | .create_dirs
 	@$(CC) $(CFLAGS) -D BONUS=$(BONUS) $(INCLUDE) -c $< -o $@
 	@echo "$(GREEN) [OK]$(DEF)	$(PURPLE)Compiling$(DEF)  $<"
 

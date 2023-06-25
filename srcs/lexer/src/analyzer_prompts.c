@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyzer_prompts.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:19:51 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/21 22:54:03 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/06/22 23:55:44 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_list	*quote_prompt(t_list *token)
 	t_list	*new_tokens;
 
 	line = get_token_name(token);
-	data = (int [3]) {get_token_type(token), 0, 0};
+	data = (int [3]){get_token_type(token), 0, 0};
 	update_quotes_data(line, data);
 	while (data[SQUOTES] % 2 || data[DQUOTES] % 2)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyzer_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:20:35 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/21 21:32:33 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/06/24 17:49:44 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,8 @@ int	parse_error(int prev_state, int state, t_list *token, int eq_point)
 		if (!msg)
 			msg = "newline";
 	}
-	if (msg)
-	{
-		ft_putstr_fd(PARSE_ERROR_MSG, 2);
-		ft_putstr_fd(msg, 2);
-		ft_putstr_fd("'\n", 2);
-	}
+	if (msg != NULL)
+		ft_print_error(PARSE_ERROR_MSG"%'\n", msg);
 	return (PARSE_ERROR * !(!msg));
 }
 

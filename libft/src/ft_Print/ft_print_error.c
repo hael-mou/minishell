@@ -1,22 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   ft_print_error.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/17 14:52:54 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/17 19:18:41 by hael-mou         ###   ########.fr       */
+/*   Created: 2023/06/24 12:41:41 by hael-mou          #+#    #+#             */
+/*   Updated: 2023/06/24 12:54:24 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include "libft.h"
 
-int	minishell_unset(char *var_name)
+void	ft_print_error(const char *format, ...)
 {
-	if (var_name != NULL)
+	va_list	ptr;
+
+	va_start(ptr, format);
+	while (*format)
 	{
-		ft_lstrmif(&g_env, var_name, varcmp, clean_var);
+		if (*format == '%')
+		{
+			ft_putstr_fd(va_arg(ptr, char *), 2);
+		}
+		else
+		{
+			ft_putchar_fd(*format, 2);
+		}
+		format++;
 	}
-	return (SUCCESS);
+	va_end(ptr);
 }
