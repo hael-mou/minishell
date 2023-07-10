@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 01:13:25 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/25 01:39:38 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/05 22:54:05 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,9 @@ void	set_file_type(t_list *file, int type)
 	}
 }
 
-//=== set file type ===========================================================
-void	set_file_pipe(t_list *file, int pipe)
+//=== set_file_fd ===========================================================
+void	set_file_fd(t_list *file, int nfd)
 {
 	if (file != NULL)
-	{
-		((t_file *)file->content)->pipe = pipe;
-	}
+		((t_file *)file->content)->fd = nfd;
 }

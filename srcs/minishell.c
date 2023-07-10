@@ -6,12 +6,13 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:26:25 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/25 06:41:23 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/09 18:01:02 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 char	**expand_var(char *line);
+
 //=== minishell main ====================================================
 int	main(int argc, char **argv, char **env)
 {
@@ -27,18 +28,15 @@ int	main(int argc, char **argv, char **env)
 		input = readline("(🔞) ︻╦̵̵̿╤── 💥-> ");
 		if (input == NULL)
 			return (FAILURE);
+		if (*input == 0)
+			continue;
 		tokens = lexer(input);
 		tree = parser(tokens);
 		interpreter(tree);
-		char **t = expand_var(input);
-		while (t != NULL && *t != NULL)
-		{
-			printf("%s\n", *t);
-			t++;
-		}
+		printf("Done ...\n");
+		minishell_clear();
 		free(input);
 	}
-	minishell_clear();
 	return (0);
 }
 
@@ -53,6 +51,7 @@ void	minishell_init(char **env)
 		printf(CLEAR);
 		printf("%s\n", PROG_INFO);
 		printf("%s\n\n", DEVLOPERS);
+		g_sys.pipeline = -1;
 		return ;
 	}
 	exit (ERROR);
@@ -61,4 +60,6 @@ void	minishell_init(char **env)
 //=== minishell clear ====================================================
 void	minishell_clear(void)
 {
+	close(g_sys.pipeline);
+	g_sys.pipeline = -1;
 }

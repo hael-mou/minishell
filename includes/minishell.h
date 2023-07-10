@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:35:28 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/25 05:19:37 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/25 20:59:44 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	minishell_init(char **env);
 void	minishell_clear(void);
 
 // minishell utils :
-t_list		*lexer(char *cmd_line);
-t_node		*parser(t_list *tokens);
-void		interpreter(t_node *tree);
-int			minishell_export(char **args);
+t_list	*lexer(char *cmd_line);
+t_node	*parser(t_list *tokens);
+void	interpreter(t_node *tree);
+int		minishell_export(char **args);
 
 #endif /* MINISHELL_H */

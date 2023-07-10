@@ -6,14 +6,14 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:04:34 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/24 15:17:43 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/02 19:34:10 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
 //=== builtins_init ===========================================================
-void	builtins_init(char **built_name, t_func *built_func)
+/*void	builtins_init(char **built_name, t_func *built_func)
 {
 	built_name[0] = "echo";
 	built_func[0] = minishell_echo;
@@ -29,10 +29,10 @@ void	builtins_init(char **built_name, t_func *built_func)
 	built_func[5] = minishell_env;
 	built_name[6] = "exit";
 	built_func[6] = minishell_exit;
-}
+}*/
 
 //=== exec_builtins ===========================================================
-int	exec_builtins(char *name, char **args)
+/*int	exec_builtins(char *name, char **args)
 {
 	char	*built_name[7];
 	t_func	built_func[7];
@@ -48,4 +48,4 @@ int	exec_builtins(char *name, char **args)
 		}
 	}
 	return (FAILURE);
-}
+}*/

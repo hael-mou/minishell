@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 01:13:25 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/25 01:39:27 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/05 18:30:16 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ int	get_file_type(t_list *file)
 	return (ERROR);
 }
 
-//=== get file pipe ===========================================================
-int	get_file_pipe(t_list *file)
+//=== get_file_fd ============================================================
+int	get_file_fd(t_list *file)
 {
 	if (file != NULL)
-		return (((t_file *)file->content)->pipe);
+		return (((t_file *)file->content)->fd);
 	return (ERROR);
 }

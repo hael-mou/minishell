@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 17:24:33 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/25 01:06:21 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/25 21:06:59 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,12 @@ int	get_token_type(t_list *token)
 void	set_token_name(t_list *token, char *new_name)
 {
 	if (token != NULL)
-	{
 		((t_token *)token->content)->name = new_name;
-	}
 }
 
 //=== set_token_type ====================================================
 void	set_token_type(t_list *token, int new_type)
 {
 	if (token != NULL)
-	{
 		((t_token *)token->content)->type = new_type;
-	}
 }

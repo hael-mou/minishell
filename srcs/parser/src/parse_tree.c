@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:23:32 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/25 02:14:07 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/25 20:33:32 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,7 @@ t_node	*parse_command(t_list **tokens)
 	set_cmd_name(cmd, join_argument(*tokens));
 	set_cmd_iofile(cmd, extract_files(*tokens));
 	while (is_end_of_command(*tokens) == FALSE)
-	{
 		*tokens = (*tokens)->next;
-	}
 	return ((t_node *) cmd);
 }
 

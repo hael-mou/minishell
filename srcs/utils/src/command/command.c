@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 12:07:00 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/25 04:13:17 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/06/25 20:18:20 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ void	clean_command(t_command *cmd)
 	free(cmd->name);
 	free(cmd->path);
 	while (cmd->args != NULL && cmd->args[index] != NULL)
-	{
 		free(cmd->args[index++]);
-	}
 	free(cmd->args);
 	clean_file(cmd->in_out);
 	free(cmd);

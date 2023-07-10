@@ -6,7 +6,7 @@
 #    By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/06 12:36:30 by hael-mou          #+#    #+#              #
-#    Updated: 2023/06/25 11:47:16 by hael-mou         ###   ########.fr        #
+#    Updated: 2023/06/26 12:53:44 by oezzaou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,7 @@ OBJ			= $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
 CC			:= cc
 AR			:= ar rc
 RM			:= rm -rf
-FLAGS 		:= -Wall -Wextra -Werror -g -fsanitize=address
+FLAGS 		:= -Wall -Wextra -Werror #-g -fsanitize=address
 
 # Colors :
 DEF			= \033[0;39m

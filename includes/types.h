@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 22:04:28 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/25 05:06:57 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/02 19:09:22 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ typedef struct s_system
 	t_list	*env;
 	int		std_in;
 	int		std_out;
+	int		(*t_func[8])(char **);
+	int		pipeline;
 	int		exit_status;
 }	t_system;
 
