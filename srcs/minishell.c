@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:26:25 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/10 10:10:45 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/10 21:58:02 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@ int	main(int argc, char **argv, char **env)
 		if (*input == 0)
 			continue;
 		tokens = lexer(input);
+		if (!tokens)
+			continue ;
 		tree = parser(tokens);
 		interpreter(tree);
-		printf("AFTER INTERPRETER ...\n");
-//		minishell_clear();
+		add_history(input);
+		minishell_clear();
 		free(input);
 	}
 	return (0);
@@ -52,9 +54,29 @@ void	minishell_init(char **env)
 		printf("%s\n", PROG_INFO);
 		printf("%s\n\n", DEVLOPERS);
 		g_sys.pipeline = -1;
+		builtins_init(&g_sys.builtins);
 		return ;
 	}
 	exit (ERROR);
+}
+
+//=== builtins_init ===========================================================
+void	builtins_init(t_built *builtins)
+{
+	builtins->name[0] = "echo";
+	builtins->func[0] = minishell_echo;
+	builtins->name[1] = "pwd";
+	builtins->func[1] = minishell_pwd;
+	builtins->name[2] = "env";
+	builtins->func[2] = minishell_env;
+	builtins->name[3] = "export";
+	builtins->func[3] = minishell_export;
+	builtins->name[4] = "unset";
+	builtins->func[4] = minishell_unset;
+	builtins->name[5] = "cd";
+	builtins->func[5] = minishell_cd;
+	builtins->name[6] = "exit";
+	builtins->func[6] = minishell_exit;
 }
 
 //=== minishell clear ====================================================

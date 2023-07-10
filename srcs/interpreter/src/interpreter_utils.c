@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:16:20 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/09 14:33:59 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/10 22:50:13 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,6 @@ char	**get_env(t_list *g_env)
 	}
 	env[i] = NULL;
 	return (env);
-}
-
-int	manage_pipe(int *fd, int flag)
-{
-	if (flag == CREAT && pipe(fd) == -1)
-		return (ERROR);
-	if (flag == CLOSE)
-	{
-		close(fd[0]);
-		close(fd[1]);
-	}
-	return (0);
 }
 
 int	*get_command_inout(t_list *file)
@@ -69,4 +57,30 @@ int	*get_command_inout(t_list *file)
 		file = file->next;
 	}
 	return (in_out);
+}
+
+int	dup_process_inout(int *fd, int *in_out, int position, int p_type)
+{
+	if (g_sys.pipeline > -1 && in_out[0] == -1)
+		dup2(g_sys.pipeline, 0);
+	if (in_out[0] > -1)
+		dup2(in_out[0], 0);
+	if (position == LEFT && p_type == PIPE)
+		dup2(fd[1], 1);
+	if (in_out[1] > -1)
+		dup2(in_out[1], 1);
+	return (SUCCESS);
+}
+
+int	close_all_fd(t_list *file, int *fd)
+{
+	while (file)
+	{
+		int re = close(get_file_fd(file));
+		printf("RE| => %d\n", re);
+		file = file->next;
+	}
+	close(fd[0]);
+	close(fd[1]);
+	return (SUCCESS);
 }

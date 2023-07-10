@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 22:04:28 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/02 19:09:22 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/10 11:38:01 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@
 #		* Includes  	    												  #
 #############################################################################*/
 # include "list.h"
+# include "builtins.h"
+
+typedef struct s_built
+{
+	char	*name[7];
+	int		(*func[7])(char **);
+}				t_built;
 
 /*#############################################################################
 #		* System type  	    												  #
@@ -26,7 +33,7 @@ typedef struct s_system
 	t_list	*env;
 	int		std_in;
 	int		std_out;
-	int		(*t_func[8])(char **);
+	t_built	builtins;
 	int		pipeline;
 	int		exit_status;
 }	t_system;

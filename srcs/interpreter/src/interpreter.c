@@ -6,13 +6,11 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 21:21:16 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/10 10:37:42 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/10 22:51:25 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "interpreter.h"
-
-pid_t	extract_exit_status(t_node *tree);
 
 int	interpreter(t_node *tree)
 {
@@ -20,7 +18,7 @@ int	interpreter(t_node *tree)
 
 	if (!tree)
 		return (0);
-	status = exec_cmds(tree);
+	status = exec_branch(tree);
 	return (status);
 }
 
@@ -29,33 +27,34 @@ pid_t	exec_cmd(t_command *cmd, int position, int p_type)
 	int	fd[2];
 	int	*in_out;
 
-	manage_pipe(fd, CREAT);
+	pipe(fd);
 	extract_command((t_node *) cmd);
+	if (exec_builtins(cmd, FIRST_PART) == SUCCESS)
+		return (0);
 	in_out = get_command_inout(cmd->in_out);
 	cmd->pid = fork();
 	if (cmd->pid < 0)
 		perror("Error creating child process ...\n");
 	if (cmd->pid == 0)
 	{
-		if (g_sys.pipeline > -1)
-			dup2(g_sys.pipeline, 0);
-		if (in_out[0] > -1)
-			dup2(in_out[0], 0);
-		if (position == LEFT && p_type == PIPE)
-			dup2(fd[1], 1);
-		if (in_out[1] > -1)
-			dup2(in_out[1], 1);
-		manage_pipe(fd, CLOSE);
+		dup_process_inout(fd, in_out, position, p_type);
+		close_all_fd(cmd->in_out, fd);
+		if (exec_builtins(cmd, SECOND_PART) == SUCCESS)
+			exit(EXIT_SUCCESS);
 		if (execve(cmd->path, cmd->args, get_env(g_sys.env)) == -1)
 			exit(printf("Error of Command\n"));
 	}
 	if (p_type == PIPE)
+	{
+		close(g_sys.pipeline);
 		g_sys.pipeline = dup(fd[0]);
-	manage_pipe(fd, CLOSE);
+	}
+	close_all_fd(cmd->in_out, fd);
+	free(in_out);
 	return (cmd->pid);
 }
 
-int	exec_cmds(t_node *node)
+int	exec_branch(t_node *node)
 {
 	int			status;
 	pid_t		pid;
@@ -67,57 +66,53 @@ int	exec_cmds(t_node *node)
 	{
 		if (node->type == COMMAND)
 			pid = exec_cmd((t_command *) node, RIGHT, COMMAND);
-		else if (((t_operator *)node)->left->type == COMMAND)
-			pid = exec_cmd((t_command *)((t_operator *) node)->left, LEFT, node->type);
-		else if (((t_operator *) node)->left->type == SUBSHELL)
+		else if (node->type == SUBSHELL
+			|| ((t_operator *) node)->left->type == SUBSHELL)
 			pid = exec_subshell(((t_operator *)node)->left);
+		else if (((t_operator *)node)->left->type != COMMAND)
+			pid = exec_branch(((t_operator *)node)->left);
 		else
-			pid = exec_cmds(((t_operator *)node)->left);
+			pid = exec_cmd((t_command *)((t_operator *) node)->left, LEFT, node->type);
 		if (node->type != PIPE)
 			waitpid(pid, &status, 0);
-		if ((status != 0 && node->type == AND)
-			|| (status == 0 && node->type == OR) || node->type == COMMAND)
+		if (node->type == COMMAND || (status != 0 && node->type == AND)
+				|| (status == 0 && node->type == OR))
 			break ;
 		node = ((t_operator *) node)->right;
 	}
+
 	return (WEXITSTATUS(status));
 }
 
+//=== exec_subshell ============================================================
 int	exec_subshell(t_node *node)
 {
 	pid_t	pid;
 	int		status;
 
-	status = -1;
 	pid = fork();
 	if (pid < 0)
 		perror("Error creating child process ...\n");
 	if (pid == 0)
-	{
-		status = exec_cmds(node);
-		exit(status);
-	}
+		exit(exec_branch(node));
 	waitpid(pid, &status, 0);
 	return (WEXITSTATUS(status));
 }
 
-int	exec_builtins(t_node *node)
+//=== exec_builtins ===========================================================
+int	exec_builtins(t_command *cmd, int start)
 {
-	t_command	*cmd;
-	int			re;
+	int		index;
 
-	cmd = (t_command *) node;
-	if (!ft_strcmp(cmd->name, "cd"))
-		re = minishell_cd(cmd->args);
-	if (!ft_strcmp(cmd->name, "exit"))
-		re = minishell_exit(cmd->args);
-	if (!ft_strcmp(cmd->name, "set"))
-		re = minishell_export(cmd->args);
-	if (!ft_strcmp(cmd->name, "unset"))
-		re = minishell_unset(cmd->args);
-	if (!ft_strcmp(cmd->name, "clear"))
-		clear();
-	return (re);
+	if (ft_strcmp(cmd->name, "clear") == 0)
+		return (clear(), 0);
+	index = start;
+	while (++index < 7)
+	{
+		if (ft_strcmp(cmd->name, g_sys.builtins.name[index]) == 0)
+			return ((g_sys.builtins.func[index])(cmd->args));
+	}
+	return (FAILURE);
 }
 /*
 pid_t	extract_exit_status(t_node *tree)
