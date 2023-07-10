@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 21:21:16 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/09 18:08:29 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/10 10:37:42 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	interpreter(t_node *tree)
 	return (status);
 }
 
-// read from pipe only in case of pipe or subshell
 pid_t	exec_cmd(t_command *cmd, int position, int p_type)
 {
 	int	fd[2];
@@ -33,6 +32,7 @@ pid_t	exec_cmd(t_command *cmd, int position, int p_type)
 	manage_pipe(fd, CREAT);
 	extract_command((t_node *) cmd);
 	in_out = get_command_inout(cmd->in_out);
+	cmd->pid = fork();
 	if (cmd->pid < 0)
 		perror("Error creating child process ...\n");
 	if (cmd->pid == 0)
@@ -45,8 +45,6 @@ pid_t	exec_cmd(t_command *cmd, int position, int p_type)
 			dup2(fd[1], 1);
 		if (in_out[1] > -1)
 			dup2(in_out[1], 1);
-//		if (!ft_strcmp(cmd->name, "env") || !ft_strcmp(cmd->name, "echo"))
-//			exit(minishell_echo(cmd->args));
 		manage_pipe(fd, CLOSE);
 		if (execve(cmd->path, cmd->args, get_env(g_sys.env)) == -1)
 			exit(printf("Error of Command\n"));
@@ -63,7 +61,7 @@ int	exec_cmds(t_node *node)
 	pid_t		pid;
 
 	status = 0;
-	if (node == NULL)
+	if (!node)
 		return (0);
 	while (node)
 	{

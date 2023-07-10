@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:26:25 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/09 18:01:02 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/10 10:10:45 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int	main(int argc, char **argv, char **env)
 		tokens = lexer(input);
 		tree = parser(tokens);
 		interpreter(tree);
-		printf("Done ...\n");
-		minishell_clear();
+		printf("AFTER INTERPRETER ...\n");
+//		minishell_clear();
 		free(input);
 	}
 	return (0);
