@@ -6,13 +6,13 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:20:35 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/10 11:28:26 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/11 20:25:28 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "analyzer.h"
 
-//=== get_current_state =================================
+//=== get_current_state =======================================================
 int	get_current_state(t_list *token)
 {
 	int	type;
@@ -31,7 +31,7 @@ int	get_current_state(t_list *token)
 	return (STRING);
 }
 
-//=== parse_error =======================================
+//=== parse_error =============================================================
 int	parse_error(int prev_state, int state, t_list *token, int eq_point)
 {
 	char	*msg;
@@ -60,7 +60,7 @@ int	parse_error(int prev_state, int state, t_list *token, int eq_point)
 	return (PARSE_ERROR * !(!msg));
 }
 
-//=== complete_tokens ===================================
+//=== complete_tokens =========================================================
 t_list	*complete_tokens(t_list *token, int eq_point)
 {
 	int		type;
@@ -81,7 +81,7 @@ t_list	*complete_tokens(t_list *token, int eq_point)
 	return (new_tokens);
 }
 
-//=== update_quotes_data ================================
+//=== update_quotes_data ======================================================
 void	update_quotes_data(char *buff, int *data)
 {
 	char	*set;

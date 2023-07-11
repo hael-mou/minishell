@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:38:00 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/11 19:22:41 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/11 20:32:26 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define SECOND_PART -1
 # define GET_MODE(T) (O_CREAT | O_WRONLY | (T == REDIR_APPEND) * O_APPEND)
 
+# define CMD_NOT_FOUND "Minishell: command not found"
 /*###############################################################
 #  	   * Functions :											#
 ###############################################################*/
@@ -56,5 +57,5 @@ void	update_pipeline(int *fd, int p_type);
 char	**get_env(t_list *g_env);
 char	*whereis_cmd(char *cmd);
 int		close_all_fd(t_list *files, int *fd);
-
+int		print_error_msg(t_command *cmd);
 #endif

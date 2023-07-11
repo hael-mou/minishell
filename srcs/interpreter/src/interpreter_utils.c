@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:16:20 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/11 20:14:31 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/11 21:46:24 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,12 @@ int	close_all_fd(t_list *file, int *fd)
 	close(fd[0]);
 	close(fd[1]);
 	return (SUCCESS);
+}
+
+//=== print_error_msg =========================================================
+int	print_error_msg(t_command *cmd)
+{
+	if (cmd->path == NULL)
+		return (ft_print_error(CMD_NOT_FOUND":%s\n",  cmd->name), 127);
+	return (0);
 }

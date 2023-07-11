@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 18:50:04 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/11 19:18:09 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/11 21:43:11 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ pid_t	exec_cmd(t_command *cmd, int position, int p_type)
 		if (exec_builtins(cmd, SECOND_PART) == SUCCESS)
 			exit(EXIT_SUCCESS);
 		if (execve(cmd->path, cmd->args, get_env(g_sys.env)) == -1)
-			exit(printf("Command Error ...\n"));
+			exit(print_error_msg(cmd));
 	}
 	update_pipeline(fd, p_type);
-	close_all_fd(cmd->in_out, fd);
+	close_all_fd(NULL, fd);
 	free(in_out);
 	return (cmd->pid);
 }
@@ -58,12 +58,13 @@ void	extract_command(t_node *cmd)
 	}
 	free(tmp);
 }
-
+# include <errno.h>
 //=== get_command_inout =======================================================
 int	*get_command_inout(t_list *file)
 {
 	int	*in_out;
 	int	mode;
+	int	fd;
 
 	in_out = (int *) malloc(sizeof(int) * 2);
 	ft_memset(in_out, 255, 8);
@@ -71,16 +72,17 @@ int	*get_command_inout(t_list *file)
 	{
 		mode = GET_MODE(get_file_type(file));
 		if (get_file_type(file) == REDIR_IN)
-			set_file_fd(file, open(get_file_name(file), O_RDONLY));
+			fd = open(get_file_name(file), O_RDONLY);
 		if (get_file_type(file) == REDIR_OUT || get_file_type(file) == REDIR_APPEND)
-			set_file_fd(file, open(get_file_name(file), mode, 0644));
+			fd = open(get_file_name(file), mode, 0644);
+		set_file_fd(file, fd);
 		if (get_file_type(file) == REDIR_IN && get_file_type(file->next) != REDIR_IN)
 			in_out[0] = get_file_fd(file);
 		// NEED TO USE ONE CONDITION FOR THESE TWO
 		if ((get_file_type(file) == REDIR_OUT && get_file_type(file->next) != REDIR_OUT))
 			in_out[1] = get_file_fd(file);
-		if (get_file_type(file) == REDIR_APPEND && get_file_type(file->next) != REDIR_APPEND)
-			in_out[1] = get_file_fd(file);
+//		if (get_file_type(file) == REDIR_APPEND && get_file_type(file->next) != REDIR_APPEND)
+//			in_out[1] = get_file_fd(file);
 		// CASE OF HEREDOC
 		file = file->next;
 	}
