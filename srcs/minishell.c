@@ -6,13 +6,14 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:26:25 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/11 21:20:55 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/12 21:53:13 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+char	**expand_var(char *line);
 
-//=== minishell main ==========================================================
+//=== minishell main ====================================================
 int	main(int argc, char **argv, char **env)
 {
 	char	*input;
@@ -27,8 +28,10 @@ int	main(int argc, char **argv, char **env)
 		input = readline("(🔞) ︻╦̵̵̿╤── 💥-> ");
 		if (input == NULL)
 			return (FAILURE);
+		if (*input == 0)
+			continue;
 		tokens = lexer(input);
-		if (!tokens || *input == 0)
+		if (!tokens)
 			continue ;
 		tree = parser(tokens);
 		interpreter(tree);
