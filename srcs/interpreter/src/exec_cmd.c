@@ -6,38 +6,37 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 18:50:04 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/11 21:43:11 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/12 22:55:06 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "interpreter.h"
 
 //=== exec_cmd ================================================================
-pid_t	exec_cmd(t_command *cmd, int position, int p_type)
+pid_t	exec_cmd(t_command *cmd, int permission)
 {
 	int	fd[2];
-	int	*in_out;
 
+//	printf("P_TYPE| => %d\nROOT| => %d\n", p_type, root);
 	pipe(fd);
+//	permission = (position == LEFT) && p_type == PIPE;
 	extract_command((t_node *) cmd);
 	if (exec_builtins(cmd, FIRST_PART) == SUCCESS)
 		return (0);
-	in_out = get_command_inout(cmd->in_out);
 	cmd->pid = fork();
 	if (cmd->pid < 0)
 		perror("Error creating child process ...\n");
 	if (cmd->pid == 0)
 	{
-		dup_process_inout(fd, in_out, position, p_type);
+		dup_process_inout(fd, get_command_inout(cmd->in_out), permission);
 		close_all_fd(cmd->in_out, fd);
 		if (exec_builtins(cmd, SECOND_PART) == SUCCESS)
 			exit(EXIT_SUCCESS);
 		if (execve(cmd->path, cmd->args, get_env(g_sys.env)) == -1)
 			exit(print_error_msg(cmd));
 	}
-	update_pipeline(fd, p_type);
+	update_pipeline(fd, permission);
 	close_all_fd(NULL, fd);
-	free(in_out);
 	return (cmd->pid);
 }
 
@@ -58,7 +57,7 @@ void	extract_command(t_node *cmd)
 	}
 	free(tmp);
 }
-# include <errno.h>
+
 //=== get_command_inout =======================================================
 int	*get_command_inout(t_list *file)
 {
@@ -75,6 +74,8 @@ int	*get_command_inout(t_list *file)
 			fd = open(get_file_name(file), O_RDONLY);
 		if (get_file_type(file) == REDIR_OUT || get_file_type(file) == REDIR_APPEND)
 			fd = open(get_file_name(file), mode, 0644);
+		if (fd < 0)
+			exit(1);
 		set_file_fd(file, fd);
 		if (get_file_type(file) == REDIR_IN && get_file_type(file->next) != REDIR_IN)
 			in_out[0] = get_file_fd(file);
@@ -90,24 +91,29 @@ int	*get_command_inout(t_list *file)
 }
 
 //=== dup_process_inout =======================================================
-int	dup_process_inout(int *fd, int *in_out, int position, int p_type)
+int	dup_process_inout(int *fd, int *in_out, int permission)
 {
+//	printf("PERMISSION| => %d\n", permission);
+	if (!in_out)
+		exit(127);
 	if (g_sys.pipeline > -1 && in_out[0] == -1)
 		dup2(g_sys.pipeline, 0);
 	if (in_out[0] > -1)
 		dup2(in_out[0], 0);
-	if (position == LEFT && p_type == PIPE)
+	if (permission)
 		dup2(fd[1], 1);
 	if (in_out[1] > -1)
 		dup2(in_out[1], 1);
+	free(in_out);
 	return (SUCCESS);
 }
 
 //=== update_pipeline =========================================================
-void	update_pipeline(int *fd, int p_type)
+void	update_pipeline(int *fd, int permission)
 {
-	if (p_type == PIPE)
+	if (permission)
 	{
+	//	printf(">>>>>>> UPDATED ...\n");
 		close(g_sys.pipeline);
 		g_sys.pipeline = dup(fd[0]);
 	}

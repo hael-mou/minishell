@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:38:00 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/11 20:32:26 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/12 22:55:14 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define GET_MODE(T) (O_CREAT | O_WRONLY | (T == REDIR_APPEND) * O_APPEND)
 
 # define CMD_NOT_FOUND "Minishell: command not found"
+# define PERMISSION_DIEND "Minishell: permission diend"
 /*###############################################################
 #  	   * Functions :											#
 ###############################################################*/
@@ -46,11 +47,11 @@ int		exec_branch(t_node *node);
 int		exec_subshell(t_node *node);
 
 // exec_cmd :
-pid_t	exec_cmd(t_command *cmd, int position, int p_type);
+pid_t	exec_cmd(t_command *cmd, int permission);
 void	extract_command(t_node *cmd);
 pid_t	exec_builtins(t_command *cmd, int start);
 int		*get_command_inout(t_list *cursor);
-int		dup_process_inout(int *fd, int *in_out, int position, int p_type);
+int		dup_process_inout(int *fd, int *in_out, int permission);
 void	update_pipeline(int *fd, int p_type);
 
 // interpreter_utils :
