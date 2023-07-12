@@ -6,19 +6,18 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:26:25 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/10 21:58:02 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/12 21:48:35 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-char	**expand_var(char *line);
-
+#include "expander.h"
 //=== minishell main ====================================================
 int	main(int argc, char **argv, char **env)
 {
 	char	*input;
-	t_list	*tokens;
-	t_node	*tree;
+	// t_list	*tokens;
+	// t_node	*tree;
 
 	(void) argc;
 	(void) argv;
@@ -26,17 +25,23 @@ int	main(int argc, char **argv, char **env)
 	while (TRUE)
 	{
 		input = readline("(🔞) ︻╦̵̵̿╤── 💥-> ");
-		if (input == NULL)
-			return (FAILURE);
-		if (*input == 0)
-			continue;
-		tokens = lexer(input);
-		if (!tokens)
-			continue ;
-		tree = parser(tokens);
-		interpreter(tree);
-		add_history(input);
-		minishell_clear();
+		// if (input == NULL)
+		// 	return (FAILURE);
+		// if (*input == 0)
+		// 	continue;
+		// tokens = lexer(input);
+		// if (!tokens)
+		// 	continue ;
+		// tree = parser(tokens);
+		// interpreter(tree);
+		// add_history(input);
+		// minishell_clear();
+		char **arg = expand_line(input);
+		while (arg && *arg)
+		{
+			printf("%s\n", *arg);
+			arg++;
+		}
 		free(input);
 	}
 	return (0);
