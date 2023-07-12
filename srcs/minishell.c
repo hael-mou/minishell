@@ -6,18 +6,19 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:26:25 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/12 21:48:35 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/12 21:53:13 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "expander.h"
+char	**expand_var(char *line);
+
 //=== minishell main ====================================================
 int	main(int argc, char **argv, char **env)
 {
 	char	*input;
-	// t_list	*tokens;
-	// t_node	*tree;
+	t_list	*tokens;
+	t_node	*tree;
 
 	(void) argc;
 	(void) argv;
@@ -25,29 +26,23 @@ int	main(int argc, char **argv, char **env)
 	while (TRUE)
 	{
 		input = readline("(🔞) ︻╦̵̵̿╤── 💥-> ");
-		// if (input == NULL)
-		// 	return (FAILURE);
-		// if (*input == 0)
-		// 	continue;
-		// tokens = lexer(input);
-		// if (!tokens)
-		// 	continue ;
-		// tree = parser(tokens);
-		// interpreter(tree);
-		// add_history(input);
-		// minishell_clear();
-		char **arg = expand_line(input);
-		while (arg && *arg)
-		{
-			printf("%s\n", *arg);
-			arg++;
-		}
+		if (input == NULL)
+			return (FAILURE);
+		if (*input == 0)
+			continue;
+		tokens = lexer(input);
+		if (!tokens)
+			continue ;
+		tree = parser(tokens);
+		interpreter(tree);
+		add_history(input);
+		minishell_clear();
 		free(input);
 	}
 	return (0);
 }
 
-//=== minishell init ====================================================
+//=== minishell init ==========================================================
 void	minishell_init(char **env)
 {
 	g_sys.std_in = dup(STDIN_FILENO);
@@ -84,7 +79,7 @@ void	builtins_init(t_built *builtins)
 	builtins->func[6] = minishell_exit;
 }
 
-//=== minishell clear ====================================================
+//=== minishell clear =========================================================
 void	minishell_clear(void)
 {
 	close(g_sys.pipeline);

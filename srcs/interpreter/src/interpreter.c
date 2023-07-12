@@ -6,12 +6,13 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 21:21:16 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/10 22:51:25 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/11 20:33:01 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "interpreter.h"
 
+//=== interpreter =============================================================
 int	interpreter(t_node *tree)
 {
 	int	status;
@@ -22,38 +23,7 @@ int	interpreter(t_node *tree)
 	return (status);
 }
 
-pid_t	exec_cmd(t_command *cmd, int position, int p_type)
-{
-	int	fd[2];
-	int	*in_out;
-
-	pipe(fd);
-	extract_command((t_node *) cmd);
-	if (exec_builtins(cmd, FIRST_PART) == SUCCESS)
-		return (0);
-	in_out = get_command_inout(cmd->in_out);
-	cmd->pid = fork();
-	if (cmd->pid < 0)
-		perror("Error creating child process ...\n");
-	if (cmd->pid == 0)
-	{
-		dup_process_inout(fd, in_out, position, p_type);
-		close_all_fd(cmd->in_out, fd);
-		if (exec_builtins(cmd, SECOND_PART) == SUCCESS)
-			exit(EXIT_SUCCESS);
-		if (execve(cmd->path, cmd->args, get_env(g_sys.env)) == -1)
-			exit(printf("Error of Command\n"));
-	}
-	if (p_type == PIPE)
-	{
-		close(g_sys.pipeline);
-		g_sys.pipeline = dup(fd[0]);
-	}
-	close_all_fd(cmd->in_out, fd);
-	free(in_out);
-	return (cmd->pid);
-}
-
+//=== exec_branch =============================================================
 int	exec_branch(t_node *node)
 {
 	int			status;
@@ -84,7 +54,7 @@ int	exec_branch(t_node *node)
 	return (WEXITSTATUS(status));
 }
 
-//=== exec_subshell ============================================================
+//=== exec_subshell ===========================================================
 int	exec_subshell(t_node *node)
 {
 	pid_t	pid;
@@ -114,6 +84,7 @@ int	exec_builtins(t_command *cmd, int start)
 	}
 	return (FAILURE);
 }
+
 /*
 pid_t	extract_exit_status(t_node *tree)
 {
