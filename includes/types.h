@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 22:04:28 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/10 11:38:01 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/13 19:16:29 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #		* Includes  	    												  #
 #############################################################################*/
 # include "list.h"
+# include "pipe.h"
 # include "builtins.h"
 
 typedef struct s_built
@@ -30,12 +31,12 @@ typedef struct s_built
 #############################################################################*/
 typedef struct s_system
 {
-	t_list	*env;
-	int		std_in;
-	int		std_out;
-	t_built	builtins;
-	int		pipeline;
-	int		exit_status;
+	t_list		*env;
+	int			std_in;
+	int			std_out;
+	t_built		builtins;
+	t_pipeline	pipeline;
+	int			exit_status;
 }	t_system;
 
 /*#############################################################################

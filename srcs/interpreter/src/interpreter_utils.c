@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:16:20 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/12 11:26:10 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/13 19:48:20 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,13 @@ char	*whereis_cmd(char *cmd)
 }
 
 //=== close_all_fd ============================================================
-int	close_all_fd(t_list *file, int *fd)
+int	close_inout(t_list *file)
 {
 	while (file)
 	{
 		close(get_file_fd(file));
 		file = file->next;
 	}
-	close(fd[0]);
-	close(fd[1]);
 	return (SUCCESS);
 }
 

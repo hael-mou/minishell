@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 21:21:16 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/12 22:55:05 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/13 22:49:28 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,10 @@
 int	interpreter(t_node *tree)
 {
 	int	status;
-	int	root;
 
 	if (!tree)
 		return (0);
-	root = tree->type;
-	status = exec_branch(tree, root);
+	status = exec_branch(tree);
 	return (status);
 }
 
@@ -32,25 +30,24 @@ int	exec_branch(t_node *node)
 	pid_t		pid;
 
 	status = 0;
-	if (!node)
-		return (0);
 	while (node)
 	{
+//		printf("PIPELINE| => %d\n", g_sys.pipeline.line);
+		create_pipe(g_sys.pipeline.fd, (node->type == PIPE));
 		if (node->type == COMMAND)
-			pid = exec_cmd((t_command *) node, 1);
+			pid = exec_cmd((t_command *) node);
 		else if (((t_operator *)node)->left->type == COMMAND)
-			pid = exec_cmd((t_command *)((t_operator *) node)->left, 1);
-		else if (node->type == SUBSHELL)
-			pid = exec_subshell(node);
-		else if (((t_operator *) node)->left->type == SUBSHELL)
-			pid = exec_subshell(((t_operator *) node)->left);
+			pid = exec_cmd((t_command *)((t_operator *) node)->left);
+		else if (node->type == SUBSHELL || ((t_operator *)node)->left->type == SUBSHELL)
+			pid = exec_subshell(((t_operator *)node)->left);
 		else
-			pid = exec_branch(((t_operator *)node)->left, root);
+			pid = exec_branch(((t_operator *)node)->left);
 		if (node->type != PIPE)
 			waitpid(pid, &status, 0);
 		if (node->type == COMMAND || (status != 0 && node->type == AND)
 				|| (status == 0 && node->type == OR))
 			break ;
+		update_pipeline(&g_sys.pipeline, (node->type == PIPE));
 		node = ((t_operator *) node)->right;
 	}
 	return (WEXITSTATUS(status));
@@ -66,7 +63,7 @@ int	exec_subshell(t_node *node)
 	if (pid < 0)
 		perror("Error creating child process ...\n");
 	if (pid == 0)
-		exit(exec_branch(node, node->type));
+		exit(exec_branch(node));
 	waitpid(pid, &status, 0);
 	return (WEXITSTATUS(status));
 }
