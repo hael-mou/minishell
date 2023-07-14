@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:17:17 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/13 21:32:38 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/14 18:25:54 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 typedef struct s_pipeline
 {
 				int *fd;
-				int	line;
+				int	offset;
 }				t_pipeline;
 
 int		create_pipe(int *fd, int boolval);

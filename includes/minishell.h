@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:35:28 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/13 18:43:14 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/14 19:31:26 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,11 @@
 /*#############################################################################
 #		* Functions : 	    												  #
 #############################################################################*/
+
 // minishell:
 void	minishell_init(char **env);
 void	builtins_init(t_built *builtins);
-void	minishell_clear(void);
+void	minishell_clean(void);
 
 // minishell utils :
 t_list	*lexer(char *cmd_line);

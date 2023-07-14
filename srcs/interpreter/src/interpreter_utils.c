@@ -6,13 +6,13 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:16:20 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/13 19:48:20 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/14 20:10:17 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "interpreter.h"
 
-//=== get_env =================================================================
+//=== get_env ==================================================================
 char	**get_env(t_list *g_env)
 {
 	char	**env;
@@ -31,7 +31,7 @@ char	**get_env(t_list *g_env)
 	return (env);
 }
 
-//=== whereis_command =========================================================
+//=== whereis_command ==========================================================
 char	*whereis_cmd(char *cmd)
 {
 	char	*cmd_path;
@@ -56,7 +56,7 @@ char	*whereis_cmd(char *cmd)
 	return (NULL);
 }
 
-//=== close_all_fd ============================================================
+//=== close_all_fd =============================================================
 int	close_inout(t_list *file)
 {
 	while (file)
@@ -67,7 +67,16 @@ int	close_inout(t_list *file)
 	return (SUCCESS);
 }
 
-//=== print_error_msg =========================================================
+//=== my_execve ================================================================
+int	my_execve(t_command *cmd)
+{
+	if (exec_builtins(cmd) == SUCCESS)
+		exit(EXIT_SUCCESS);
+	execve(cmd->path, cmd->args, get_env(g_sys.env));
+	return (-1);
+}
+
+//=== print_error_msg ==========================================================
 int	print_error_msg(t_command *cmd)
 {
 	if (cmd->path == NULL)

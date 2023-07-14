@@ -6,14 +6,14 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:26:25 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/13 21:33:02 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/14 21:41:41 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-char	**expand_var(char *line);
+char	**expand_var(char offset);
 
-//=== minishell main ====================================================
+//=== minishell main ===========================================================
 int	main(int argc, char **argv, char **env)
 {
 	char	*input;
@@ -36,24 +36,24 @@ int	main(int argc, char **argv, char **env)
 		tree = parser(tokens);
 		interpreter(tree);
 		add_history(input);
-		minishell_clear();
+		minishell_clean();
 		free(input);
 	}
 	return (0);
 }
 
-//=== minishell init ==========================================================
+//=== minishell init ===========================================================
 void	minishell_init(char **env)
 {
-	g_sys.std_in = dup(STDIN_FILENO);
-	g_sys.std_out = dup(STDOUT_FILENO);
+//	g_sys.std_in = dup(STDIN_FILENO);
+//	g_sys.std_out = dup(STDOUT_FILENO);
 	if (g_sys.std_in != ERROR && g_sys.std_out != ERROR)
 	{
 		minishell_export(env);
 		printf(CLEAR);
 		printf("%s\n", PROG_INFO);
 		printf("%s\n\n", DEVLOPERS);
-		g_sys.pipeline.line = -1;
+		g_sys.pipeline.offset = -1;
 		g_sys.pipeline.fd = (int [2]) {-1, -1};
 		builtins_init(&g_sys.builtins);
 		return ;
@@ -61,7 +61,7 @@ void	minishell_init(char **env)
 	exit (ERROR);
 }
 
-//=== builtins_init ===========================================================
+//=== builtins_init ============================================================
 void	builtins_init(t_built *builtins)
 {
 	builtins->name[0] = "echo";
@@ -78,11 +78,14 @@ void	builtins_init(t_built *builtins)
 	builtins->func[5] = minishell_cd;
 	builtins->name[6] = "exit";
 	builtins->func[6] = minishell_exit;
+	builtins->name[7] = "clear";
+	builtins->func[7] = minishell_clear;
 }
 
-//=== minishell clear =========================================================
-void	minishell_clear(void)
+//=== minishell clear ==========================================================
+void	minishell_clean(void)
 {
-	close(g_sys.pipeline.line);
-	g_sys.pipeline.line = -1;
+	// 1 => destroy AST
+	close(g_sys.pipeline.offset);
+	g_sys.pipeline.offset = -1;
 }

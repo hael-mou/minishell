@@ -6,24 +6,30 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 21:21:16 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/13 22:49:28 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/14 21:44:37 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "interpreter.h"
 
-//=== interpreter =============================================================
-int	interpreter(t_node *tree)
+//=== interpreter ==============================================================
+int	interpreter(t_node *root)
 {
 	int	status;
 
-	if (!tree)
+	if (!root)
 		return (0);
-	status = exec_branch(tree);
+	if (root->type == COMMAND)
+	{
+		extract_command(root);
+		if (exec_builtins((t_command *) root) == SUCCESS)
+			return (EXIT_SUCCESS);
+	}
+	status = exec_branch(root);
 	return (status);
 }
 
-//=== exec_branch =============================================================
+//=== exec_branch ==============================================================
 int	exec_branch(t_node *node)
 {
 	int			status;
@@ -32,7 +38,6 @@ int	exec_branch(t_node *node)
 	status = 0;
 	while (node)
 	{
-//		printf("PIPELINE| => %d\n", g_sys.pipeline.line);
 		create_pipe(g_sys.pipeline.fd, (node->type == PIPE));
 		if (node->type == COMMAND)
 			pid = exec_cmd((t_command *) node);
@@ -53,7 +58,7 @@ int	exec_branch(t_node *node)
 	return (WEXITSTATUS(status));
 }
 
-//=== exec_subshell ===========================================================
+//=== exec_subshell ============================================================
 int	exec_subshell(t_node *node)
 {
 	pid_t	pid;
@@ -63,20 +68,22 @@ int	exec_subshell(t_node *node)
 	if (pid < 0)
 		perror("Error creating child process ...\n");
 	if (pid == 0)
+	{
+		if (g_sys.pipeline.fd[1] > -1)
+			dup2(g_sys.pipeline.fd[1], 1);
 		exit(exec_branch(node));
+	}
 	waitpid(pid, &status, 0);
 	return (WEXITSTATUS(status));
 }
 
-//=== exec_builtins ===========================================================
-int	exec_builtins(t_command *cmd, int start)
+//=== exec_builtins ============================================================
+int	exec_builtins(t_command *cmd)
 {
-	int		index;
+	int	index;
 
-	if (ft_strcmp(cmd->name, "clear") == 0)
-		return (clear(), 0);
-	index = start;
-	while (++index < 7)
+	index = -1;
+	while (++index < 8)
 	{
 		if (ft_strcmp(cmd->name, g_sys.builtins.name[index]) == 0)
 			return ((g_sys.builtins.func[index])(cmd->args));

@@ -6,13 +6,13 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 15:04:53 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/25 02:17:53 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/14 19:23:17 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenizer.h"
 
-//=== get_next_state ====================================================
+//=== get_next_state ===========================================================
 int	get_next_state(int state, char *input)
 {
 	int	(*state_func[6])();
@@ -35,20 +35,20 @@ int	get_next_state(int state, char *input)
 	return (state_string(input));
 }
 
-//=== clean_tokenizer ===================================================
+//=== clean_tokenizer ==========================================================
 void	clean_tokenizer(t_list *tokens)
 {
 	ft_lstclear(&tokens, free_token);
 }
 
-//=== set_state =========================================================
+//=== set_state ================================================================
 void	set_state(t_state *states, int index, char *key, int state)
 {
 	states[index].key = key;
 	states[index].state = state;
 }
 
-//=== get_state =========================================================
+//=== get_state ================================================================
 int	get_state(t_state *states, int size, char input)
 {
 	int	index;

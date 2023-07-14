@@ -6,13 +6,13 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:19:51 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/13 22:51:07 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/14 19:22:14 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "analyzer.h"
 
-//=== operator_prompt ===================================
+//=== operator_prompt ==========================================================
 t_list	*operator_prompt(int type)
 {
 	char	*prompt;
@@ -30,7 +30,7 @@ t_list	*operator_prompt(int type)
 	return (new_tokens);
 }
 
-//=== subsh_prompt ======================================
+//=== subsh_prompt =============================================================
 t_list	*subsh_prompt(int eq_point)
 {
 	t_list	*new_tokens;
@@ -50,7 +50,7 @@ t_list	*subsh_prompt(int eq_point)
 	return (new_tokens);
 }
 
-//=== quote_prompt ======================================
+//=== quote_prompt =============================================================
 t_list	*quote_prompt(t_list *token)
 {
 	char	*line;
@@ -76,7 +76,7 @@ t_list	*quote_prompt(t_list *token)
 	return (new_tokens);
 }
 
-//=== get_prompt ========================================
+//=== get_prompt ===============================================================
 char	*get_prompt(int type)
 {
 	if (type == PIPE)
