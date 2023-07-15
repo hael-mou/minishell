@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 18:50:04 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/14 21:29:46 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/15 15:24:28 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	extract_command(t_node *cmd)
 	char	**args;
 	char	*tmp;
 
+	if (((t_command *) cmd)->args)
+		return ;
 	tmp = get_cmd_name(cmd);
 	args = expand_line(tmp); 
 	if (args != NULL)
@@ -54,29 +56,23 @@ void	extract_command(t_node *cmd)
 int	*get_command_inout(t_list *file)
 {
 	int	*in_out;
-	int	mode;
-	int	fd;
+	int	type;
 
 	in_out = (int *) malloc(sizeof(int) * 2);
 	ft_memset(in_out, 255, 8);
 	while (in_out && file)
 	{
-		mode = GET_MODE(get_file_type(file));
-		if (get_file_type(file) == REDIR_IN)
-			fd = open(get_file_name(file), O_RDONLY);
-		if (get_file_type(file) == REDIR_OUT || get_file_type(file) == REDIR_APPEND)
-			fd = open(get_file_name(file), mode, 0644);
-		if (fd < 0)
-			exit(1);
-		set_file_fd(file, fd);
-		if (get_file_type(file) == REDIR_IN && get_file_type(file->next) != REDIR_IN)
+		type = get_file_type(file);
+		if (type == REDIR_IN || type == REDIR_OUT || type == REDIR_APPEND)
+			set_file_fd(file, open(get_file_name(file), GET_MODE(type), 0644));
+		if (get_file_fd(file) < -1)
+			continue ;
+		if ((type == REDIR_IN && get_file_type(file->next) != REDIR_IN)
+				|| (type == HERE_DOC && get_file_type(file) != HERE_DOC))
 			in_out[0] = get_file_fd(file);
-		// NEED TO USE ONE CONDITION FOR THESE TWO
-		if ((get_file_type(file) == REDIR_OUT && get_file_type(file->next) != REDIR_OUT))
+		if ((type == REDIR_APPEND && get_file_type(file->next) != REDIR_APPEND)
+				|| (type == REDIR_OUT && get_file_type(file->next) != REDIR_OUT))
 			in_out[1] = get_file_fd(file);
-//		if (get_file_type(file) == REDIR_APPEND && get_file_type(file->next) != REDIR_APPEND)
-//			in_out[1] = get_file_fd(file);
-		// CASE OF HEREDOC
 		file = file->next;
 	}
 	return (in_out);

@@ -6,13 +6,13 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 00:05:32 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/25 01:25:30 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/15 11:42:44 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command.h"
 
-//=== get command pid =========================================================
+//=== get command pid ==========================================================
 pid_t	get_cmd_pid(t_node *cmd)
 {
 	if (cmd != NULL)
@@ -20,7 +20,7 @@ pid_t	get_cmd_pid(t_node *cmd)
 	return (ERROR);
 }
 
-//=== get command name ========================================================
+//=== get command name =========================================================
 char	*get_cmd_name(t_node *cmd)
 {
 	if (cmd != NULL)
@@ -28,7 +28,7 @@ char	*get_cmd_name(t_node *cmd)
 	return (NULL);
 }
 
-//=== get command path ========================================================
+//=== get command path =========================================================
 char	*get_cmd_path(t_node *cmd)
 {
 	if (cmd != NULL)
@@ -36,7 +36,7 @@ char	*get_cmd_path(t_node *cmd)
 	return (NULL);
 }
 
-//=== get command args ========================================================
+//=== get command args =========================================================
 char	**get_cmd_args(t_node *cmd)
 {
 	if (cmd != NULL)
@@ -44,7 +44,7 @@ char	**get_cmd_args(t_node *cmd)
 	return (NULL);
 }
 
-//=== get command iofile ======================================================
+//=== get command iofile =======================================================
 t_list	*get_cmd_iofile(t_node *cmd)
 {
 	if (cmd != NULL)

@@ -6,13 +6,13 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 12:13:38 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/25 01:43:10 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/15 11:39:42 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "file.h"
 
-//=== create_file =============================================================
+//=== create_file ==============================================================
 t_file	*create_file(char *name, int type)
 {
 	t_file	*new_file;
@@ -30,7 +30,7 @@ t_file	*create_file(char *name, int type)
 	return (new_file);
 }
 
-//=== clean_file ===========================================================
+//=== clean_file ===============================================================
 void	clean_file(void *file)
 {
 	if (file != NULL)
@@ -40,7 +40,7 @@ void	clean_file(void *file)
 	}
 }
 
-//=== listadd_file ======================================================
+//=== listadd_file =============================================================
 void	listadd_file(t_list **list, t_file *new_file)
 {
 	t_list	*new_node;

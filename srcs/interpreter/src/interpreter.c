@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 21:21:16 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/14 21:44:37 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/15 14:59:37 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	interpreter(t_node *root)
 
 	if (!root)
 		return (0);
-	if (root->type == COMMAND)
+	if (root->type == COMMAND && get_cmd_iofile(root) == NULL)
 	{
 		extract_command(root);
 		if (exec_builtins((t_command *) root) == SUCCESS)
