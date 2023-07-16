@@ -6,12 +6,11 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:26:25 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/14 21:41:41 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/16 09:50:14 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-char	**expand_var(char offset);
 
 //=== minishell main ===========================================================
 int	main(int argc, char **argv, char **env)
