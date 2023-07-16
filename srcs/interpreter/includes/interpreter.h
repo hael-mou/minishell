@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:38:00 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/15 21:40:37 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/16 21:18:05 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include "pipe.h"
+# include "operator.h"
 # include "builtins.h"
 # include "parser.h"
 # include "expander.h"
@@ -42,6 +43,7 @@
 int		interpreter(t_node *tree);
 
 // exec :
+int		exec_simple_cmd(t_node *cmd);
 int		exec_branch(t_node *node);
 int		exec_subshell(t_node *node);
 pid_t	exec_builtins(t_command *cmd);

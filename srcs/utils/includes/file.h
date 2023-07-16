@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 08:55:32 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/05 18:32:04 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/16 19:57:19 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@ typedef struct s_file
 	int		type;
 	char	*name;
 	int		fd;
-}	t_file;
+}			t_file;
 
 /*###############################################################
 #		* Functions :		    							 	#
 ###############################################################*/
+
 // file function :
 t_file	*create_file(char *name, int type);
 void	clean_file(void *content);

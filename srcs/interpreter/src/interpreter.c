@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 21:21:16 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/15 14:59:37 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/16 22:23:41 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,27 @@ int	interpreter(t_node *root)
 
 	if (!root)
 		return (0);
-	if (root->type == COMMAND && get_cmd_iofile(root) == NULL)
-	{
-		extract_command(root);
-		if (exec_builtins((t_command *) root) == SUCCESS)
-			return (EXIT_SUCCESS);
-	}
+	if (root->type == COMMAND)
+		return (exec_simple_cmd(root));
 	status = exec_branch(root);
+	return (status);
+}
+
+//=== exec_simple_cmd ==========================================================
+int	exec_simple_cmd(t_node *cmd)
+{
+	int	status;
+	int	pid;
+
+	status = 0;
+	if (get_cmd_iofile(cmd) == NULL)
+	{
+		extract_command(cmd);
+		if (exec_builtins((t_command *) cmd) == SUCCESS)
+			return (status);
+	}
+	pid = exec_cmd((t_command *) cmd);
+	waitpid(pid, &status, 0);
 	return (status);
 }
 
@@ -42,19 +56,20 @@ int	exec_branch(t_node *node)
 		if (node->type == COMMAND)
 			pid = exec_cmd((t_command *) node);
 		else if (((t_operator *)node)->left->type == COMMAND)
-			pid = exec_cmd((t_command *)((t_operator *) node)->left);
-		else if (node->type == SUBSHELL || ((t_operator *)node)->left->type == SUBSHELL)
-			pid = exec_subshell(((t_operator *)node)->left);
+			pid = exec_cmd((t_command *) get_left_node((t_operator *) node));
+//		else if (node->type == SUBSHELL)
+//			pid = exec_subshell(get_left_node((t_operator *) node));
 		else
-			pid = exec_branch(((t_operator *)node)->left);
+			pid = exec_branch(get_left_node((t_operator *) node));
 		if (node->type != PIPE)
 			waitpid(pid, &status, 0);
 		if (node->type == COMMAND || (status != 0 && node->type == AND)
 				|| (status == 0 && node->type == OR))
 			break ;
 		update_pipeline(&g_sys.pipeline, (node->type == PIPE));
-		node = ((t_operator *) node)->right;
+		node = get_right_node((t_operator *) node);
 	}
+	waitpid(pid, &status, 0);
 	return (WEXITSTATUS(status));
 }
 

@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 18:50:04 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/16 09:20:24 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/16 21:22:27 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	*get_command_inout(t_list *file)
 //=== dup_process_inout ========================================================
 int	dup_process_inout(int *in_out)
 {
-	if (g_sys.pipeline.offset > -1)
+	if (g_sys.pipeline.offset > -1 && in_out[0] == -1)
 		dup2(g_sys.pipeline.offset, 0);
 	if (in_out[0] > -1)
 		dup2(in_out[0], 0);
