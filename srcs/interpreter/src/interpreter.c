@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 21:21:16 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/16 22:23:41 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/18 23:54:06 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 //=== interpreter ==============================================================
 int	interpreter(t_node *root)
 {
-	int	status;
-
 	if (!root)
 		return (0);
 	if (root->type == COMMAND)
 		return (exec_simple_cmd(root));
-	status = exec_branch(root);
-	return (status);
+	exec_branch(root);
+	// EXIT STATUS IS NOT COMPLETE AND IT NEEDS MORE WORK (SUBSHELL CASE)
+	g_sys.exit_status = extract_exit_status(root);
+	return (SUCCESS);
 }
 
 //=== exec_simple_cmd ==========================================================
@@ -52,16 +52,16 @@ int	exec_branch(t_node *node)
 	status = 0;
 	while (node)
 	{
-		create_pipe(g_sys.pipeline.fd, (node->type == PIPE));
+		create_pipe(&g_sys.pipeline, (node->type == PIPE));
 		if (node->type == COMMAND)
 			pid = exec_cmd((t_command *) node);
 		else if (((t_operator *)node)->left->type == COMMAND)
 			pid = exec_cmd((t_command *) get_left_node((t_operator *) node));
-//		else if (node->type == SUBSHELL)
-//			pid = exec_subshell(get_left_node((t_operator *) node));
+		else if (node->type == SUBSHELL || ((t_operator *) node)->left->type == SUBSHELL)
+			pid = exec_subshell(get_left_node((t_operator *) node));
 		else
 			pid = exec_branch(get_left_node((t_operator *) node));
-		if (node->type != PIPE)
+		if (node->type != PIPE && node->type != COMMAND)
 			waitpid(pid, &status, 0);
 		if (node->type == COMMAND || (status != 0 && node->type == AND)
 				|| (status == 0 && node->type == OR))
@@ -69,7 +69,6 @@ int	exec_branch(t_node *node)
 		update_pipeline(&g_sys.pipeline, (node->type == PIPE));
 		node = get_right_node((t_operator *) node);
 	}
-	waitpid(pid, &status, 0);
 	return (WEXITSTATUS(status));
 }
 
@@ -79,6 +78,8 @@ int	exec_subshell(t_node *node)
 	pid_t	pid;
 	int		status;
 
+	if (node->type == SUBSHELL)
+		node = get_left_node((t_operator *) node);
 	pid = fork();
 	if (pid < 0)
 		perror("Error creating child process ...\n");
@@ -86,7 +87,8 @@ int	exec_subshell(t_node *node)
 	{
 		if (g_sys.pipeline.fd[1] > -1)
 			dup2(g_sys.pipeline.fd[1], 1);
-		exit(exec_branch(node));
+		exec_branch(node);
+		exit(extract_exit_status(node));
 	}
 	waitpid(pid, &status, 0);
 	return (WEXITSTATUS(status));
@@ -106,30 +108,28 @@ int	exec_builtins(t_command *cmd)
 	return (FAILURE);
 }
 
-/*
-pid_t	extract_exit_status(t_node *tree)
+//=== extract_exit_status ======================================================
+pid_t	extract_exit_status(t_node *node)
 {
 	pid_t	pid;
 	int		status;
 
-	while (tree)
+	while (node)
 	{
-		if (tree->type == COMMAND)
+		if (node->type == COMMAND)
 		{
-	//		printf("PID|%s| => %d\n", ((t_command *)tree)->name, ((t_command *)tree)->pid);
-			waitpid(((t_command *)tree)->pid, &status, 0);
+			waitpid(get_cmd_pid(node), &status, 0);
 			pid = WEXITSTATUS(status);
 			break ;
 		}
-		else if (((t_operator *)tree)->left->type == COMMAND)
+		else if (get_left_node((t_operator *) node)->type == COMMAND)
 		{
-	//		printf("PID|%s| => %d\n", ((t_command *)((t_operator *)tree)->left)->name, ((t_command *)((t_operator *)tree)->left)->pid);
-			waitpid(((t_command *)((t_operator *)tree)->left)->pid, &status, 0);
+			waitpid(((t_command *)((t_operator *)node)->left)->pid, &status, 0);
 			pid = WEXITSTATUS(status);
 		}
 		else
-			extract_exit_status(((t_operator *)tree)->left);
-		tree = ((t_operator *)tree)->right;
+			extract_exit_status(((t_operator *)node)->left);
+		node = ((t_operator *) node)->right;
 	}
 	return (status);
-}*/
+}

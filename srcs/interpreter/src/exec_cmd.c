@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 18:50:04 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/16 21:22:27 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/18 14:56:49 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,22 @@ pid_t	exec_cmd(t_command *cmd)
 	if (cmd->pid == 0)
 	{
 		in_out = get_command_inout(cmd->in_out);
+		/*printf("===============================\n");
+		printf("CMD| ===> %s\n", cmd->name);
+		printf("FD[0] ===> %d\n", g_sys.pipeline.fd[0]);
+		printf("FD[1] ===> %d\n", g_sys.pipeline.fd[1]);
+		printf("SAVED[0] ===> %d\n", g_sys.pipeline.saved[0]);
+		printf("SAVED[1] ===> %d\n", g_sys.pipeline.saved[1]);
+		printf("PIPELINE| ===> %d\n", g_sys.pipeline.offset);
+		printf("===============================\n");*/
 		dup_process_inout(in_out);
 		close_inout(cmd->in_out);
 		close_pipe(g_sys.pipeline.fd);
+		close(g_sys.pipeline.offset);
 		if (my_execve(cmd) == -1)
 			exit(print_error_msg(cmd));
 	}
+	close(g_sys.pipeline.offset);
 	return (cmd->pid);
 }
 
@@ -66,7 +76,7 @@ int	*get_command_inout(t_list *file)
 		if (type == REDIR_IN || type == REDIR_OUT || type == REDIR_APPEND)
 			set_file_fd(file, open(get_file_name(file), GET_MODE(type), 0644));
 		if (get_file_fd(file) < -1)
-			continue ;
+			;
 		if ((type == REDIR_IN && get_file_type(file->next) != REDIR_IN)
 				|| (type == HERE_DOC && get_file_type(file) != HERE_DOC))
 			in_out[0] = get_file_fd(file);
