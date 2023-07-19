@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:16:20 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/18 15:08:58 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/19 15:34:54 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ char	**get_env(t_list *g_env)
 		g_env = g_env->next;
 	}
 	env[index] = NULL;
-
 	return (env);
 }
 
@@ -83,6 +82,6 @@ int	my_execve(t_command *cmd)
 int	print_error_msg(t_command *cmd)
 {
 	if (cmd->path == NULL)
-		return (ft_print_error(CMD_NOT_FOUND":%s\n",  cmd->name), 127);
+		return (ft_print_error(CMD_NOT_FOUND":%s\n", cmd->name), 127);
 	return (0);
 }

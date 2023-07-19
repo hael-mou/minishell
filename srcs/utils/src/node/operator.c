@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 12:02:40 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/16 19:55:55 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/19 14:52:38 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,17 @@ void	clean_operator(t_operator *node)
 }
 
 //=== get_left_node =====================================================
-t_node	*get_left_node(t_operator *node)
+t_node	*get_left_node(t_node *node)
 {
-	if (node != NULL)
-		return (node->left);
+	if (node != NULL && node->type != COMMAND)
+		return (((t_operator *) node)->left);
 	return (NULL);
 }
 
 //=== get_right_node ====================================================
-t_node	*get_right_node(t_operator *node)
+t_node	*get_right_node(t_node *node)
 {
-	if (node != NULL)
-		return (node->right);
+	if (node != NULL && node->type != COMMAND)
+		return (((t_operator *) node)->right);
 	return (NULL);
 }

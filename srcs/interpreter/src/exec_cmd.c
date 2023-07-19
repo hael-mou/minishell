@@ -6,11 +6,11 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 18:50:04 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/18 14:56:49 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/19 15:38:11 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "interpreter.h"
+#include "interpreter.h"
 
 //=== exec_cmd =================================================================
 pid_t	exec_cmd(t_command *cmd)
@@ -24,14 +24,6 @@ pid_t	exec_cmd(t_command *cmd)
 	if (cmd->pid == 0)
 	{
 		in_out = get_command_inout(cmd->in_out);
-		/*printf("===============================\n");
-		printf("CMD| ===> %s\n", cmd->name);
-		printf("FD[0] ===> %d\n", g_sys.pipeline.fd[0]);
-		printf("FD[1] ===> %d\n", g_sys.pipeline.fd[1]);
-		printf("SAVED[0] ===> %d\n", g_sys.pipeline.saved[0]);
-		printf("SAVED[1] ===> %d\n", g_sys.pipeline.saved[1]);
-		printf("PIPELINE| ===> %d\n", g_sys.pipeline.offset);
-		printf("===============================\n");*/
 		dup_process_inout(in_out);
 		close_inout(cmd->in_out);
 		close_pipe(g_sys.pipeline.fd);
@@ -43,6 +35,24 @@ pid_t	exec_cmd(t_command *cmd)
 	return (cmd->pid);
 }
 
+//=== exec_simple_cmd ==========================================================
+int	exec_simple_cmd(t_node *cmd)
+{
+	int	status;
+	int	pid;
+
+	status = 0;
+	if (get_cmd_iofile(cmd) == NULL)
+	{
+		extract_command(cmd);
+		if (exec_builtins((t_command *) cmd) == SUCCESS)
+			return (status);
+	}
+	pid = exec_cmd((t_command *) cmd);
+	waitpid(pid, &status, 0);
+	return (status);
+}
+
 //=== extract_command ==========================================================
 void	extract_command(t_node *cmd)
 {
@@ -52,7 +62,7 @@ void	extract_command(t_node *cmd)
 	if (((t_command *) cmd)->args)
 		return ;
 	tmp = get_cmd_name(cmd);
-	args = expand_line(tmp); 
+	args = expand_line(tmp);
 	if (args != NULL)
 	{
 		set_cmd_args(cmd, args);
@@ -78,10 +88,10 @@ int	*get_command_inout(t_list *file)
 		if (get_file_fd(file) < -1)
 			;
 		if ((type == REDIR_IN && get_file_type(file->next) != REDIR_IN)
-				|| (type == HERE_DOC && get_file_type(file) != HERE_DOC))
+			|| (type == HERE_DOC && get_file_type(file) != HERE_DOC))
 			in_out[0] = get_file_fd(file);
 		if ((type == REDIR_APPEND && get_file_type(file->next) != REDIR_APPEND)
-				|| (type == REDIR_OUT && get_file_type(file->next) != REDIR_OUT))
+			|| (type == REDIR_OUT && get_file_type(file->next) != REDIR_OUT))
 			in_out[1] = get_file_fd(file);
 		file = file->next;
 	}

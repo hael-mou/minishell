@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:17:17 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/18 23:29:03 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/19 15:24:27 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_pipeline
 }				t_pipeline;
 
 int		create_pipe(t_pipeline *pipeline, int boolval);
+int		update_pipeline(t_pipeline *pipeline);
 void	close_pipe(int *pipe);
-int		update_pipeline(t_pipeline *pipeline, int boolval);
 
 #endif

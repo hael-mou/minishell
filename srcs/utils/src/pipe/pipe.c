@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:16:58 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/19 11:32:32 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/19 15:23:43 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,8 @@ void	close_pipe(int *pipe)
 }
 
 //=== update_pipeline =========================================================
-int	update_pipeline(t_pipeline *pipeline, int boolval)
+int	update_pipeline(t_pipeline *pipeline)
 {
-	(void) boolval;
 	if (pipeline->fd[0] > -1 && pipeline->fd[1] > -1)
 	{
 		close(pipeline->offset);
