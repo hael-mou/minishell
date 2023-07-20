@@ -6,33 +6,33 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 18:50:04 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/19 15:38:11 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/20 11:14:38 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "interpreter.h"
 
 //=== exec_cmd =================================================================
-pid_t	exec_cmd(t_command *cmd)
+pid_t	exec_cmd(t_node *cmd)
 {
 	int	*in_out;
 
-	extract_command((t_node *) cmd);
-	cmd->pid = fork();
-	if (cmd->pid < 0)
+	extract_command(cmd);
+	set_cmd_pid(cmd, fork());
+	if (get_cmd_pid(cmd) < 0)
 		perror("Error creating child process ...\n");
-	if (cmd->pid == 0)
+	if (get_cmd_pid(cmd) == 0)
 	{
-		in_out = get_command_inout(cmd->in_out);
+		in_out = get_command_inout(get_cmd_iofile(cmd));
 		dup_process_inout(in_out);
-		close_inout(cmd->in_out);
+		close_inout(get_cmd_iofile(cmd));
 		close_pipe(g_sys.pipeline.fd);
 		close(g_sys.pipeline.offset);
 		if (my_execve(cmd) == -1)
 			exit(print_error_msg(cmd));
 	}
 	close(g_sys.pipeline.offset);
-	return (cmd->pid);
+	return (get_cmd_pid(cmd));
 }
 
 //=== exec_simple_cmd ==========================================================
@@ -45,10 +45,10 @@ int	exec_simple_cmd(t_node *cmd)
 	if (get_cmd_iofile(cmd) == NULL)
 	{
 		extract_command(cmd);
-		if (exec_builtins((t_command *) cmd) == SUCCESS)
+		if (exec_builtins(cmd) == SUCCESS)
 			return (status);
 	}
-	pid = exec_cmd((t_command *) cmd);
+	pid = exec_cmd(cmd);
 	waitpid(pid, &status, 0);
 	return (status);
 }

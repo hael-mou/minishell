@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:35:28 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/14 19:31:26 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/20 15:13:15 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 
 // minishell:
 void	minishell_init(char **env);
+char	*minishell_prompt(void);
 void	builtins_init(t_built *builtins);
 void	minishell_clean(void);
 

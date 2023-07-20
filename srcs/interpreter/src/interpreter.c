@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 21:21:16 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/19 15:44:52 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/20 15:43:34 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ int	interpreter(t_node *root)
 		return (0);
 	if (root->type == COMMAND)
 		return (exec_simple_cmd(root));
-	exec_branch(root);
-	g_sys.exit_status = extract_exit_status(root);
+	exec_branches(root);
+	extract_exit_status(root);
 	return (SUCCESS);
 }
 
-//=== exec_branch ==============================================================
-int	exec_branch(t_node *node)
+//=== exec_branches ============================================================
+pid_t	exec_branches(t_node *node)
 {
 	int			status;
 	pid_t		pid;
@@ -35,14 +35,14 @@ int	exec_branch(t_node *node)
 	{
 		create_pipe(&g_sys.pipeline, (node->type == PIPE));
 		if (node->type == COMMAND)
-			pid = exec_cmd((t_command *) node);
+			pid = exec_cmd(node);
 		else if (get_left_node(node)->type == COMMAND)
-			pid = exec_cmd((t_command *) get_left_node(node));
+			pid = exec_cmd(get_left_node(node));
 		else if (node->type == SUBSHELL
 			|| get_left_node(node)->type == SUBSHELL)
 			pid = exec_subshell(get_left_node(node));
 		else
-			pid = exec_branch(get_left_node(node));
+			pid = exec_branches(get_left_node(node));
 		if (node->type == AND || node->type == OR)
 			waitpid(pid, &status, 0);
 		if (node->type == COMMAND || (status != 0 && node->type == AND)
@@ -51,11 +51,11 @@ int	exec_branch(t_node *node)
 		update_pipeline(&g_sys.pipeline);
 		node = get_right_node(node);
 	}
-	return (WEXITSTATUS(status));
+	return (pid);
 }
 
 //=== exec_subshell ============================================================
-int	exec_subshell(t_node *node)
+pid_t	exec_subshell(t_node *node)
 {
 	pid_t	pid;
 
@@ -69,25 +69,23 @@ int	exec_subshell(t_node *node)
 		if (g_sys.pipeline.fd[1] > -1)
 			dup2(g_sys.pipeline.fd[1], 1);
 		close_pipe(g_sys.pipeline.fd);
-		exec_branch(node);
+		exec_branches(node);
 		close(g_sys.pipeline.offset);
 		exit(extract_exit_status(node));
 	}
-	close(g_sys.pipeline.offset);
-	set_cmd_pid(node, pid);
 	return (pid);
 }
 
 //=== exec_builtins ============================================================
-int	exec_builtins(t_command *cmd)
+int	exec_builtins(t_node *cmd)
 {
 	int	index;
 
 	index = -1;
 	while (++index < 8)
 	{
-		if (ft_strcmp(cmd->name, g_sys.builtins.name[index]) == 0)
-			return ((g_sys.builtins.func[index])(cmd->args));
+		if (ft_strcmp(get_cmd_name(cmd), g_sys.builtins.name[index]) == 0)
+			return ((g_sys.builtins.func[index])(get_cmd_args(cmd)));
 	}
 	return (FAILURE);
 }

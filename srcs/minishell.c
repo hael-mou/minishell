@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:26:25 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/18 23:45:43 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/20 15:35:58 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char **argv, char **env)
 	minishell_init(env);
 	while (TRUE)
 	{
-		input = readline("(🔞) ︻╦̵̵̿╤── 💥-> ");
+		input = readline(minishell_prompt());
 		if (input == NULL)
 			return (FAILURE);
 		if (*input == 0)
@@ -39,6 +39,15 @@ int	main(int argc, char **argv, char **env)
 		free(input);
 	}
 	return (0);
+}
+
+//=== minishell_prompt =========================================================
+char	*minishell_prompt(void)
+{
+	char	*prompt;
+
+	prompt = "\n(🔞 )\n ↳ ︻╦̵̵̿╤── 💥 ⟹  ";
+	return (prompt);
 }
 
 //=== minishell init ===========================================================

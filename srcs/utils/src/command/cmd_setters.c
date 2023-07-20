@@ -6,11 +6,12 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 00:05:32 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/25 00:45:13 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/20 14:38:34 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command.h"
+#include <stdio.h>
 
 //=== set command pid =========================================================
 void	set_cmd_pid(t_node *cmd, pid_t pid)
