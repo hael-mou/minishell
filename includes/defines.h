@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 07:17:12 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/24 15:35:34 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/21 18:17:24 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,15 @@
 # define SUBSHELL			16
 # define OPERATOR			17
 # define REDIR				18
+
+/*###############################################################
+#		* special char :		    						 	#
+###############################################################*/
+# define SINGLE_QUOTE	    '\''  
+# define DOUBLE_QUOTE	    '"'
+# define C_SPACE	        '\5'
+# define S_SPACE	        "\5"
+# define C_STAR	            '\2'
+# define S_STAR	            "\2"
 
 #endif /* DEFINES_H */
