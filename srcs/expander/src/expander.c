@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 05:28:53 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/12 21:39:16 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/21 15:42:32 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char	**expand_line(char *line)
 
 	tmp = expand_var(line);
 	exp_line = expand_wildcard(tmp);
+	ft_free_array(tmp);
 	return (exp_line);
 }
 

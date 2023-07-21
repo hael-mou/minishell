@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 05:28:53 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/12 11:09:50 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/21 15:41:34 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,14 @@ char	*extract_var(char *eline, char **line, int in_dquote)
 	char	*value;
 
 	*line += 1;
-	if (**line == 0 || **line == DOUBLE_QUOTE || **line == SINGLE_QUOTE)
+	if (**line == 0 || **line == C_SPACE || **line == '$'
+		|| **line == DOUBLE_QUOTE || **line == SINGLE_QUOTE)
 	{
-		if (**line == 0)
+		if (**line != DOUBLE_QUOTE && **line != SINGLE_QUOTE)
+		{
+			(*line)++;
 			eline = ft_strnjoin(eline, "$", 1);
+		}
 		return (eline);
 	}
 	key = get_var_key(line);
@@ -34,7 +38,6 @@ char	*extract_var(char *eline, char **line, int in_dquote)
 		ft_strreplace(value, " \t", C_SPACE);
 		ft_strreplace(value, "*", C_STAR);
 	}
-	*line += ft_strlen(key);
 	return (free(key), ft_strjoin(eline, value));
 }
 
@@ -44,15 +47,15 @@ char	*get_var_key(char **line)
 	int		len;
 	char	*key;
 
-	len = ft_isalpha(**line);
+	len = ft_isalpha(**line) || **line == '_';
 	if (len == 0 && **line == '?')
-		return (ft_strdup("?"));
-	if (len == 0 && **line != 0)
+		return (++(*line), ft_strdup("?"));
+	if (len == 0 && **line != 0 )
 		return (++(*line), NULL);
-	while (ft_isalnum((*line)[len]))
+	while (ft_isalnum((*line)[len]) || (*line)[len] == '_')
 		len++;
 	key = ft_substr(*line, 0, len);
-	line += len;
+	*line += len;
 	return (key);
 }
 
