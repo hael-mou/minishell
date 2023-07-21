@@ -6,13 +6,13 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:42:13 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/02 19:39:39 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/21 20:24:51 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-//=== builtins_init ===========================================================
+//=== detect_nflag =============================================================
 int	detect_nflag(char **args, int *index)
 {
 	char	*arg;
@@ -32,7 +32,7 @@ int	detect_nflag(char **args, int *index)
 	return (nflag);
 }
 
-//=== builtins_init ===========================================================
+//=== minishell_echo ===========================================================
 int	minishell_echo(char **args)
 {
 	int	index;
@@ -46,9 +46,9 @@ int	minishell_echo(char **args)
 	{
 		ft_putstr_fd(args[index++], 1);
 		if (args[index] != NULL)
-			ft_putstr_fd(" ", 1);
+			ft_putstr_fd(" ", 1/*(inout == NULL) + (*inout) * (inout != NULL)*/);
 	}
 	if (nflag == TRUE)
-		ft_putstr_fd("\n", 1);
+		ft_putstr_fd("\n", 1/*(inout == NULL) + (*inout) * (inout != NULL)*/);
 	return (SUCCESS);
 }

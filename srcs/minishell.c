@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:26:25 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/21 09:51:56 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/21 22:54:10 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,21 +46,21 @@ char	*minishell_prompt(void)
 {
 	char	*prompt;
 
-	prompt = "\n(🔞 )\n ↳ ︻╦̵̵̿╤── 💥 ⟹  ";
+	prompt = "\n (🔞)-[$]\n ↳ ︻╦̵̵̿╤── 💥⟶  ";
 	return (prompt);
 }
 
 //=== minishell init ===========================================================
 void	minishell_init(char **env)
 {
-//	g_sys.std_in = dup(STDIN_FILENO);
-//	g_sys.std_out = dup(STDOUT_FILENO);
+	g_sys.std_in = dup(STDIN_FILENO);
+	g_sys.std_out = dup(STDOUT_FILENO);
 	if (g_sys.std_in != ERROR && g_sys.std_out != ERROR)
 	{
 		minishell_export(env);
 		printf(CLEAR);
 		printf("%s\n", PROG_INFO);
-		printf("%s\n\n", DEVLOPERS);
+		printf("%s\n", DEVLOPERS);
 		g_sys.pipeline.offset = -1;
 		g_sys.pipeline.fd[0] = -1;
 		g_sys.pipeline.fd[1] = -1;

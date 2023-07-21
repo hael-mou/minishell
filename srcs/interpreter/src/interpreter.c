@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 21:21:16 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/21 12:55:05 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/21 20:22:15 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ int	interpreter(t_node *root)
 {
 	if (!root)
 		return (0);
-	if (root->type == COMMAND)
-		return (exec_simple_cmd(root));
 	exec_branches(root);
 	g_sys.exit_status = extract_exit_status(root);
 	return (SUCCESS);
@@ -73,11 +71,11 @@ pid_t	exec_subshell(t_node *node)
 }
 
 //=== exec_builtins ============================================================
-int	exec_builtins(t_node *cmd)
+int	exec_builtins(t_node *cmd, int start)
 {
 	int	index;
 
-	index = -1;
+	index = start;
 	while (++index < 8)
 	{
 		if (ft_strcmp(get_cmd_name(cmd), g_sys.builtins.name[index]) == 0)

@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:38:00 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/21 12:33:42 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/21 20:45:38 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@
 /*###############################################################
 #  	   * DEFINES   :											#
 ###############################################################*/
-
+# define SIMPLE_CMD 0
+# define COMPONENT_CMD 1
 # define CMD_NOT_FOUND "Minishell: command not found"
 # define PERMISSION_DIEND "Minishell: permission diend"
 
@@ -45,7 +46,7 @@ int		interpreter(t_node *tree);
 pid_t	exec_simple_cmd(t_node *cmd);
 pid_t	exec_branches(t_node *node);
 pid_t	exec_subshell(t_node *node);
-pid_t	exec_builtins(t_node *cmd);
+pid_t	exec_builtins(t_node *cmd, int start);
 
 // exec_cmd :
 pid_t	exec_cmd(t_node *cmd);
@@ -60,6 +61,7 @@ char	*whereis_cmd(char *cmd);
 int		close_inout(t_list *files);
 int		my_execve(t_node *cmd);
 int		get_mode(int type);
+int		is_simple_cmd(void);
 int		print_error_msg(t_node *cmd);
 
 #endif

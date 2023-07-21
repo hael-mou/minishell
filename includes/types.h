@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 22:04:28 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/21 10:46:57 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/21 22:17:12 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_system
 	t_built		builtins;
 	t_pipeline	pipeline;
 	int			exit_status;
+	int			merrno;
 }	t_system;
 
 /*##############################################################################

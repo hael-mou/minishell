@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 18:50:04 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/21 12:37:52 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/21 22:22:48 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ pid_t	exec_cmd(t_node *cmd)
 	int	*in_out;
 
 	extract_command(cmd);
+	if (is_simple_cmd() == TRUE)
+		exec_builtins(cmd, 1);
 	cmd->pid = fork();
 	if (cmd->pid < 0)
 		perror("Error creating child process ...\n");
@@ -32,25 +34,8 @@ pid_t	exec_cmd(t_node *cmd)
 			exit(print_error_msg(cmd));
 	}
 	close(g_sys.pipeline.offset);
+	g_sys.pipeline.offset = -1;
 	return (cmd->pid);
-}
-
-//=== exec_simple_cmd ==========================================================
-int	exec_simple_cmd(t_node *cmd)
-{
-	int	status;
-	int	pid;
-
-	status = 0;
-	if (get_cmd_iofile(cmd) == NULL)
-	{
-		extract_command(cmd);
-		if (exec_builtins(cmd) == SUCCESS)
-			return (status);
-	}
-	pid = exec_cmd(cmd);
-	waitpid(pid, &status, 0);
-	return (status);
 }
 
 //=== extract_command ==========================================================
@@ -86,7 +71,7 @@ int	*get_command_inout(t_list *file)
 		if (type == REDIR_IN || type == REDIR_OUT || type == REDIR_APPEND)
 			set_file_fd(file, open(get_file_name(file), get_mode(type), 0644));
 		if (get_file_fd(file) < -1)
-			;
+			g_sys.merrno = 2;
 		if ((type == REDIR_IN && get_file_type(file->next) != REDIR_IN)
 			|| (type == HERE_DOC && get_file_type(file) != HERE_DOC))
 			in_out[0] = get_file_fd(file);
