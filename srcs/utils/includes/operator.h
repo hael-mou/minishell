@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 11:39:52 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/19 14:49:34 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/21 10:49:33 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 typedef struct s_operator
 {
 	int			type;
+	pid_t		pid;
 	t_node		*right;
 	t_node		*left;
 }				t_operator;

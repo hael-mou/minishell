@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 22:04:28 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/20 15:39:02 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/21 10:46:57 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_system	g_sys;
 typedef struct s_node
 {
 	int			type;
+	pid_t		pid;
 }	t_node;
 
 #endif /* TYPES_H */

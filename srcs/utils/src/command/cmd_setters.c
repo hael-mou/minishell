@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 00:05:32 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/20 14:38:34 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/21 10:06:07 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 //=== set command pid =========================================================
 void	set_cmd_pid(t_node *cmd, pid_t pid)
 {
-	if (cmd != NULL)
+	if (cmd != NULL && cmd->type == COMMAND)
 	{
 		((t_command *)cmd)->pid = pid;
 	}
@@ -25,7 +25,7 @@ void	set_cmd_pid(t_node *cmd, pid_t pid)
 //=== set command name ========================================================
 void	set_cmd_name(t_node *cmd, char *name)
 {
-	if (cmd != NULL)
+	if (cmd != NULL && cmd->type == COMMAND)
 	{
 		((t_command *)cmd)->name = name;
 	}
@@ -34,7 +34,7 @@ void	set_cmd_name(t_node *cmd, char *name)
 //=== set command path ========================================================
 void	set_cmd_path(t_node *cmd, char *path)
 {
-	if (cmd != NULL)
+	if (cmd != NULL && cmd->type == COMMAND)
 	{
 		((t_command *)cmd)->path = path;
 	}
@@ -43,7 +43,7 @@ void	set_cmd_path(t_node *cmd, char *path)
 //=== set command args ========================================================
 void	set_cmd_args(t_node *cmd, char **args)
 {
-	if (cmd != NULL)
+	if (cmd != NULL && cmd->type == COMMAND)
 	{
 		((t_command *)cmd)->args = args;
 	}
@@ -52,7 +52,7 @@ void	set_cmd_args(t_node *cmd, char **args)
 //=== set command iofile ======================================================
 void	set_cmd_iofile(t_node *cmd, t_list *iofiles)
 {
-	if (cmd != NULL)
+	if (cmd != NULL && cmd->type == COMMAND)
 	{
 		((t_command *)cmd)->in_out = iofiles;
 	}

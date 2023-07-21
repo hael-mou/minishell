@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:16:20 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/20 11:19:07 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/21 12:43:50 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,14 @@ int	my_execve(t_node *cmd)
 		exit(EXIT_SUCCESS);
 	execve(get_cmd_path(cmd), get_cmd_args(cmd), get_env(g_sys.env));
 	return (-1);
+}
+
+//=== get_mode =================================================================
+int	get_mode(int type)
+{
+	if (type == REDIR_IN)
+		return (O_RDONLY);
+	return (O_CREAT | O_WRONLY | O_APPEND * (type == REDIR_APPEND));
 }
 
 //=== print_error_msg ==========================================================

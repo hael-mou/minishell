@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:38:00 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/20 11:16:00 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/21 12:33:42 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@
 /*###############################################################
 #  	   * DEFINES   :											#
 ###############################################################*/
-# define GET_MODE(T) (T == REDIR_IN) * O_RDONLY + (T != REDIR_IN) * (O_CREAT | O_WRONLY | (T == REDIR_APPEND) * O_APPEND)
 
 # define CMD_NOT_FOUND "Minishell: command not found"
 # define PERMISSION_DIEND "Minishell: permission diend"
@@ -60,6 +59,7 @@ char	**get_env(t_list *g_env);
 char	*whereis_cmd(char *cmd);
 int		close_inout(t_list *files);
 int		my_execve(t_node *cmd);
+int		get_mode(int type);
 int		print_error_msg(t_node *cmd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 21:21:16 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/20 15:43:34 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/21 12:55:05 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	interpreter(t_node *root)
 	if (root->type == COMMAND)
 		return (exec_simple_cmd(root));
 	exec_branches(root);
-	extract_exit_status(root);
+	g_sys.exit_status = extract_exit_status(root);
 	return (SUCCESS);
 }
 
@@ -30,16 +30,16 @@ pid_t	exec_branches(t_node *node)
 	int			status;
 	pid_t		pid;
 
-	status = 0;
 	while (node)
 	{
 		create_pipe(&g_sys.pipeline, (node->type == PIPE));
 		if (node->type == COMMAND)
 			pid = exec_cmd(node);
+		else if (node->type == SUBSHELL)
+			pid = exec_subshell(node);
 		else if (get_left_node(node)->type == COMMAND)
 			pid = exec_cmd(get_left_node(node));
-		else if (node->type == SUBSHELL
-			|| get_left_node(node)->type == SUBSHELL)
+		else if (get_left_node(node)->type == SUBSHELL)
 			pid = exec_subshell(get_left_node(node));
 		else
 			pid = exec_branches(get_left_node(node));
@@ -57,23 +57,19 @@ pid_t	exec_branches(t_node *node)
 //=== exec_subshell ============================================================
 pid_t	exec_subshell(t_node *node)
 {
-	pid_t	pid;
-
-	if (node->type == SUBSHELL)
-		node = get_left_node(node);
-	pid = fork();
-	if (pid < 0)
+	node->pid = fork();
+	if (node->pid < 0)
 		perror("Error creating child process ...\n");
-	if (pid == 0)
+	if (node->pid == 0)
 	{
 		if (g_sys.pipeline.fd[1] > -1)
 			dup2(g_sys.pipeline.fd[1], 1);
 		close_pipe(g_sys.pipeline.fd);
-		exec_branches(node);
+		exec_branches(get_left_node(node));
 		close(g_sys.pipeline.offset);
-		exit(extract_exit_status(node));
+		exit(extract_exit_status(get_left_node(node)));
 	}
-	return (pid);
+	return (node->pid);
 }
 
 //=== exec_builtins ============================================================
@@ -97,15 +93,15 @@ pid_t	extract_exit_status(t_node *node)
 
 	while (node)
 	{
-		if (node->type == COMMAND)
-		{
-			waitpid(get_cmd_pid(node), &status, 0);
-			break ;
-		}
-		else if (get_left_node(node)->type == COMMAND)
-			waitpid(get_cmd_pid(get_left_node(node)), &status, 0);
+		if (node->type == COMMAND || node->type == SUBSHELL)
+			waitpid(node->pid, &status, 0);
+		else if (get_left_node(node)->type == COMMAND
+			|| get_left_node(node)->type == SUBSHELL)
+			waitpid(get_left_node(node)->pid, &status, 0);
 		else
 			extract_exit_status(get_left_node(node));
+		if (node->type == COMMAND)
+			break ;
 		node = get_right_node(node);
 	}
 	return (WEXITSTATUS(status));
