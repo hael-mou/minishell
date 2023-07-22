@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 12:05:49 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/24 12:46:35 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/22 15:32:19 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,7 @@ int	invalid_name(char *str, char *name)
 			status = TRUE;
 	}
 	if (status == TRUE)
-	{
 		ft_print_error("minishell: %: `%': "INVALID_ID, str, name);
-	}
 	return (status);
 }
 

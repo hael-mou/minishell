@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 11:46:06 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/21 10:51:35 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/22 22:38:28 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_command
 	char		*path;
 	char		**args;
 	t_list		*in_out;
+	int			exit_status;
 }				t_command;
 
 /*###############################################################

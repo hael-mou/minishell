@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 18:50:04 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/21 22:22:48 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/22 22:40:24 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,18 @@
 pid_t	exec_cmd(t_node *cmd)
 {
 	int	*in_out;
+	int	re;
 
 	extract_command(cmd);
-	if (is_simple_cmd() == TRUE)
-		exec_builtins(cmd, 1);
+	re = exec_builtins(cmd, 1);
 	cmd->pid = fork();
 	if (cmd->pid < 0)
 		perror("Error creating child process ...\n");
 	if (cmd->pid == 0)
 	{
 		in_out = get_command_inout(get_cmd_iofile(cmd));
+		if (re != -1)
+			exit(re);
 		dup_process_inout(in_out);
 		close_inout(get_cmd_iofile(cmd));
 		close_pipe(g_sys.pipeline.fd);
