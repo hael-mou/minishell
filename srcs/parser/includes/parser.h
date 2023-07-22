@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:23:48 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/14 19:47:51 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/22 16:06:41 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,18 @@
 /*###############################################################
 #		* Includes :		    							 	#
 ###############################################################*/
+# include <unistd.h>
+# include <sys/wait.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include "tokenizer.h"
 # include "defines.h"
 # include "types.h"
 # include "operator.h"
 # include "command.h"
 # include "file.h"
+# include "pipe.h"
+# include "expander.h"
 
 /*###############################################################
 #  	   * Functions :											#
@@ -43,5 +49,10 @@ t_list		*extract_files(t_list *tokens);
 char		*join_argument(t_list *tokens);
 int			is_end_of_command(t_list *token);
 int			is_redirection(t_list *token);
+
+//heredoc
+void		run_heredoc(t_list *file);
+void		heardoc_readlines(t_list *file, int fd);
+int			remove_quotes(t_list *file);
 
 #endif

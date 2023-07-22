@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 05:31:09 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/21 18:20:43 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/22 16:28:42 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct s_pattern
 char	**expand_line(char *line);
 char	**expand_var(char *line);
 char	**expand_wildcard(char **arg);
-void	clear_pattern(t_pattern *pattern);
+char	*expand_heredoc(char *line);
 
 //=======================================
 char	*extract_var(char *eline, char **line, int in_dquote);
@@ -47,6 +47,7 @@ char	*var_value(char *key);
 //======================================
 char	*home_path(char *eline, char **line);
 char	*extract_star(char *line);
+void	clear_pattern(t_pattern *pattern);
 
 //======================================
 char	*with_single_quates(char *eline, char **line);

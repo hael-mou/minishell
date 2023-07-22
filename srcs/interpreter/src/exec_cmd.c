@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 18:50:04 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/21 22:22:48 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/22 16:32:33 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	*get_command_inout(t_list *file)
 		if (get_file_fd(file) < -1)
 			g_sys.merrno = 2;
 		if ((type == REDIR_IN && get_file_type(file->next) != REDIR_IN)
-			|| (type == HERE_DOC && get_file_type(file) != HERE_DOC))
+			|| (type == HERE_DOC && get_file_type(file->next) != HERE_DOC))
 			in_out[0] = get_file_fd(file);
 		if ((type == REDIR_APPEND && get_file_type(file->next) != REDIR_APPEND)
 			|| (type == REDIR_OUT && get_file_type(file->next) != REDIR_OUT))
