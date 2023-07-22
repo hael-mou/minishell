@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 05:28:53 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/21 15:42:32 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/22 17:06:10 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,23 @@ char	**expand_wildcard(char **arg)
 	}
 	exp_line = ft_split(tmp, C_SPACE);
 	return (free(tmp), exp_line);
+}
+
+//===
+char	*expand_heredoc(char *line)
+{
+	char	*exp_line;
+	char	*save;
+
+	save = line;
+	exp_line = ft_strdup("");
+	while(line != NULL && *line != 0)
+	{
+		if (*line == '$' && *(line + 1) != '"' && *(line + 1) != '\'' 
+			&& *(line + 1) != '\n' && *(line + 1) != 0)
+			exp_line = extract_var(exp_line, &line, TRUE);
+		else
+			exp_line = ft_strnjoin(exp_line, line++, 1);
+	}
+	return (free(save), exp_line);
 }
