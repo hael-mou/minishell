@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:16:20 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/22 11:40:05 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/23 13:54:38 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	my_execve(t_node *cmd)
 	if (exec_builtins(cmd, -1) == SUCCESS)
 		exit(EXIT_SUCCESS);
 	execve(get_cmd_path(cmd), get_cmd_args(cmd), get_env(g_sys.env));
-	return (-1);
+	return (ERROR);
 }
 
 //=== get_mode =================================================================

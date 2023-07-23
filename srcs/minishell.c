@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:26:25 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/22 12:20:33 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/23 13:42:02 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char **argv, char **env)
 	{
 		input = readline(minishell_prompt());
 		if (input == NULL)
-			return (FAILURE);
+			return (g_sys.exit_status);
 		if (*input == 0)
 			continue;
 		tokens = lexer(input);
