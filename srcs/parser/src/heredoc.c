@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:37:38 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/22 16:59:42 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/23 14:10:08 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	heardoc_readlines(t_list *file, int fd)
 	while (TRUE)
 	{
 		line = readline("heredoc> ");
-		if (!ft_strcmp(line, get_file_name(file)))
+		if (!line || !ft_strcmp(line, get_file_name(file)))
 			break ;
 		line = ft_strjoin(line, ft_strdup("\n"));
 		if (detect_quotes == FALSE)

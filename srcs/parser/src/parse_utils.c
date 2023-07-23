@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 10:45:47 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/22 14:35:38 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/23 14:08:37 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ t_list	*extract_files(t_list *tokens)
 				return (NULL);
 			}
 			if (get_file_type(files) == HERE_DOC)
-				run_heredoc(files);
+				run_heredoc(ft_lstlast(files));
 			tokens = tokens->next;
 		}
 		tokens = tokens->next;
