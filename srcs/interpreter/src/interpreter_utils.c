@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:16:20 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/23 22:53:56 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/23 23:54:03 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,15 +101,18 @@ int	get_mode(int type)
 //=== print_error_msg ==========================================================
 int	print_error_msg(t_node *cmd)
 {
-	if (g_sys.merrno == 1)
-		return (ft_print_error(CMD_NOT_FOUND":%s\n", get_cmd_name(cmd)), 127);
-	if (g_sys.merrno == 2 || g_sys.merrno == 6)
-		return (ft_print_error("minishell: no such a file or directory\n"), 1 + 126 * (g_sys.merrno == 6));
-	if (g_sys.merrno == 3)
-		return (ft_print_error("minishell: permission denied\n"), 1);
-	if (g_sys.merrno == 4)
-		return (ft_print_error("minishell: permission denied\n"), 1);
-	if (g_sys.merrno == 5)
-		return (ft_print_error("minishell: permission denied\n"), 126);
+	t_list	*file;
+	char	*tmp;
+	
+	if (g_sys.merrno == 1 || g_sys.merrno == 5 || g_sys.merrno == 6)
+		tmp = get_cmd_name(cmd);
+	if (g_sys.merrno == 3 || g_sys.merrno == 4)
+	{
+		file = get_cmd_iofile(cmd);
+		while (file && get_file_fd(file) > -1)
+			file = file->next;
+		tmp = get_file_name(file);
+	}
+	printf("TMP| ====> %s\n", tmp);
 	return (0);
 }
