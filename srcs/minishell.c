@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:26:25 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/23 13:42:02 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/23 14:09:40 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ char	*minishell_prompt(void)
 //=== minishell init ===========================================================
 void	minishell_init(char **env)
 {
-	g_sys.std_in = dup(STDIN_FILENO);
-	g_sys.std_out = dup(STDOUT_FILENO);
+	// g_sys.std_in = dup(STDIN_FILENO);
+	// g_sys.std_out = dup(STDOUT_FILENO);
 	if (g_sys.std_in != ERROR && g_sys.std_out != ERROR)
 	{
 		minishell_export(env);
-		printf(CLEAR);
-		printf("%s\n", PROG_INFO);
-		printf("%s\n", DEVLOPERS);
+		// printf(CLEAR);
+		// printf("%s\n", PROG_INFO);
+		// printf("%s\n", DEVLOPERS);
 		g_sys.pipeline.offset = -1;
 		g_sys.pipeline.fd[0] = -1;
 		g_sys.pipeline.fd[1] = -1;
