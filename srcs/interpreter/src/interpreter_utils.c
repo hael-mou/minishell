@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:16:20 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/23 21:55:49 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/23 22:53:56 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*whereis_cmd(char *cmd)
 	if (ft_strncmp(cmd, "./", 2) == 0 || *cmd == '/')
 	{
 		if (access(cmd, F_OK) == -1)
-			g_sys.merrno = 2;
+			g_sys.merrno = 6;
 		else if (access(cmd, X_OK) == -1)
 			g_sys.merrno = 5;
 		return (ft_strdup(cmd));
@@ -83,7 +83,8 @@ int	my_execve(t_node *cmd)
 {
 	if (exec_builtins(cmd, NULL) == EXIT_SUCCESS)
 		exit(EXIT_SUCCESS);
-	execve(get_cmd_path(cmd), get_cmd_args(cmd), get_env(g_sys.env));
+	if (g_sys.merrno == -1)
+ 		execve(get_cmd_path(cmd), get_cmd_args(cmd), get_env(g_sys.env));
 	return (ERROR);
 }
 
@@ -102,13 +103,13 @@ int	print_error_msg(t_node *cmd)
 {
 	if (g_sys.merrno == 1)
 		return (ft_print_error(CMD_NOT_FOUND":%s\n", get_cmd_name(cmd)), 127);
-	if (g_sys.merrno == 2)
-		return (ft_print_error("No such a file or dir ...\n"), 1);
+	if (g_sys.merrno == 2 || g_sys.merrno == 6)
+		return (ft_print_error("minishell: no such a file or directory\n"), 1 + 126 * (g_sys.merrno == 6));
 	if (g_sys.merrno == 3)
-		return (ft_print_error("Permission Read ...\n"), 1);
+		return (ft_print_error("minishell: permission denied\n"), 1);
 	if (g_sys.merrno == 4)
-		return (ft_print_error("Permission Write ...\n"), 1);
+		return (ft_print_error("minishell: permission denied\n"), 1);
 	if (g_sys.merrno == 5)
-		return (ft_print_error("Permission Exec ...\n"), 1);
+		return (ft_print_error("minishell: permission denied\n"), 126);
 	return (0);
 }

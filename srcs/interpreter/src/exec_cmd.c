@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 18:50:04 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/23 21:46:41 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/23 22:48:05 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ pid_t	exec_cmd(t_node *cmd)
 		perror("Error creating child process ...\n");
 	if (cmd->pid == 0)
 	{
-		printf("MERRNO| => %d\n", g_sys.merrno);
+//		printf("MERRNO| => %d\n", g_sys.merrno);
 		if (re != -1)
 			exit(re);
 		dup_process_inout(in_out);
 		close_inout(get_cmd_iofile(cmd));
 		close_pipe(g_sys.pipeline.fd);
 		close(g_sys.pipeline.offset);
-		if (my_execve(cmd) == ERROR)
+		if (my_execve(cmd))
 			exit(print_error_msg(cmd));
 	}
 	close_inout(get_cmd_iofile(cmd));
