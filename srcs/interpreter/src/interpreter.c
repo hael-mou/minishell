@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 21:21:16 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/23 15:20:10 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/23 17:57:15 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,16 @@ int	exec_builtins(t_node *cmd, int *in_out)
 	{
 		if (ft_strcmp(get_cmd_name(cmd), g_sys.builtins.name[index]) == 0)
 		{
-			status = ((g_sys.builtins.func[index])(get_cmd_args(cmd)));
-			dup2(g_sys.std_in, 0);
-			dup2(g_sys.std_out, 1);
+			status = (g_sys.builtins.func[index])(get_cmd_args(cmd));
+			if (in_out)
+			{
+				dup2(g_sys.std_in, 0);
+				dup2(g_sys.std_out, 1);
+			}
 			return (status);
 		}
 	}
-	return (-1);
+	return (ERROR);
 }
 
 //=== extract_exit_status ======================================================

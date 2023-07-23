@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 18:50:04 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/23 15:19:50 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/23 17:48:12 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ pid_t	exec_cmd(t_node *cmd)
 	re = -1;
 	extract_command(cmd);
 	in_out = get_command_inout(get_cmd_iofile(cmd));
-	if (is_simple_cmd())
+	if (g_sys.pipeline.offset == -1 && g_sys.pipeline.fd[1] == -1)
 		re = exec_builtins(cmd, in_out);
 	cmd->pid = fork();
 	if (cmd->pid < 0)

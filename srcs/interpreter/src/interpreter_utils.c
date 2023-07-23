@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:16:20 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/23 15:19:32 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/23 16:42:32 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ char	*whereis_cmd(char *cmd)
 	char	*path;
 	int		pathlen;
 
+	if (!cmd)
+		return (NULL);
 	path = search_var(g_sys.env, "PATH");
 	if (ft_strncmp(cmd, "./", 2) == 0 || *cmd == '/')
 	{
