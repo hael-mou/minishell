@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 18:50:04 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/23 21:35:18 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/23 21:46:41 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ pid_t	exec_cmd(t_node *cmd)
 		close_inout(get_cmd_iofile(cmd));
 		close_pipe(g_sys.pipeline.fd);
 		close(g_sys.pipeline.offset);
-		if (g_sys.merrno > -1 || my_execve(cmd) == ERROR)
+		if (my_execve(cmd) == ERROR)
 			exit(print_error_msg(cmd));
 	}
 	close_inout(get_cmd_iofile(cmd));
