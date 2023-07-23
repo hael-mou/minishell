@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:42:13 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/23 17:31:50 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/23 18:52:13 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	minishell_echo(char **args)
 
 	index = (args && !ft_strcmp(*args, "echo"));
 	if (args == NULL)
-		return (FAILURE);
+		return (EXIT_FAILURE);
 	nflag = detect_nflag(args, &index);
 	while (args[index] != NULL)
 	{
@@ -51,5 +51,5 @@ int	minishell_echo(char **args)
 	}
 	if (nflag == TRUE)
 		ft_putstr_fd("\n", 1);
-	return (SUCCESS);
+	return (EXIT_SUCCESS);
 }

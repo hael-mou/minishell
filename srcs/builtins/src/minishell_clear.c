@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_clear.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:41:52 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/14 19:28:51 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/23 18:51:53 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
 //=== minishell_clear ==========================================================
-int	minishell_clear()
+int	minishell_clear(void)
 {
 	printf(CLEAR);
-	return (SUCCESS);
+	return (EXIT_SUCCESS);
 }

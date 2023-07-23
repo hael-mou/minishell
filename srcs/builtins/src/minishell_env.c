@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 16:22:16 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/24 13:43:01 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/23 20:40:10 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int	minishell_env(char **args)
 	{
 		name = get_var_name(cursor);
 		value = get_var_value(cursor);
-		if (value != NULL && *value != 0)
+		if (value != NULL)
 			printf("%s=%s\n", name, value);
 		cursor = cursor->next;
 	}
-	return (SUCCESS);
+	return (EXIT_SUCCESS);
 }

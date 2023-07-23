@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 12:06:23 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/21 20:25:16 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/23 20:44:06 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,6 @@ int		minishell_export(char **args);
 int		minishell_unset(char **args);
 int		minishell_env(char **args);
 int		minishell_exit(char **args);
-int		minishell_clear();
+int		minishell_clear(void);
 
 #endif /* BUILTINS_H */

@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 12:05:49 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/22 15:32:19 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/23 19:15:01 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,16 @@ t_list	*create_variable(char *variable)
 //=== is invalide name ========================================================
 int	invalid_name(char *str, char *name)
 {
-	int	status;
+	int		status;
+	char	*cursor;
 
 	status = FALSE;
-	if (!ft_isalpha(*name) && *name != '_')
+	cursor = name;
+	if (!ft_isalpha(*cursor) && *cursor != '_')
 		status = TRUE;
-	while (!status && *(++name) != '\0')
+	while (!status && *(++cursor) != '\0')
 	{
-		if (!ft_isalnum(*name) && *name != '_')
+		if (!ft_isalnum(*cursor) && *cursor != '_')
 			status = TRUE;
 	}
 	if (status == TRUE)

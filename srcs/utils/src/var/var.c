@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 15:29:58 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/24 12:56:21 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/23 19:17:21 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	set_variable(t_list **vars, char *var)
 		*vars = new_var;
 	else if (select != NULL)
 	{
+		if (get_var_value(new_var) == NULL)
+			return (ft_lstdelone(new_var, clean_var), FAILURE);
 		clean_var(select->content);
 		select->content = new_var->content;
 		free(new_var);

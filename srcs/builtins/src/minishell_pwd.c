@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:42:35 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/24 14:58:25 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/23 20:16:42 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ int	minishell_pwd(char **args)
 	(void)args;
 	abs_path = getcwd(NULL, 0);
 	if (abs_path == NULL)
-		return (FAILURE);
-	printf("%s\n", abs_path);
+		return (EXIT_FAILURE);
+	ft_putstr_fd(abs_path, 1);
+	ft_putchar_fd('\n', 1);
 	free(abs_path);
-	return (SUCCESS);
+	return (EXIT_SUCCESS);
 }

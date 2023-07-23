@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:42:24 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/06/24 17:14:52 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/23 18:51:06 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ int	minishell_cd(char **args)
 		if (path == NULL)
 		{
 			ft_print_error(OLDPWD_ER);
-			return (FAILURE);
+			return (EXIT_FAILURE);
 		}
 		perror(path);
-		return (FAILURE);
+		return (EXIT_FAILURE);
 	}
 	set_new_value("OLDPWD", opwd);
 	set_new_value("PWD", getcwd(NULL, 0));
-	return (SUCCESS);
+	return (EXIT_SUCCESS);
 }
