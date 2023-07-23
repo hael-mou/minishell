@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:26:25 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/23 17:57:30 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/23 20:03:37 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	minishell_init(char **env)
 		g_sys.pipeline.offset = -1;
 		g_sys.pipeline.fd[0] = -1;
 		g_sys.pipeline.fd[1] = -1;
+		g_sys.merrno = -1;
 		builtins_init(&g_sys.builtins);
 		return ;
 	}

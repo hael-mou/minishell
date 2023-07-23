@@ -6,15 +6,16 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:41:52 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/23 18:51:53 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/23 21:37:04 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
 //=== minishell_clear ==========================================================
-int	minishell_clear(void)
+int	minishell_clear(char **args)
 {
+	(void) args;
 	printf(CLEAR);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:16:20 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/23 16:42:32 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/23 20:46:59 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,10 @@ char	*whereis_cmd(char *cmd)
 	path = search_var(g_sys.env, "PATH");
 	if (ft_strncmp(cmd, "./", 2) == 0 || *cmd == '/')
 	{
-		if (ft_strncmp(cmd, "./", 2) == 0 && access(cmd, F_OK) == -1)
+		if (access(cmd, F_OK) == -1)
 			g_sys.merrno = 2;
+		else if (access(cmd, X_OK) == -1)
+			g_sys.merrno = 5;
 		return (ft_strdup(cmd));
 	}
 	while (cmd && path && *path)
@@ -79,7 +81,7 @@ int	close_inout(t_list *file)
 //=== my_execve ================================================================
 int	my_execve(t_node *cmd)
 {
-	if (exec_builtins(cmd, NULL) == SUCCESS)
+	if (exec_builtins(cmd, NULL) == EXIT_SUCCESS)
 		exit(EXIT_SUCCESS);
 	execve(get_cmd_path(cmd), get_cmd_args(cmd), get_env(g_sys.env));
 	return (ERROR);
@@ -88,22 +90,11 @@ int	my_execve(t_node *cmd)
 //=== get_mode =================================================================
 int	get_mode(int type)
 {
-	int	mode;
-
-	mode = O_CREAT | O_WRONLY;
 	if (type == REDIR_IN)
 		return (O_RDONLY);
-	if (type == REDIR_OUT)
-		return (mode | O_TRUNC);
-	return (mode | O_APPEND);
-}
-
-//=== is_simple_cmd ============================================================
-int	is_simple_cmd(void)
-{
-	if (g_sys.pipeline.offset > -1 || g_sys.pipeline.fd[1] > -1)
-		return (FALSE);
-	return (TRUE);
+	if (type == REDIR_APPEND)
+		return (O_CREAT | O_WRONLY | O_APPEND);
+	return (O_CREAT | O_WRONLY | O_TRUNC);
 }
 
 //=== print_error_msg ==========================================================
@@ -113,8 +104,11 @@ int	print_error_msg(t_node *cmd)
 		return (ft_print_error(CMD_NOT_FOUND":%s\n", get_cmd_name(cmd)), 127);
 	if (g_sys.merrno == 2)
 		return (ft_print_error("No such a file or dir ...\n"), 1);
-	// 3 => permission read
-	// 4 => permission write
-	// 5 => permission exec
+	if (g_sys.merrno == 3)
+		return (ft_print_error("Permission Read ...\n"), 1);
+	if (g_sys.merrno == 4)
+		return (ft_print_error("Permission Write ...\n"), 1);
+	if (g_sys.merrno == 5)
+		return (ft_print_error("Permission Exec ...\n"), 1);
 	return (0);
 }
