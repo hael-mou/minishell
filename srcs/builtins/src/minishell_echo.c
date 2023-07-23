@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:42:13 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/21 20:24:51 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/23 17:31:50 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	detect_nflag(char **args, int *index)
 	int		nflag;
 
 	nflag = TRUE;
-	while (args && index && args[*index] && args[++(*index)][0] == '-')
+	(*index)--;
+	while (args && index && args[++(*index)] && args[*index][0] == '-')
 	{
 		arg = args[*index] + 1;
 		while (*arg != 0)
@@ -38,17 +39,17 @@ int	minishell_echo(char **args)
 	int	index;
 	int	nflag;
 
-	index = (args && !ft_strcmp(*args, "echo")) - 1;
-	if (args == NULL || args[index + 1] == NULL)
-		return (SUCCESS);
+	index = (args && !ft_strcmp(*args, "echo"));
+	if (args == NULL)
+		return (FAILURE);
 	nflag = detect_nflag(args, &index);
 	while (args[index] != NULL)
 	{
 		ft_putstr_fd(args[index++], 1);
 		if (args[index] != NULL)
-			ft_putstr_fd(" ", 1/*(inout == NULL) + (*inout) * (inout != NULL)*/);
+			ft_putstr_fd(" ", 1);
 	}
 	if (nflag == TRUE)
-		ft_putstr_fd("\n", 1/*(inout == NULL) + (*inout) * (inout != NULL)*/);
+		ft_putstr_fd("\n", 1);
 	return (SUCCESS);
 }
