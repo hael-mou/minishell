@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:16:20 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/23 13:54:38 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/23 15:19:32 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	close_inout(t_list *file)
 //=== my_execve ================================================================
 int	my_execve(t_node *cmd)
 {
-	if (exec_builtins(cmd, -1) == SUCCESS)
+	if (exec_builtins(cmd, NULL) == SUCCESS)
 		exit(EXIT_SUCCESS);
 	execve(get_cmd_path(cmd), get_cmd_args(cmd), get_env(g_sys.env));
 	return (ERROR);
@@ -86,9 +86,14 @@ int	my_execve(t_node *cmd)
 //=== get_mode =================================================================
 int	get_mode(int type)
 {
+	int	mode;
+
+	mode = O_CREAT | O_WRONLY;
 	if (type == REDIR_IN)
 		return (O_RDONLY);
-	return (O_CREAT | O_WRONLY | O_APPEND * (type == REDIR_APPEND));
+	if (type == REDIR_OUT)
+		return (mode | O_TRUNC);
+	return (mode | O_APPEND);
 }
 
 //=== is_simple_cmd ============================================================

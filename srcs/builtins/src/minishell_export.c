@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:42:47 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/22 15:33:50 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/23 14:36:02 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	minishell_export(char **args)
 	index = (args && !ft_strcmp(*args, "export")) - 1;
 	if (args == NULL || args[index + 1] == NULL)
 	{
-	//	export_show();
+		export_show();
 		return (SUCCESS);
 	}
 	while (args[++index] != NULL)

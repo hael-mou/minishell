@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 18:50:04 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/23 13:55:58 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/23 15:19:50 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ pid_t	exec_cmd(t_node *cmd)
 	extract_command(cmd);
 	in_out = get_command_inout(get_cmd_iofile(cmd));
 	if (is_simple_cmd())
-		re = exec_builtins(cmd, 2);
+		re = exec_builtins(cmd, in_out);
 	cmd->pid = fork();
 	if (cmd->pid < 0)
 		perror("Error creating child process ...\n");

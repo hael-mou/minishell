@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:38:00 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/22 15:02:44 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/23 14:44:42 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int		interpreter(t_node *tree);
 pid_t	exec_simple_cmd(t_node *cmd, int *in_out);
 pid_t	exec_branches(t_node *node);
 pid_t	exec_subshell(t_node *node);
-pid_t	exec_builtins(t_node *cmd, int start);
+pid_t	exec_builtins(t_node *cmd, int *in_out);
 
 // exec_cmd :
 pid_t	exec_cmd(t_node *cmd);
