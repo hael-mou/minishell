@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:34:12 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/24 17:25:21 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:31:08 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*minishell_prompt(void)
 	cwd = get_wdir();
 	git = get_git_tag();
 	status = get_status_icon();
-	printf("\n\033[1;96m╭ %s %s \033[0;90m\n", cwd, git);
+	printf("\n\033[1;96m╭ %s %s\033[0;120m\n", cwd, git);
 	prompt = ft_vstrjoin(3, ft_strdup("╰ "), status, ICON_PROMPT);
 	return (free(cwd), prompt);
 }

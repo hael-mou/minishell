@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 18:50:04 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/24 15:54:25 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/24 17:27:05 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ void	extract_command(t_node *cmd)
 	char	**args;
 	char	*tmp;
 
-//	if (((t_command *) cmd)->args)
-//		return ;
 	tmp = get_cmd_name(cmd);
 	args = expand_line(tmp);
 	if (args != NULL)
@@ -78,8 +76,7 @@ int	*get_command_inout(t_list *file)
 			set_file_fd(file, open(get_file_name(file), get_mode(type), 0644));
 		if (get_file_fd(file) == -1)
 		{
-			if (access(get_file_name(file), F_OK) == -1 && g_sys.merrno == -1)
-				g_sys.merrno = 3;
+			g_sys.merrno += 4 * (access(get_file_name(file), F_OK) == -1);
 			if (access(get_file_name(file), R_OK) == -1 && g_sys.merrno == -1)
 				g_sys.merrno = 4;
 			if ((type == REDIR_OUT || type == REDIR_APPEND) && g_sys.merrno == -1)
