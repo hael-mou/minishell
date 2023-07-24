@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 22:04:28 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/21 22:17:12 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/24 17:25:11 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "list.h"
 # include "pipe.h"
 # include "builtins.h"
+# include <dirent.h>
 
 typedef struct s_built
 {
@@ -53,5 +54,12 @@ typedef struct s_node
 	int			type;
 	pid_t		pid;
 }	t_node;
+
+typedef struct dirent	t_dirent;
+typedef struct s_dir
+{
+	DIR			*stream;
+	t_dirent	*info;
+}	t_dir;
 
 #endif /* TYPES_H */

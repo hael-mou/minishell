@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 05:31:09 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/22 16:28:42 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:24:50 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,7 @@
 # include "var.h"
 # include "defines.h"
 # include "types.h"
-# include <dirent.h>
 
-typedef struct dirent	t_dirent;
-typedef struct s_dir
-{
-	DIR			*stream;
-	t_dirent	*info;
-}	t_dir;
 
 typedef struct s_pattern
 {

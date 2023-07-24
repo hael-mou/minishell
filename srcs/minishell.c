@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:26:25 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/23 20:03:37 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/24 17:22:19 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,15 @@ int	main(int argc, char **argv, char **env)
 	char	*input;
 	t_list	*tokens;
 	t_node	*tree;
+	char	*prompt;
 
 	(void) argc;
 	(void) argv;
 	minishell_init(env);
 	while (TRUE)
 	{
-		input = readline(minishell_prompt());
+		prompt =  minishell_prompt();
+		input = readline(prompt);
 		if (input == NULL)
 			return (g_sys.exit_status);
 		if (*input == 0)
@@ -37,17 +39,9 @@ int	main(int argc, char **argv, char **env)
 		add_history(input);
 		minishell_clean();
 		free(input);
+		free(prompt);
 	}
 	return (0);
-}
-
-//=== minishell_prompt =========================================================
-char	*minishell_prompt(void)
-{
-	char	*prompt;
-
-	prompt = "\n (🔞/HOME/EZZAOU)-[$]\n ↘︎ ︻╦̵̵̿╤── 💥⟶  ";
-	return (prompt);
 }
 
 //=== minishell init ===========================================================
