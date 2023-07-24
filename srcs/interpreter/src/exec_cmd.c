@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 18:50:04 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/23 22:48:05 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/24 15:54:25 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ pid_t	exec_cmd(t_node *cmd)
 	int	re;
 
 	re = -1;
-	extract_command(cmd);
 	in_out = get_command_inout(get_cmd_iofile(cmd));
+	extract_command(cmd);
 	if (g_sys.pipeline.offset == -1 && g_sys.pipeline.fd[1] == -1)
 		re = exec_builtins(cmd, in_out);
 	cmd->pid = fork();
@@ -28,7 +28,6 @@ pid_t	exec_cmd(t_node *cmd)
 		perror("Error creating child process ...\n");
 	if (cmd->pid == 0)
 	{
-//		printf("MERRNO| => %d\n", g_sys.merrno);
 		if (re != -1)
 			exit(re);
 		dup_process_inout(in_out);
@@ -79,12 +78,12 @@ int	*get_command_inout(t_list *file)
 			set_file_fd(file, open(get_file_name(file), get_mode(type), 0644));
 		if (get_file_fd(file) == -1)
 		{
-			if (access(get_file_name(file), F_OK) == -1)
-				g_sys.merrno = 2;
-			else if (type == REDIR_OUT || type == REDIR_APPEND)
-				g_sys.merrno = 4;
-			else
+			if (access(get_file_name(file), F_OK) == -1 && g_sys.merrno == -1)
 				g_sys.merrno = 3;
+			if (access(get_file_name(file), R_OK) == -1 && g_sys.merrno == -1)
+				g_sys.merrno = 4;
+			if ((type == REDIR_OUT || type == REDIR_APPEND) && g_sys.merrno == -1)
+				g_sys.merrno = 5;
 		}
 		if (type == REDIR_IN || type == HERE_DOC)
 			in_out[0] = get_file_fd(file);

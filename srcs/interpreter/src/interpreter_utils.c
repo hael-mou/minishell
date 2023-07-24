@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:16:20 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/23 23:54:03 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/24 15:53:54 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ char	*whereis_cmd(char *cmd)
 	if (!cmd)
 		return (NULL);
 	path = search_var(g_sys.env, "PATH");
+	g_sys.merrno += 3 * (!path || !*path); 
 	if (ft_strncmp(cmd, "./", 2) == 0 || *cmd == '/')
 	{
-		if (access(cmd, F_OK) == -1)
-			g_sys.merrno = 6;
-		else if (access(cmd, X_OK) == -1)
-			g_sys.merrno = 5;
+		g_sys.merrno = 2;
+		if (access(cmd, F_OK) == 0)
+			g_sys.merrno = 7 * -access(cmd, X_OK) - 1;
 		return (ft_strdup(cmd));
 	}
 	while (cmd && path && *path)
@@ -63,7 +63,8 @@ char	*whereis_cmd(char *cmd)
 			pathlen++;
 		path += pathlen;
 	}
-	g_sys.merrno = 1;
+	if (g_sys.merrno == -1)
+		g_sys.merrno = 1;
 	return (NULL);
 }
 
@@ -103,16 +104,24 @@ int	print_error_msg(t_node *cmd)
 {
 	t_list	*file;
 	char	*tmp;
-	
-	if (g_sys.merrno == 1 || g_sys.merrno == 5 || g_sys.merrno == 6)
+	char	*msg;
+	int		exit;
+
+	if (g_sys.merrno == 1 || g_sys.merrno == 2 || g_sys.merrno == 6)
 		tmp = get_cmd_name(cmd);
-	if (g_sys.merrno == 3 || g_sys.merrno == 4)
+	if (g_sys.merrno == 3 || g_sys.merrno == 4 || g_sys.merrno == 5)
 	{
 		file = get_cmd_iofile(cmd);
 		while (file && get_file_fd(file) > -1)
 			file = file->next;
 		tmp = get_file_name(file);
 	}
-	printf("TMP| ====> %s\n", tmp);
-	return (0);
+	msg = PERMISSION_DENIED; 
+	if (g_sys.merrno == 1)
+		msg = CMD_NOT_FOUND;
+	if (g_sys.merrno >= 2 && g_sys.merrno <= 3)
+		msg = NO_SUCH_FILE;
+	exit = 127 - 126 * (g_sys.merrno >= 3 && g_sys.merrno <= 5);
+	exit -= (g_sys.merrno == 6); 
+	return (ft_print_error("minishell: %: %\n", msg, tmp), exit);
 }

@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:38:00 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/23 14:44:42 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/24 14:41:01 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,9 @@
 /*###############################################################
 #  	   * DEFINES   :											#
 ###############################################################*/
-# define SIMPLE_CMD 0
-# define COMPONENT_CMD 1
-# define CMD_NOT_FOUND "Minishell: command not found"
-# define PERMISSION_DIEND "Minishell: permission diend"
+# define CMD_NOT_FOUND "command not found"
+# define NO_SUCH_FILE "no such a file or directory"
+# define PERMISSION_DENIED "permission denied"
 
 /*###############################################################
 #  	   * Functions :											#
