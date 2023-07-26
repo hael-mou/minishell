@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 10:49:51 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/21 15:41:58 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/26 17:09:27 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,15 @@ char	*join_string(char *eline, char **line, int in_dquote)
 	}
 	*line += in_dquote;
 	return (eline);
+}
+
+//=============================================
+int	is_empty(char *str)
+{
+	while (str && *str)
+	{
+		if (*str++ != C_SPACE)
+			return (FALSE);
+	}
+	return (TRUE);
 }

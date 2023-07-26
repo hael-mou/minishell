@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 05:31:09 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/24 17:24:50 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/26 16:45:26 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@ void	clear_pattern(t_pattern *pattern);
 //======================================
 char	*with_single_quates(char *eline, char **line);
 char	*join_string(char *eline, char **line, int in_dquote);
+int		is_empty(char *str);
 
 #endif /* EXPANDER_H */

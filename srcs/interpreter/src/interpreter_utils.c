@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:16:20 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/24 23:28:54 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/26 16:43:17 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,16 +75,12 @@ int	minishell_open(t_list *file)
 	int		fd;
 	int		type;
 
+	count = 0;
 	type = get_file_type(file);
 	args = expand_line(get_file_name(file));
-	count = 0;
 	while (args && args[count])
 		count++;
-	if (count > 1
-		|| ((ft_strnstr(get_file_name(file), "\"\"", ft_strlen(get_file_name(file))) == NULL 
-	    && ft_strnstr(get_file_name(file), "''", ft_strlen(get_file_name(file))) == NULL
-		&& *get_file_name(file) != '"')
-		&& *args == NULL))
+	if (count > 1 || *args == NULL)
 	{
 		g_sys.merrno = 7;
 		// free args

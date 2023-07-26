@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 05:28:53 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/24 22:40:08 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/26 17:15:41 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,33 +18,42 @@ char	**expand_line(char *line)
 	char	**exp_line;
 	char	**tmp;
 
-	tmp = expand_var(line);
-	exp_line = expand_wildcard(tmp);
-	ft_free_array(tmp);
+	exp_line = expand_var(line);
+	if (exp_line && *exp_line && **exp_line != 0)
+	{
+		tmp = exp_line;
+		exp_line = expand_wildcard(tmp);
+		ft_free_array(tmp);
+	}
 	return (exp_line);
 }
 
 //=== expand var : ============================================================
 char	**expand_var(char *line)
 {
-	char	**exp_line;
-	char	*tmp;
+	char	**exp_line = NULL;
+	char	*e_tmp;
+	int		q_str;
 
-	tmp = ft_strdup("");
+	q_str = FALSE;
+	e_tmp = ft_strdup("");
 	while (line != NULL && *line != 0)
 	{
-		if (*line == SINGLE_QUOTE)
-		{
-			tmp = with_single_quates(tmp, &line);
-			continue ;
-		}
-		if (*line == DOUBLE_QUOTE)
-			tmp = join_string(tmp, &line, TRUE);
+		if (*line == SINGLE_QUOTE && ++q_str)
+			e_tmp = with_single_quates(e_tmp, &line);
+		else if (*line == DOUBLE_QUOTE && ++q_str)
+			e_tmp = join_string(e_tmp, &line, TRUE);
 		else
-			tmp = join_string(tmp, &line, FALSE);
+			e_tmp = join_string(e_tmp, &line, FALSE);
 	}
-	exp_line = ft_split(tmp, C_SPACE);
-	return (free(tmp), exp_line);
+	if (is_empty(e_tmp) && *e_tmp != C_SPACE && q_str)
+	{
+		exp_line = ft_split("\1", C_SPACE);
+		ft_strreplace(*exp_line, "\1", '\0');
+		return (free(e_tmp), exp_line);
+	}
+	exp_line = ft_split(e_tmp, C_SPACE);
+	return (free(e_tmp), exp_line);
 }
 
 //=== expand wildcard : =======================================================

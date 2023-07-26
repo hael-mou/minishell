@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 05:28:53 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/23 20:36:41 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/26 17:34:08 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ char	*extract_var(char *eline, char **line, int in_dquote)
 		|| **line == DOUBLE_QUOTE || **line == SINGLE_QUOTE)
 	{
 		if (**line != DOUBLE_QUOTE && **line != SINGLE_QUOTE)
-		{
-			(*line)++;
 			eline = ft_vstrjoin(3, eline, "$", S_SPACE);
-		}
 		return (eline);
 	}
 	key = get_var_key(line);

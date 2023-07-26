@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 10:45:47 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/23 14:08:37 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/26 17:13:18 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ int	is_redirection(t_list *token)
 char	*join_argument(t_list *tokens)
 {
 	char	*arg;
+	int		index;
 
+	index = 0;
 	arg = ft_strdup("");
 	if (arg == NULL)
 		return (free(arg), NULL);
@@ -55,7 +57,10 @@ char	*join_argument(t_list *tokens)
 			tokens = tokens->next->next;
 			continue ;
 		}
-		arg = ft_vstrjoin(3, arg, get_token_name(tokens), S_SPACE);
+		if (index++)
+			arg = ft_vstrjoin(3, arg, S_SPACE, get_token_name(tokens));
+		else
+			arg = ft_vstrjoin(2, arg, get_token_name(tokens));
 		tokens = tokens->next;
 	}
 	return (arg);

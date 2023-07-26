@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 12:13:38 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/22 11:01:11 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/26 15:48:52 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_file	*create_file(char *name, int type)
 		return (NULL);
 	new_file->name = ft_strdup(name);
 	new_file->type = type;
+	new_file->fd = -1;
 	if (new_file->name == NULL)
 	{
 		free(new_file);

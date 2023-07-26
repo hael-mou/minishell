@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 18:50:04 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/24 21:55:40 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/26 17:27:52 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	extract_command(t_node *cmd)
 	if (args != NULL)
 	{
 		set_cmd_args(cmd, args);
-		set_cmd_name(cmd, *args);
+		set_cmd_name(cmd, ft_strdup(*args));
 		set_cmd_path(cmd, whereis_cmd(*args));
 	}
 	free(tmp);
@@ -80,7 +80,7 @@ char	*whereis_cmd(char *cmd)
 			g_sys.merrno = 7 * -access(cmd, X_OK) - 1;
 		return (ft_strdup(cmd));
 	}
-	while (cmd && path && *path)
+	while (cmd && *cmd && path && *path)
 	{
 		pathlen = ft_toklen(path, ':');
 		cmd_path = ft_substr(path, 0, pathlen);
@@ -104,19 +104,11 @@ int	*get_command_inout(t_list *file)
 
 	in_out = (int *) malloc(sizeof(int) * 2);
 	ft_memset(in_out, 255, 8);
-	while (in_out && file)
+	while (in_out && file && g_sys.merrno == -1)
 	{
 		type = get_file_type(file);
 		if (type == REDIR_IN || type == REDIR_OUT || type == REDIR_APPEND)
 			set_file_fd(file, minishell_open(file));
-		/*if (get_file_fd(file) == -1)
-		{
-			g_sys.merrno += 4 * (access(get_file_name(file), F_OK) == -1);
-			if (access(get_file_name(file), R_OK) == -1 && g_sys.merrno == -1)
-				g_sys.merrno = 4;
-			if ((type == REDIR_OUT || type == REDIR_APPEND) && g_sys.merrno == -1)
-				g_sys.merrno = 5;
-		}*/
 		if (type == REDIR_IN || type == HERE_DOC)
 			in_out[0] = get_file_fd(file);
 		if (type == REDIR_OUT || type == REDIR_APPEND)
