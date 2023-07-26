@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:20:51 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/23 14:24:19 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/26 20:05:31 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,10 @@ t_list	*analyzer(t_list *tokens)
 			return (NULL);
 		if (cursor->next == NULL)
 			cursor->next = complete_tokens(cursor, eq_point);
+		if (!(cursor->next == NULL && eq_point > 0)
+			&& get_token_type(cursor) != END)
+			cursor = cursor->next;
 		prev_state = cur_state;
-		cursor = cursor->next;
 	}
 	return (tokens);
 }

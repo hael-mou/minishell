@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:21:54 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/02 18:25:53 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/26 19:28:10 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,11 @@ void	update_quotes_data(char *buff, int *data);
 
 // minishell toknizer
 t_list	*tokenizer(char *line);
+void	clean_tokenizer(t_list *tokens);
 
 // Subtokens:
-t_list	*subsh_prompt(int eq_point);
-t_list	*operator_prompt(int type);
+t_list	*subsh_prompt(t_list *token, int eq_point);
+t_list	*operator_prompt(t_list *token);
 t_list	*quote_prompt(t_list *token);
 char	*get_prompt(int type);
 

@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:20:35 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/11 20:25:28 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/26 20:18:15 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int	parse_error(int prev_state, int state, t_list *token, int eq_point)
 		|| (eq_point < 0))
 		msg = get_token_name(token);
 	if ((prev_state == STRING && state == OPEN_PARENTHESIS)
-		|| (!token->next && state == REDIR))
+		|| (!token->next && state == REDIR)
+		|| (get_token_type(token) == END))
 	{
 		msg = get_token_name(token->next);
 		if (!msg)
@@ -69,15 +70,11 @@ t_list	*complete_tokens(t_list *token, int eq_point)
 	new_tokens = NULL;
 	type = get_token_type(token);
 	if (type == PIPE || type == AND || type == OR)
-		return (operator_prompt(type));
+		new_tokens = operator_prompt(token);
 	if (type == SINGLE_QUOTES || type == DOUBLE_QUOTES)
-	{
 		new_tokens = quote_prompt(token);
-		if (new_tokens != NULL)
-			return (new_tokens);
-	}
-	if (eq_point > 0)
-		ft_lstadd_back(&new_tokens, subsh_prompt(eq_point));
+	if (eq_point > 0 && (type == STRING || type == OPEN_PARENTHESIS))
+		new_tokens = subsh_prompt(token, eq_point);
 	return (new_tokens);
 }
 
