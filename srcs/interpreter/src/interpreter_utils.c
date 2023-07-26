@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:16:20 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/24 17:04:33 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/24 23:28:54 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,40 +31,6 @@ char	**get_env(t_list *g_env)
 	}
 	env[index] = NULL;
 	return (env);
-}
-
-//=== whereis_command ==========================================================
-char	*whereis_cmd(char *cmd)
-{
-	char	*cmd_path;
-	char	*path;
-	int		pathlen;
-
-	if (!cmd)
-		return (NULL);
-	path = search_var(g_sys.env, "PATH");
-	g_sys.merrno += 3 * (!path || !*path); 
-	if (ft_strncmp(cmd, "./", 2) == 0 || *cmd == '/')
-	{
-		g_sys.merrno = 2;
-		if (access(cmd, F_OK) == 0)
-			g_sys.merrno = 7 * -access(cmd, X_OK) - 1;
-		return (ft_strdup(cmd));
-	}
-	while (cmd && path && *path)
-	{
-		pathlen = ft_toklen(path, ':');
-		cmd_path = ft_substr(path, 0, pathlen);
-		cmd_path = ft_strjoin(cmd_path, ft_strjoin(ft_strdup("/"), ft_strdup(cmd)));
-		if (access(cmd_path, F_OK) == F_OK)
-			return (cmd_path);
-		free(cmd_path);
-		while (path[pathlen] == ':')
-			pathlen++;
-		path += pathlen;
-	}
-	g_sys.merrno += 2 * (g_sys.merrno == -1);
-	return (NULL);
 }
 
 //=== close_inout ==============================================================
@@ -101,29 +67,40 @@ int	get_mode(int type)
 	return (tmp | O_TRUNC);
 }
 
-//=== print_error_msg ==========================================================
-int	print_error_msg(t_node *cmd)
+//=== minishell_open ===========================================================
+int	minishell_open(t_list *file)
 {
-	t_list	*file;
-	char	*name;
-	char	*msg;
-	int		exit;
+	char	**args;
+	int		count;
+	int		fd;
+	int		type;
 
-	if (g_sys.merrno == 1 || g_sys.merrno == 2 || g_sys.merrno == 6)
-		name = get_cmd_name(cmd);
-	if (g_sys.merrno >= 3 && g_sys.merrno <= 5)
+	type = get_file_type(file);
+	args = expand_line(get_file_name(file));
+	count = 0;
+	while (args && args[count])
+		count++;
+	if (count > 1
+		|| ((ft_strnstr(get_file_name(file), "\"\"", ft_strlen(get_file_name(file))) == NULL 
+	    && ft_strnstr(get_file_name(file), "''", ft_strlen(get_file_name(file))) == NULL
+		&& *get_file_name(file) != '"')
+		&& *args == NULL))
 	{
-		file = get_cmd_iofile(cmd);
-		while (file && get_file_fd(file) > -1)
-			file = file->next;
-		name = get_file_name(file);
+		g_sys.merrno = 7;
+		// free args
+		return (-1);
 	}
-	msg = PERMISSION_DENIED; 
-	if (g_sys.merrno == 1)
-		msg = CMD_NOT_FOUND;
-	if (g_sys.merrno >= 2 && g_sys.merrno <= 3)
-		msg = NO_SUCH_FILE;
-	exit = 127 - 126 * (g_sys.merrno >= 3 && g_sys.merrno <= 5);
-	exit -= (g_sys.merrno == 6); 
-	return (ft_print_error("minishell: %: %\n", msg, name), exit);
+	free(get_file_name(file));
+	set_file_name(file, ft_strdup(*args));
+	fd = open(get_file_name(file), get_mode(type), 0644);
+	if (fd == -1)
+	{
+		g_sys.merrno += 4 * (access(get_file_name(file), F_OK) == -1);
+		if (access(get_file_name(file), R_OK) == -1 && g_sys.merrno == -1)
+			g_sys.merrno = 4;
+		if ((type == REDIR_OUT || type == REDIR_APPEND) && g_sys.merrno == -1)
+			g_sys.merrno = 5;
+	}
+	// free args
+	return (fd);
 }

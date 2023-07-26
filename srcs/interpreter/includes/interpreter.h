@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:38:00 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/24 14:41:01 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/24 21:30:39 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@
 #  	   * DEFINES   :											#
 ###############################################################*/
 # define CMD_NOT_FOUND "command not found"
-# define NO_SUCH_FILE "no such a file or directory"
-# define PERMISSION_DENIED "permission denied"
+# define NO_SUCH_FILE "No such file or directory"
+# define PERMISSION_DENIED "Permission denied"
+# define AMBIGUOUS_REDIRECT "ambiguous redirect"
 
 /*###############################################################
 #  	   * Functions :											#
@@ -61,6 +62,8 @@ int		close_inout(t_list *files);
 int		my_execve(t_node *cmd);
 int		get_mode(int type);
 int		is_simple_cmd(void);
+int		minishell_open(t_list *file);
+
 int		print_error_msg(t_node *cmd);
 
 #endif

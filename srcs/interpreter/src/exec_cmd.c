@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 18:50:04 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/24 17:27:05 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/24 21:55:40 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ pid_t	exec_cmd(t_node *cmd)
 	re = -1;
 	in_out = get_command_inout(get_cmd_iofile(cmd));
 	extract_command(cmd);
-	if (g_sys.pipeline.offset == -1 && g_sys.pipeline.fd[1] == -1)
+	if (g_sys.pipeline.offset == -1 && g_sys.pipeline.fd[1] == -1
+			&& g_sys.merrno <= 2)
 		re = exec_builtins(cmd, in_out);
 	cmd->pid = fork();
 	if (cmd->pid < 0)
@@ -34,7 +35,7 @@ pid_t	exec_cmd(t_node *cmd)
 		close_inout(get_cmd_iofile(cmd));
 		close_pipe(g_sys.pipeline.fd);
 		close(g_sys.pipeline.offset);
-		if (my_execve(cmd))
+		if (my_execve(cmd) == ERROR)
 			exit(print_error_msg(cmd));
 	}
 	close_inout(get_cmd_iofile(cmd));
@@ -61,6 +62,40 @@ void	extract_command(t_node *cmd)
 	free(tmp);
 }
 
+//=== whereis_command ==========================================================
+char	*whereis_cmd(char *cmd)
+{
+	char	*cmd_path;
+	char	*path;
+	int		pathlen;
+
+	if (!cmd)
+		return (NULL);
+	path = search_var(g_sys.env, "PATH");
+	g_sys.merrno += 3 * (!path || !*path); 
+	if (ft_strncmp(cmd, "./", 2) == 0 || *cmd == '/')
+	{
+		g_sys.merrno = 2;
+		if (access(cmd, F_OK) == 0)
+			g_sys.merrno = 7 * -access(cmd, X_OK) - 1;
+		return (ft_strdup(cmd));
+	}
+	while (cmd && path && *path)
+	{
+		pathlen = ft_toklen(path, ':');
+		cmd_path = ft_substr(path, 0, pathlen);
+		cmd_path = ft_strjoin(cmd_path, ft_strjoin(ft_strdup("/"), ft_strdup(cmd)));
+		if (access(cmd_path, F_OK) == F_OK)
+			return (cmd_path);
+		free(cmd_path);
+		while (path[pathlen] == ':')
+			pathlen++;
+		path += pathlen;
+	}
+	g_sys.merrno += 2 * (g_sys.merrno == -1);
+	return (NULL);
+}
+
 //=== get_command_inout ========================================================
 int	*get_command_inout(t_list *file)
 {
@@ -73,15 +108,15 @@ int	*get_command_inout(t_list *file)
 	{
 		type = get_file_type(file);
 		if (type == REDIR_IN || type == REDIR_OUT || type == REDIR_APPEND)
-			set_file_fd(file, open(get_file_name(file), get_mode(type), 0644));
-		if (get_file_fd(file) == -1)
+			set_file_fd(file, minishell_open(file));
+		/*if (get_file_fd(file) == -1)
 		{
 			g_sys.merrno += 4 * (access(get_file_name(file), F_OK) == -1);
 			if (access(get_file_name(file), R_OK) == -1 && g_sys.merrno == -1)
 				g_sys.merrno = 4;
 			if ((type == REDIR_OUT || type == REDIR_APPEND) && g_sys.merrno == -1)
 				g_sys.merrno = 5;
-		}
+		}*/
 		if (type == REDIR_IN || type == HERE_DOC)
 			in_out[0] = get_file_fd(file);
 		if (type == REDIR_OUT || type == REDIR_APPEND)
