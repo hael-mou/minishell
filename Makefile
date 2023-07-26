@@ -6,7 +6,7 @@
 #    By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/13 11:01:09 by hael-mou          #+#    #+#              #
-#    Updated: 2023/07/26 17:51:45 by oezzaou          ###   ########.fr        #
+#    Updated: 2023/07/26 21:49:56 by oezzaou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ BONUS			:=	1
 # Directories:
 SRC_DIR			:=	srcs
 LIBFT_DIR		:= 	libft
+RDL_DIR			:=	readline
 OBJ_DIR			:=	objs
 
 # Libraries:
@@ -35,7 +36,8 @@ INCLUDE_DIRS	:=	$(sort $(dir $(INCLUDE_FILES)))
 CC				:= 	cc
 RM				:= 	rm -rf
 CFLAGS 			:= 	-Wall -Wextra -Werror -g -fsanitize=address
-LINKS			:= 	-lreadline
+LINKS			:= 	-lft -lhistory -lreadline
+LINKS_DIR		:=	-L $(LIBFT_DIR) -L $(RDL_DIR)
 INCLUDE			:=	$(addprefix -I,$(INCLUDE_DIRS))
 
 # Colors :
@@ -67,7 +69,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/*/src/*/%.c | .create_dirs
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ_FILES)
-	@$(CC) $(CFLAGS) $(LINKS) $(INCLUDE) $^ -o $@
+	@$(CC) $(CFLAGS) $(INCLUDE) $(LINKS_DIR) $^ -o $@ $(LINKS)
 	@echo "$(GREEN) [OK]$(DEF)$(YELLOW)	[ $@ is created ]$(DEF)"
 
 run:

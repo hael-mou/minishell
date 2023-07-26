@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:35:28 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/26 20:09:10 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/26 21:51:10 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@
 /*#############################################################################
 #		* Includes : 	    												  #
 #############################################################################*/
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <stdlib.h>
 # include <unistd.h>
+# include <stdio.h>
+# include "readline.h"
+# include "history.h"
+# include <stdlib.h>
 # include "defines.h"
 # include "types.h"
 

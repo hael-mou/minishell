@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:23:48 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/22 16:06:41 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/26 21:56:56 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 ###############################################################*/
 # include <unistd.h>
 # include <sys/wait.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+# include <stdio.h>
+# include "readline.h"
 # include "tokenizer.h"
 # include "defines.h"
 # include "types.h"

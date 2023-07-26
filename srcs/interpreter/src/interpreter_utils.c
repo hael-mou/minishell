@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:16:20 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/26 16:43:17 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/26 21:44:41 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,25 +71,23 @@ int	get_mode(int type)
 int	minishell_open(t_list *file)
 {
 	char	**args;
-	int		count;
-	int		fd;
+	int		tmp;
 	int		type;
 
-	count = 0;
+	tmp = 0;
 	type = get_file_type(file);
 	args = expand_line(get_file_name(file));
-	while (args && args[count])
-		count++;
-	if (count > 1 || *args == NULL)
+	while (args && args[tmp])
+		tmp++;
+	if (tmp > 1 || *args == NULL)
 	{
 		g_sys.merrno = 7;
-		// free args
-		return (-1);
+		return (ft_free_array(args), -1);
 	}
 	free(get_file_name(file));
 	set_file_name(file, ft_strdup(*args));
-	fd = open(get_file_name(file), get_mode(type), 0644);
-	if (fd == -1)
+	tmp = open(get_file_name(file), get_mode(type), 0644);
+	if (tmp == -1)
 	{
 		g_sys.merrno += 4 * (access(get_file_name(file), F_OK) == -1);
 		if (access(get_file_name(file), R_OK) == -1 && g_sys.merrno == -1)
@@ -97,6 +95,5 @@ int	minishell_open(t_list *file)
 		if ((type == REDIR_OUT || type == REDIR_APPEND) && g_sys.merrno == -1)
 			g_sys.merrno = 5;
 	}
-	// free args
-	return (fd);
+	return (ft_free_array(args), tmp);
 }
