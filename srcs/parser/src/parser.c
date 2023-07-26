@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:23:32 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/06/25 04:30:58 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/26 20:12:56 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ t_node	*parser(t_list *tokens)
 	void	*copy;
 
 	copy = tokens;
+	if (tokens == NULL)
+		return (NULL);
 	tree = parse_seq(&tokens);
 	clean_tokenizer(copy);
 	return (tree);

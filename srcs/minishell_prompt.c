@@ -6,21 +6,14 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:34:12 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/24 17:31:08 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/26 20:39:02 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-#define ICON_SUCCESS   "🟢"
-#define ICON_FAILURE   "🔴"
-#define ICON_PROMPT	   " ︻╦̵̵̿╤── 💥 ⟹  "
-#define PROMPT_GIT	   "\033[1;34m git:(\033[1;31mmain\033[1;34m)"
-#define PROMPT_SUFFIX  "\033[1;33m ✗"
-
-
-//=====================
-char *get_wdir(void)
+//=== get_wdir ================================================================
+char	*get_wdir(void)
 {
 	char	*cwd_abs_path;
 	char	*cwd;
@@ -32,8 +25,8 @@ char *get_wdir(void)
 	return (free(cwd_abs_path), cwd);
 }
 
-//=====================
-char *get_git_tag(void)
+//=== get_git_tag =============================================================
+char	*get_git_tag(void)
 {
 	t_dir	dir;
 	char	*cwd;
@@ -54,15 +47,15 @@ char *get_git_tag(void)
 	return (PROMPT_SUFFIX);
 }
 
-//=====================
-char *get_status_icon(void)
+//=== get_status_icon =========================================================
+char	*get_status_icon(void)
 {
 	if (g_sys.exit_status == EXIT_SUCCESS)
 		return (ICON_SUCCESS);
 	return (ICON_FAILURE);
 }
 
-//=====================
+//=== minishell_prompt ========================================================
 char	*minishell_prompt(void)
 {
 	char	*prompt;
@@ -73,7 +66,8 @@ char	*minishell_prompt(void)
 	cwd = get_wdir();
 	git = get_git_tag();
 	status = get_status_icon();
-	printf("\n\033[1;96m╭ %s %s\033[0;120m\n", cwd, git);
-	prompt = ft_vstrjoin(3, ft_strdup("╰ "), status, ICON_PROMPT);
+	prompt = ft_strdup("\n"CYAN_COLOR"╭ ");
+	prompt = ft_vstrjoin(4, prompt, cwd, git, WAITE_COLOR"\n");
+	prompt = ft_vstrjoin(4, prompt, "╰ ", status, ICON_PROMPT);
 	return (free(cwd), prompt);
 }
