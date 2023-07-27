@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 07:17:12 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/26 18:44:25 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/27 18:08:39 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,13 @@
 # define S_SPACE	        "\5"
 # define C_STAR	            '\2'
 # define S_STAR	            "\2"
+
+/*###############################################################
+#		* Area :		    						 			#
+###############################################################*/
+# define MAIN_AREA			0
+# define INTERPRETER		1
+# define PARSER_AREA		2
+# define LEXER_AREA			3
 
 #endif /* DEFINES_H */

@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:35:28 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/27 11:40:29 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/27 18:09:51 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #############################################################################*/
 # include <unistd.h>
 # include <stdio.h>
+# include <signal.h>
 # include "readline.h"
 # include "history.h"
 # include <stdlib.h>
@@ -56,6 +57,7 @@ void	minishell_init(char **env);
 void	minishell_clean(t_minish *minish);
 void	builtins_init(t_built *builtins);
 void	minishell_ignore(int argc, char **argv);
+void	minishell_signal(void);
 
 // minishell Module :
 char	*minishell_prompt(void);
@@ -66,5 +68,6 @@ void	interpreter(t_node *tree);
 // other :
 int		minishell_export(char **args);
 void	clean_tree(t_node *head);
+void	minish_sigign(void);
 
 #endif /* MINISHELL_H */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:20:51 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/27 16:27:29 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/27 17:59:23 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_list	*lexer(char *line)
 {
 	t_list	*tokens;
 
+	g_sys.area = LEXER_AREA;
 	tokens = tokenizer(line);
 	if (!tokens)
 		return (NULL);

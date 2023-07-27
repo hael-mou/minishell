@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 22:04:28 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/27 11:49:58 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/27 16:56:15 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_system
 	int			std_out;
 	int			exit_status;
 	int			merrno;
+	int			area;
 	t_list		*env;
 	t_built		builtins;
 	t_pipeline	pipeline;

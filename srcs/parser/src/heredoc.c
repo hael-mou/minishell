@@ -6,17 +6,18 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:37:38 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/23 14:10:08 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/27 18:45:11 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
 //===================
-void	run_heredoc(t_list *file)
+int	run_heredoc(t_list *file)
 {
 	pid_t	h_pid;
 	int		h_pipe[2];
+	int		status;
 
 	if (pipe(h_pipe) == ERROR)
 		perror("heredoc: create pipe error !!\n");
@@ -26,18 +27,21 @@ void	run_heredoc(t_list *file)
 		if (h_pid < 0)
 		{
 			perror("heredoc: fock error !!\n");
-			return ;
+			return (EXIT_FAILURE);
 		}
 		else if (h_pid == 0)
 		{
+			minishell_signal();
 			heardoc_readlines(file, h_pipe[1]);
 			close_pipe(h_pipe);
-			exit(SUCCESS);
+			exit(EXIT_SUCCESS);
 		}
 		set_file_fd(file, h_pipe[0]);
 		close(h_pipe[1]);
-		waitpid(h_pid, NULL, 0);
+		waitpid(h_pid, &status, 0);
+		return ((((*(int *)&(status)) >> 8) & 0x000000ff));
 	}
+	return (EXIT_FAILURE);
 }
 
 //==================
@@ -48,7 +52,7 @@ void	heardoc_readlines(t_list *file, int fd)
 
 	detect_quotes = remove_quotes(file);
 	while (TRUE)
-	{
+	{ 
 		line = readline("heredoc> ");
 		if (!line || !ft_strcmp(line, get_file_name(file)))
 			break ;

@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 21:21:16 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/27 17:13:55 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/27 18:35:11 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 //=== interpreter ==============================================================
 int	interpreter(t_node *root)
 {
-	if (!root)
-		return (0);
+	if (root == NULL || g_sys.merrno != -1)
+	{
+		g_sys.merrno = -1;
+		return (!root);
+	}
 	exec_branches(root);
 	g_sys.exit_status = extract_exit_status(root);
 	return (SUCCESS);

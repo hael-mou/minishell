@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:23:48 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/26 21:56:56 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/27 18:30:39 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,13 @@ int			is_end_of_command(t_list *token);
 int			is_redirection(t_list *token);
 
 //heredoc
-void		run_heredoc(t_list *file);
+int			run_heredoc(t_list *file);
 void		heardoc_readlines(t_list *file, int fd);
 int			remove_quotes(t_list *file);
+int			close_iofile_pipe(t_list *file, int c_pipe);
+
+//SIGNAL:
+void		minish_sigign(void);
+void		minishell_signal(void);
 
 #endif

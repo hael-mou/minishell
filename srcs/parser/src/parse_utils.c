@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 10:45:47 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/27 11:44:53 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/27 18:49:44 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,14 @@ t_list	*extract_files(t_list *tokens)
 			name = get_token_name(tokens->next);
 			listadd_file(&files, create_file(name, type));
 			if (files == NULL || tokens->next == NULL)
+				return (ft_lstclear(&files, clean_file), NULL);
+			if (type == HERE_DOC && g_sys.merrno == -1 
+				&& run_heredoc(ft_lstlast(files)))
 			{
-				ft_lstclear(&files, clean_file);
-				return (NULL);
+				g_sys.merrno = 9;
+				close_iofile_pipe(files, FALSE);
+				return (ft_lstclear(&files, clean_file), NULL);
 			}
-			if (get_file_type(files) == HERE_DOC)
-				run_heredoc(ft_lstlast(files));
 			tokens = tokens->next;
 		}
 		tokens = tokens->next;

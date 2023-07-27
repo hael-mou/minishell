@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:19:51 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/27 17:06:11 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/27 18:04:10 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_list	*operator_prompt(t_list *token)
 	while (!ntokens)
 	{
 		line = readline(prompt);
-		if (!line && write(1, "\n", 1))
+		if (!line)
 			return (set_token_type(token, END), clean_tokenizer(ntokens), NULL);
 		ntokens = tokenizer(line);
 		free(line);
@@ -46,7 +46,7 @@ t_list	*subsh_prompt(t_list *token, int eq_point)
 		while (--subshs > 0)
 			printf("%-6.5s", SUBSH_PROMPT);
 		line = readline(SUBSH_PROMPT);
-		if (!line && write(1, "\n", 1))
+		if (!line)
 			return (set_token_type(token, END), clean_tokenizer(ntokens), NULL);
 		ntokens = tokenizer(line);
 		free(line);
@@ -68,7 +68,7 @@ t_list	*quote_prompt(t_list *token)
 	while (data[SQUOTES] % 2 || data[DQUOTES] % 2)
 	{
 		tmp = readline(get_prompt(data[TYPE]));
-		if (!tmp && write(1, "\n", 1))
+		if (!tmp)
 			return (set_token_type(token, END), free(line), NULL);
 		update_quotes_data((char *) tmp, data);
 		line = ft_strjoin(line, (char *) tmp);
