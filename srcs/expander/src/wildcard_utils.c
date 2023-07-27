@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 10:52:16 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/21 18:14:01 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/26 23:16:21 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ int	is_match(char *str, t_pattern *ptn)
 		str += ft_strlen(*middle++);
 	}
 	len = ft_strlen(str) - ft_strlen(ptn->last);
-	if (ptn->last != NULL && *(ptn->last) != 0 && (len < 0 
-		|| ft_strncmp(str + len, ptn->last, ft_strlen(ptn->last)) != 0))
-			return (FALSE);
+	if (ptn->last != NULL && *(ptn->last) != 0 && (len < 0
+			|| ft_strncmp(str + len, ptn->last, ft_strlen(ptn->last)) != 0))
+		return (FALSE);
 	return (SUCCESS);
 }
 
@@ -89,7 +89,7 @@ char	*extract_star(char *line)
 	dir.stream = opendir(".");
 	exp_line = ft_strdup("");
 	if (dir.stream == NULL)
-		return (clear_pattern(&pattern), NULL); //free pattern;
+		return (clear_pattern(&pattern), NULL);
 	dir.info = readdir(dir.stream);
 	while (dir.info)
 	{

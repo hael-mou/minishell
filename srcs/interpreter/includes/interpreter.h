@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:38:00 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/24 21:30:39 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/26 23:36:49 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		extract_exit_status(t_node *node);
 // interpreter_utils :
 char	**get_env(t_list *g_env);
 char	*whereis_cmd(char *cmd);
-int		close_inout(t_list *files);
+int	    close_file_pipes(t_list *file, int c_pipe);
 int		my_execve(t_node *cmd);
 int		get_mode(int type);
 int		is_simple_cmd(void);

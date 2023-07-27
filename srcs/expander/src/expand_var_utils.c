@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 05:28:53 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/26 17:34:08 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/26 23:13:58 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ char	*get_var_key(char **line)
 	int		len;
 	char	*key;
 
-	len = ft_isalpha(**line) || **line == '_';
+	len = (ft_isalpha(**line) || **line == '_');
 	if (len == 0 && **line == '?')
 		return (++(*line), ft_strdup("?"));
-	if (len == 0 && **line != 0 )
+	if (len == 0 && **line != 0)
 		return (++(*line), NULL);
 	while (ft_isalnum((*line)[len]) || (*line)[len] == '_')
 		len++;

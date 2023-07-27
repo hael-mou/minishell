@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 18:50:04 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/26 21:30:53 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/27 10:18:40 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ pid_t	exec_cmd(t_node *cmd)
 	in_out = get_command_inout(get_cmd_iofile(cmd));
 	extract_command(cmd);
 	if (g_sys.pipeline.offset == -1 && g_sys.pipeline.fd[1] == -1
-			&& g_sys.merrno <= 2)
+		&& g_sys.merrno <= 2)
 		re = exec_builtins(cmd, in_out);
 	cmd->pid = fork();
 	if (cmd->pid < 0)
@@ -32,15 +32,11 @@ pid_t	exec_cmd(t_node *cmd)
 		if (re != -1)
 			exit(re);
 		dup_process_inout(in_out);
-		close_inout(get_cmd_iofile(cmd));
-		close_pipe(g_sys.pipeline.fd);
-		close(g_sys.pipeline.offset);
+		close_file_pipes(get_cmd_iofile(cmd), TRUE);
 		if (my_execve(cmd) == ERROR)
 			exit(print_error_msg(cmd));
 	}
-	close_inout(get_cmd_iofile(cmd));
-	close(g_sys.pipeline.offset);
-	g_sys.pipeline.offset = -1;
+	close_file_pipes(get_cmd_iofile(cmd), FALSE);
 	g_sys.merrno = -1;
 	return (cmd->pid);
 }
@@ -69,10 +65,10 @@ char	*whereis_cmd(char *cmd)
 	char	*path;
 	int		pathlen;
 
-	if (!cmd)
+	if (cmd == NULL)
 		return (NULL);
 	path = search_var(g_sys.env, "PATH");
-	g_sys.merrno += 3 * (!path || !*path); 
+	g_sys.merrno += 3 * (!path || !*path);
 	if (ft_strncmp(cmd, "./", 2) == 0 || *cmd == '/')
 	{
 		g_sys.merrno = 2;
@@ -83,8 +79,8 @@ char	*whereis_cmd(char *cmd)
 	while (cmd && *cmd && path && *path)
 	{
 		pathlen = ft_toklen(path, ':');
-		cmd_path = ft_substr(path, 0, pathlen);
-		cmd_path = ft_strjoin(cmd_path, ft_strjoin(ft_strdup("/"), ft_strdup(cmd)));
+		cmd_path = ft_strjoin(ft_substr(path, 0, pathlen),
+				ft_strjoin(ft_strdup("/"), ft_strdup(cmd)));
 		if (access(cmd_path, F_OK) == F_OK)
 			return (cmd_path);
 		free(cmd_path);
@@ -92,8 +88,7 @@ char	*whereis_cmd(char *cmd)
 			pathlen++;
 		path += pathlen;
 	}
-	g_sys.merrno += 2 * (g_sys.merrno == -1);
-	return (NULL);
+	return ((g_sys.merrno += 2 * (g_sys.merrno == -1)), NULL);
 }
 
 //=== get_command_inout ========================================================

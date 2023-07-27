@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interpreter_errors.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 18:49:13 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/26 20:23:30 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/26 23:19:28 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	print_error_msg(t_node *cmd)
 			file = file->next;
 		name = get_file_name(file);
 	}
-	msg = PERMISSION_DENIED; 
+	msg = PERMISSION_DENIED;
 	if (g_sys.merrno == 1)
 		msg = CMD_NOT_FOUND;
 	if (g_sys.merrno >= 2 && g_sys.merrno <= 3)
@@ -39,6 +39,6 @@ int	print_error_msg(t_node *cmd)
 	if (g_sys.merrno == 7)
 		msg = AMBIGUOUS_REDIRECT;
 	exit = 127 - 126 * ((g_sys.merrno >= 3 && g_sys.merrno <= 5) || g_sys.merrno == 7);
-	exit -= (g_sys.merrno == 6); 
+	exit -= (g_sys.merrno == 6);
 	return (ft_print_error("minishell: %\n", msg), exit);
 }

@@ -6,7 +6,7 @@
 #    By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/06 12:36:30 by hael-mou          #+#    #+#              #
-#    Updated: 2023/07/26 17:51:56 by oezzaou          ###   ########.fr        #
+#    Updated: 2023/07/26 23:23:04 by hael-mou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ FT_NUMBER	= ft_nbrlen ft_nbrnchr
 FT_STRING	= ft_split ft_strchr ft_strcount ft_strdup ft_striteri ft_strjoin\
 			  ft_strlcat ft_strlcpy ft_strlen ft_strmapi ft_strncmp ft_strnstr\
 			  ft_strrchr ft_strtok ft_strtrim ft_substr ft_strcmp ft_toklen\
-			  ft_strnjoin ft_strreplace ft_vstrjoin ft_free_array
+			  ft_strnjoin ft_strreplace ft_vstrjoin ft_free_array ft_array_size
 FT_PRINT	= ft_putchar_fd ft_putendl_fd ft_putnbr_fd ft_putstr_fd ft_print_error
 FT_GNL		= get_next_line get_next_line_utils
 FT_LIST		= ft_lstdelone ft_lstadd_front ft_lstadd_back ft_lstdelone ft_lstclear\

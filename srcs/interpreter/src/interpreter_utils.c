@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:16:20 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/26 21:44:41 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/26 23:35:08 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,18 @@ char	**get_env(t_list *g_env)
 	return (env);
 }
 
-//=== close_inout ==============================================================
-int	close_inout(t_list *file)
+//=== close_file_pipes ==============================================================
+int	close_file_pipes(t_list *file, int c_pipe)
 {
 	while (file)
 	{
 		close(get_file_fd(file));
 		file = file->next;
 	}
+	if (c_pipe == TRUE)
+		close_pipe(g_sys.pipeline.fd);
+	close(g_sys.pipeline.offset);
+	g_sys.pipeline.offset = -1;
 	return (SUCCESS);
 }
 
@@ -50,7 +54,7 @@ int	my_execve(t_node *cmd)
 	if (g_sys.merrno <= 2 && exec_builtins(cmd, NULL) == EXIT_SUCCESS)
 		exit(EXIT_SUCCESS);
 	if (g_sys.merrno == -1)
- 		execve(get_cmd_path(cmd), get_cmd_args(cmd), get_env(g_sys.env));
+		execve(get_cmd_path(cmd), get_cmd_args(cmd), get_env(g_sys.env));
 	return (ERROR);
 }
 
@@ -71,23 +75,20 @@ int	get_mode(int type)
 int	minishell_open(t_list *file)
 {
 	char	**args;
-	int		tmp;
+	int		fd;
 	int		type;
 
-	tmp = 0;
 	type = get_file_type(file);
 	args = expand_line(get_file_name(file));
-	while (args && args[tmp])
-		tmp++;
-	if (tmp > 1 || *args == NULL)
+	if (ft_array_size(args) > 1 || *args == NULL)
 	{
 		g_sys.merrno = 7;
 		return (ft_free_array(args), -1);
 	}
 	free(get_file_name(file));
 	set_file_name(file, ft_strdup(*args));
-	tmp = open(get_file_name(file), get_mode(type), 0644);
-	if (tmp == -1)
+	fd = open(get_file_name(file), get_mode(type), 0644);
+	if (fd == ERROR)
 	{
 		g_sys.merrno += 4 * (access(get_file_name(file), F_OK) == -1);
 		if (access(get_file_name(file), R_OK) == -1 && g_sys.merrno == -1)
@@ -95,5 +96,5 @@ int	minishell_open(t_list *file)
 		if ((type == REDIR_OUT || type == REDIR_APPEND) && g_sys.merrno == -1)
 			g_sys.merrno = 5;
 	}
-	return (ft_free_array(args), tmp);
+	return (ft_free_array(args), fd);
 }
