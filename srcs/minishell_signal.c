@@ -6,15 +6,14 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 16:49:20 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/27 18:32:01 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/27 18:56:56 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //=== sigint_hendler ==========================================================
-
-void    sigint_hendler(int signum)
+void	sigint_hendler(int signum)
 {
 	(void) signum;
 	rl_replace_line("", 0);

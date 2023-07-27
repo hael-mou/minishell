@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 10:25:28 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/26 23:23:29 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/27 18:57:19 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	*ft_substr(char const *string, unsigned int start, size_t len);
 char	*ft_strnjoin(char *string1, char const *string2, size_t n);
 char	*ft_vstrjoin(int nstr, char *dst, ...);
 void	ft_free_array(char **node);
-int     ft_array_size(char **array);
+int		ft_array_size(char **array);
 
 // number:
 int		ft_nbrlen(int number);
