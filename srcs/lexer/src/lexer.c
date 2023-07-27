@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:20:51 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/26 20:05:31 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/27 16:27:29 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ t_list	*lexer(char *line)
 	t_list	*tokens;
 
 	tokens = tokenizer(line);
+	if (!tokens)
+		return (NULL);
 	if (analyzer(tokens) == NULL)
 	{
 		g_sys.exit_status = 2;

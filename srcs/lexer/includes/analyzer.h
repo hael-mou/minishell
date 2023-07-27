@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyzer.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:21:54 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/26 21:56:26 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/27 14:44:52 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #  	   * Includes :		    								 	#
 ###############################################################*/
 # include <stdio.h>
-# include "readline.h"
+# include <readline/readline.h>
 # include "libft.h"
 # include "token.h"
 

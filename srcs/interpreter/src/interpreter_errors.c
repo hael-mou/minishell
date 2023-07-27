@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 18:49:13 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/27 15:58:25 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/27 17:11:52 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ int	get_exit(int merrno)
 	int	exit;
 
 	exit = 127;
-	exit -= 126 * ((merrno >= 3 && merrno <= 5) || merrno == 7) - (merrno == 6);
+	exit -= 126 * ((merrno >= 3 && merrno <= 5) || merrno == 7);
+	exit -= (merrno == 6);
 	return (exit);
 }
 

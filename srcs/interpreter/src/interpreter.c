@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 21:21:16 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/27 14:34:30 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/27 17:13:55 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,5 @@ pid_t	extract_exit_status(t_node *node)
 			break ;
 		node = get_right_node(node);
 	}
-	return (WEXITSTATUS(status));
+	return ((((*(int *)&(status)) >> 8) & 0x000000ff));
 }
