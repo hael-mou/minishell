@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:16:20 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/27 18:25:00 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/27 21:54:09 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,16 @@ int	close_iofile_pipe(t_list *file, int c_pipe)
 //=== my_execve ================================================================
 int	my_execve(t_node *cmd)
 {
+	char	**env;
+
 	if (g_sys.merrno <= 2 && exec_builtins(cmd, NULL) == EXIT_SUCCESS)
 		exit(EXIT_SUCCESS);
 	if (g_sys.merrno == -1)
-		execve(get_cmd_path(cmd), get_cmd_args(cmd), get_env(g_sys.env));
+	{
+		env = get_env(g_sys.env);
+		execve(get_cmd_path(cmd), get_cmd_args(cmd), env);
+		ft_free_array(env);
+	}
 	return (ERROR);
 }
 
