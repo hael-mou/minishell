@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:38:00 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/27 17:16:13 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/07/27 21:01:20 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ pid_t	exec_cmd(t_node *cmd);
 void	extract_command(t_node *cmd);
 int		*get_command_inout(t_list *cursor);
 int		dup_process_inout(int *in_out);
-int		extract_exit_status(t_node *node);
+int		extract_exit_status(t_node *node, int sig);
 
 // interpreter_utils :
 char	**get_env(t_list *g_env);

@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 16:49:20 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/27 18:56:56 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/27 20:37:30 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 void	sigint_hendler(int signum)
 {
 	(void) signum;
+	ft_putstr_fd("\n", 1);
 	rl_replace_line("", 0);
 	g_sys.exit_status = 1;
-	if (g_sys.area == START || g_sys.area == INTERPRETER)
+	if (g_sys.area == START)
 	{
-		ft_putstr_fd("\n", 1);
 		rl_on_new_line();
 		minishell_prompt();
 	}

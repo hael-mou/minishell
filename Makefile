@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+         #
+#    By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/13 11:01:09 by hael-mou          #+#    #+#              #
-#    Updated: 2023/07/27 19:07:21 by oezzaou          ###   ########.fr        #
+#    Updated: 2023/07/27 20:34:04 by hael-mou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ CC				:= 	cc
 RM				:= 	rm -rf
 CFLAGS 			:= 	-Wall -Wextra -Werror #-g -fsanitize=address
 LINKS			:= 	-lft -lreadline 
-LINKS_DIR		:=	-L $(LIBFT_DIR) #-L $(RDL_DIR)
+LINKS_DIR		:=	-L $(LIBFT_DIR) -L $(RDL_DIR)
 INCLUDE			:=	$(addprefix -I,$(INCLUDE_DIRS))
 
 # Colors :

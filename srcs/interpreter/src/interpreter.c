@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 21:21:16 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/27 18:54:39 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/27 21:44:37 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,16 @@
 //=== interpreter ==============================================================
 int	interpreter(t_node *root)
 {
+	g_sys.area = INTERPRETER;
 	if (root == NULL || g_sys.merrno != -1)
 	{
-		g_sys.exit_status = (g_sys.merrno != -1);
+		if (g_sys.merrno != -1)
+			g_sys.exit_status = (g_sys.merrno != -1);
 		g_sys.merrno = -1;
 		return (0);
 	}
 	exec_branches(root);
-	g_sys.exit_status = extract_exit_status(root);
+	g_sys.exit_status = extract_exit_status(root, FALSE);
 	return (SUCCESS);
 }
 
@@ -69,7 +71,7 @@ pid_t	exec_subshell(t_node *node)
 		close_pipe(g_sys.pipeline.fd);
 		exec_branches(get_left_node(node));
 		close(g_sys.pipeline.offset);
-		exit(extract_exit_status(get_left_node(node)));
+		exit(extract_exit_status(get_left_node(node), FALSE));
 	}
 	return (node->pid);
 }
@@ -104,7 +106,7 @@ int	exec_builtins(t_node *cmd, int *in_out)
 }
 
 //=== extract_exit_status ======================================================
-pid_t	extract_exit_status(t_node *node)
+pid_t	extract_exit_status(t_node *node, int sig)
 {
 	int		status;
 
@@ -116,10 +118,14 @@ pid_t	extract_exit_status(t_node *node)
 			|| get_left_node(node)->type == SUBSHELL)
 			waitpid(get_left_node(node)->pid, &status, 0);
 		else
-			extract_exit_status(get_left_node(node));
+			extract_exit_status(get_left_node(node), sig);
+		if (WIFSIGNALED(status) == 1)
+			sig = TRUE;
 		if (node->type == COMMAND)
 			break ;
 		node = get_right_node(node);
 	}
+	if (sig == TRUE)
+		return (130);
 	return ((((*(int *)&(status)) >> 8) & 0x000000ff));
 }
