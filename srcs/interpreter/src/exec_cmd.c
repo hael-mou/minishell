@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 18:50:04 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/27 10:18:40 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/27 15:59:45 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,13 @@ pid_t	exec_cmd(t_node *cmd)
 		if (re != -1)
 			exit(re);
 		dup_process_inout(in_out);
-		close_file_pipes(get_cmd_iofile(cmd), TRUE);
+		close_iofile_pipe(get_cmd_iofile(cmd), TRUE);
 		if (my_execve(cmd) == ERROR)
 			exit(print_error_msg(cmd));
 	}
-	close_file_pipes(get_cmd_iofile(cmd), FALSE);
+	close_iofile_pipe(get_cmd_iofile(cmd), FALSE);
 	g_sys.merrno = -1;
+	free(in_out);
 	return (cmd->pid);
 }
 
@@ -70,12 +71,7 @@ char	*whereis_cmd(char *cmd)
 	path = search_var(g_sys.env, "PATH");
 	g_sys.merrno += 3 * (!path || !*path);
 	if (ft_strncmp(cmd, "./", 2) == 0 || *cmd == '/')
-	{
-		g_sys.merrno = 2;
-		if (access(cmd, F_OK) == 0)
-			g_sys.merrno = 7 * -access(cmd, X_OK) - 1;
-		return (ft_strdup(cmd));
-	}
+		return (set_merrno(cmd), ft_strdup(cmd));
 	while (cmd && *cmd && path && *path)
 	{
 		pathlen = ft_toklen(path, ':');

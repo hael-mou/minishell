@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:16:20 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/07/26 23:35:08 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/27 15:39:58 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ char	**get_env(t_list *g_env)
 	return (env);
 }
 
-//=== close_file_pipes ==============================================================
-int	close_file_pipes(t_list *file, int c_pipe)
+//=== close_iofile_pipes =======================================================
+int	close_iofile_pipe(t_list *file, int c_pipe)
 {
 	while (file)
 	{
