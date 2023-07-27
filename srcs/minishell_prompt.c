@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:34:12 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/26 20:39:02 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/27 10:49:19 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ char	*get_status_icon(void)
 //=== minishell_prompt ========================================================
 char	*minishell_prompt(void)
 {
-	char	*prompt;
 	char	*cwd;
 	char	*git;
 	char	*status;
@@ -66,8 +65,6 @@ char	*minishell_prompt(void)
 	cwd = get_wdir();
 	git = get_git_tag();
 	status = get_status_icon();
-	prompt = ft_strdup("\n"CYAN_COLOR"╭ ");
-	prompt = ft_vstrjoin(4, prompt, cwd, git, WAITE_COLOR"\n");
-	prompt = ft_vstrjoin(4, prompt, "╰ ", status, ICON_PROMPT);
-	return (free(cwd), prompt);
+	printf("\n%s╭ %s %s %s\n╰ %s", CYAN, cwd, git, WAITE, status);
+	return (free(cwd), ICON_PROMPT);
 }

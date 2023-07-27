@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 19:05:02 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/26 20:38:13 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/27 11:42:47 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	minishell_ignore(int argc, char **argv)
 //=== minishell_clean =========================================================
 void	minishell_clean(t_minish *minish)
 {
-	free(g_sys.prompt);
 	clean_tree(minish->tree);
 	free(minish->input);
 }

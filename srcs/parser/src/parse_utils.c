@@ -6,7 +6,7 @@
 /*   By: hael-mou <hael-mou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 10:45:47 by hael-mou          #+#    #+#             */
-/*   Updated: 2023/07/26 17:13:18 by hael-mou         ###   ########.fr       */
+/*   Updated: 2023/07/27 11:44:53 by hael-mou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ void	clean_tree(t_node *head)
 		node_type = get_node_type(head);
 		if (node_type != COMMAND)
 		{
-			clean_tree(((t_operator *)head)->left);
-			clean_tree(((t_operator *)head)->right);
+			clean_tree(get_left_node(head));
+			clean_tree(get_right_node(head));
 			clean_operator((t_operator *)head);
 		}
 		else if (node_type == COMMAND)
